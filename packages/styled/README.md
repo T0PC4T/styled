@@ -2,6 +2,8 @@
 
 A headless, token-driven styling engine for Flutter, with code generation for design tokens and component presets.
 
+**Repository:** [github.com/T0PC4T/styled](https://github.com/T0PC4T/styled) · [Issues](https://github.com/T0PC4T/styled/issues) · [Releases](https://github.com/T0PC4T/styled/tags)
+
 Styled moves every visual decision into data, and every design value into the theme. A `Style` describes decoration, size, spacing, layout, typography, icons and motion, plus how they change when a widget is hovered, pressed, selected or shown on a phone. Every colour, size, radius, spacing, font size and duration in a style is a **reference** to a theme token, never a raw number. When the theme changes, every styled widget in the app re-resolves its references and updates.
 
 ```dart
@@ -91,7 +93,7 @@ States merge first, so a hovered button swaps one reference for another. Resolut
 
 ## 2. Installation
 
-The packages are not published to pub.dev. Depend on them from git, pinned to a tag:
+The packages are not published to pub.dev. Depend on them from [the git repository](https://github.com/T0PC4T/styled), pinned to [a tag](https://github.com/T0PC4T/styled/tags):
 
 ```yaml
 dependencies:
@@ -99,20 +101,28 @@ dependencies:
     sdk: flutter
   styled:
     git:
-      url: https://github.com/thomasclovis/styled.git
+      url: https://github.com/T0PC4T/styled.git
       path: packages/styled
-      ref: v2.0.0   # pin a tag or commit, never a moving branch
+      ref: v1.0.0   # pin a tag or commit, never a moving branch
 
 dev_dependencies:
   build_runner: ^2.4.0
   styled_generator:
     git:
-      url: https://github.com/thomasclovis/styled.git
+      url: https://github.com/T0PC4T/styled.git
       path: packages/styled_generator
-      ref: v2.0.0
+      ref: v1.0.0
 ```
 
-While developing against a local checkout, override all three packages with paths in the workspace root `pubspec.yaml`:
+`styled_annotation` comes in through `styled`, so it needs no entry of its own.
+
+To develop against a local checkout, clone the repository next to your project:
+
+```sh
+git clone https://github.com/T0PC4T/styled.git
+```
+
+Then override all three packages with paths in the workspace root `pubspec.yaml`:
 
 ```yaml
 dependency_overrides:
@@ -1324,6 +1334,29 @@ In tests, one-off values that are not tokens are `DataValue`s: `BoxStyle(width: 
 | `resolveTokens([...])` | `resolveStates([...])` |
 | `@Responsive(mobile: '_mobile')` | A `mobile` state member, or a `StyledScreen screen` parameter |
 | `@StyledPreset(mergeBase: false)` | Removed; `base` always merges |
+
+---
+
+## Contributing
+
+Report bugs and request features in [the issue tracker](https://github.com/T0PC4T/styled/issues). To work on the packages themselves:
+
+```sh
+git clone https://github.com/T0PC4T/styled.git
+cd styled
+dart pub get
+
+(cd packages/styled && flutter test)
+(cd packages/styled_generator && dart test)
+```
+
+The repository is a Dart workspace:
+
+| Path | Contents |
+|---|---|
+| `packages/styled` | The runtime |
+| `packages/styled_annotation` | The annotations |
+| `packages/styled_generator` | The generator: `inspectors/` read a spec class into a descriptor (`models/`), and `writers/` emit code from it |
 
 ---
 
