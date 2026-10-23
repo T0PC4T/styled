@@ -5,18 +5,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:styled/styled.dart';
 
 class _Colors {
-  static const white = Color(0xFFFFFFFF);
-  static const black = Color(0xFF000000);
-  static const blue = Color(0xFF2196F3);
-  static const red = Color(0xFFF44336);
-  static const green = Color(0xFF4CAF50);
-  static const yellow = Color(0xFFFFEB3B);
-  static const amber = Color(0xFFFFC107);
-  static const grey = Color(0xFF9E9E9E);
-  static const purple = Color(0xFF9C27B0);
-  static const cyan = Color(0xFF00BCD4);
-  static const orange = Color(0xFFFF9800);
+  static const white = ThemeToken<Color>('test.white', Color(0xFFFFFFFF));
+  static const black = ThemeToken<Color>('test.black', Color(0xFF000000));
+  static const blue = ThemeToken<Color>('test.blue', Color(0xFF2196F3));
+  static const red = ThemeToken<Color>('test.red', Color(0xFFF44336));
+  static const green = ThemeToken<Color>('test.green', Color(0xFF4CAF50));
+
+  static const amber = ThemeToken<Color>('test.amber', Color(0xFFFFC107));
+  static const grey = ThemeToken<Color>('test.grey', Color(0xFF9E9E9E));
+  static const purple = ThemeToken<Color>('test.purple', Color(0xFF9C27B0));
+  static const cyan = ThemeToken<Color>('test.cyan', Color(0xFF00BCD4));
+  static const orange = ThemeToken<Color>('test.orange', Color(0xFFFF9800));
 }
+
+const _selected = StyleState('selected');
 
 Widget testApp([dynamic home, WidgetBuilder? builder, StyledTheme? theme]) {
   final Widget? effectiveHome = home is Widget ? home : null;
@@ -38,770 +40,557 @@ Widget testApp([dynamic home, WidgetBuilder? builder, StyledTheme? theme]) {
   );
 }
 
-class TestScaffold extends StatelessWidget {
-  final Widget body;
-  const TestScaffold({super.key, required this.body});
-  @override
-  Widget build(BuildContext context) => body;
-}
+/// The style the innermost box publishes to its descendants.
+Style _innermostStyle(WidgetTester tester) =>
+    tester.widget<InheritedStyle>(find.byType(InheritedStyle).last).style;
 
 void main() {
-  group('Style & Token Architecture Tests', () {
-    test('Style.on and resolveTokens apply states properly', () {
-      final base =
-          const Style(
-                box: BoxStyle(
-                  color: _Colors.white,
-                  border: StyledBorder.all(
-                    color: _Colors.black,
-                    width: 1,
-                    radius: 8,
-                  ),
-                ),
-                text: StyledTextStyle(color: _Colors.black),
-              )
-              .on(StyledToken.hovered, box: const BoxStyle(color: _Colors.blue))
-              .on(
-                StyledToken.disabled,
-                box: const BoxStyle(color: _Colors.grey),
-              )
-              .on(
-                'custom_tag',
-                text: const StyledTextStyle(color: _Colors.amber),
-              );
+  group('Style', () {
+    test('on and resolveStates apply overrides; later states win', () {
+      final base = const Style(
+        box: BoxStyle(
+          color: _Colors.white,
+          border: StyledBorder.all(color: _Colors.black, width: DataValue(1.0), radius: DataValue(8.0)),
+        ),
+        text: StyledTextStyle(color: _Colors.black),
+      )
+          .on(StyleState.hovered, box: const BoxStyle(color: _Colors.blue))
+          .on(StyleState.disabled, box: const BoxStyle(color: _Colors.grey))
+          .on(_selected, text: const StyledTextStyle(color: _Colors.amber));
 
       expect(base.box.color, _Colors.white);
-      expect(base.text.color, _Colors.black);
-      expect(base.box.border?.radius, 8.0);
+      expect(base.box.border?.radius, const DataValue(8.0));
 
-      final hoveredStyle = base.resolveTokens([StyledToken.hovered]);
-      expect(hoveredStyle.box.color, _Colors.blue);
-      expect(hoveredStyle.text.color, _Colors.black);
+      final hovered = base.resolveStates([StyleState.hovered]);
+      expect(hovered.box.color, _Colors.blue);
+      expect(hovered.text.color, _Colors.black);
+      expect(hovered.states, isEmpty);
 
-      final customStyle = base.resolveTokens(['custom_tag']);
-      expect(customStyle.box.color, _Colors.white);
-      expect(customStyle.text.color, _Colors.amber);
+      final compound = base.resolveStates([_selected, StyleState.hovered]);
+      expect(compound.box.color, _Colors.blue);
+      expect(compound.text.color, _Colors.amber);
 
-      final compoundStyle = base.resolveTokens([
-        StyledToken.hovered,
-        'custom_tag',
-      ]);
-      expect(compoundStyle.box.color, _Colors.blue);
-      expect(compoundStyle.text.color, _Colors.amber);
+      expect(base.resolveStates([StyleState.hovered, StyleState.disabled]).box.color, _Colors.grey);
     });
 
-    test('Style value equality works correctly', () {
-      const style1 = Style(
-        box: BoxStyle(color: _Colors.blue),
-        text: StyledTextStyle(fontSize: 16),
-      );
-      const style2 = Style(
-        box: BoxStyle(color: _Colors.blue),
-        text: StyledTextStyle(fontSize: 16),
-      );
-      const style3 = Style(
-        box: BoxStyle(color: _Colors.red),
-        text: StyledTextStyle(fontSize: 16),
-      );
-
-      expect(style1, equals(style2));
-      expect(style1.hashCode, equals(style2.hashCode));
-      expect(style1, isNot(equals(style3)));
+    test('on merges into an existing override for the same state', () {
+      final style = const Style()
+          .on(StyleState.hovered, box: const BoxStyle(color: _Colors.blue))
+          .on(StyleState.hovered, text: const StyledTextStyle(color: _Colors.red));
+      final hovered = style.resolveStates([StyleState.hovered]);
+      expect(hovered.box.color, _Colors.blue);
+      expect(hovered.text.color, _Colors.red);
     });
 
-    test(
-      'BoxStyle equality and hashCode account for all decoration and container fields',
-      () {
-        final transform = Matrix4.rotationZ(0.5);
-        final styleA = BoxStyle(
-          color: _Colors.blue,
-          boxShadow: const [BoxShadow(color: _Colors.black, blurRadius: 4)],
-          transform: transform,
-          transformAlignment: Alignment.center,
-          curve: Curves.easeInOut,
-          foregroundDecoration: const BoxDecoration(color: _Colors.red),
-          backgroundBlendMode: BlendMode.colorBurn,
-        );
+    test('merge and + combine sub-styles and states without casts', () {
+      const a = Style(box: BoxStyle(color: _Colors.white, padding: StyledEdgeInsets.all(DataValue(4.0))));
+      final b = const Style(box: BoxStyle(color: _Colors.red)).on(StyleState.pressed, box: const BoxStyle(color: _Colors.green));
+      final Style merged = a + b;
+      expect(merged.box.color, _Colors.red);
+      expect(merged.box.padding, const StyledEdgeInsets.all(DataValue(4.0)));
+      expect(merged.hasState(StyleState.pressed), isTrue);
+      expect(a.merge(null), same(a));
+    });
 
-        final styleB = BoxStyle(
-          color: _Colors.blue,
-          boxShadow: const [BoxShadow(color: _Colors.black, blurRadius: 4)],
-          transform: transform,
-          transformAlignment: Alignment.center,
-          curve: Curves.easeInOut,
-          foregroundDecoration: const BoxDecoration(color: _Colors.red),
-          backgroundBlendMode: BlendMode.colorBurn,
-        );
+    test('equal styles with states have equal hash codes', () {
+      Style build() => const Style(box: BoxStyle(color: _Colors.blue))
+          .on(StyleState.hovered, box: const BoxStyle(color: _Colors.red))
+          .on(_selected, text: const StyledTextStyle(fontSize: DataValue(14.0)));
+      expect(build(), equals(build()));
+      expect(build().hashCode, equals(build().hashCode));
+      expect(build(), isNot(equals(const Style(box: BoxStyle(color: _Colors.blue)))));
+    });
 
-        final styleC = BoxStyle(
-          color: _Colors.blue,
-          boxShadow: const [BoxShadow(color: _Colors.white, blurRadius: 8)],
-          transform: transform,
-        );
+    test('BoxStyle equality covers decoration, transform and motion', () {
+      const level = ThemeToken<ShadowLevel>('test.level', ShadowLevel(opacity: 0.5, blurRadius: 4));
+      BoxStyle build({ThemeToken<Color> shadow = _Colors.black}) => BoxStyle(
+            color: _Colors.blue,
+            boxShadow: [StyledBoxShadow.level(shadow, level)],
+            transform: const StyledTransform.translate(y: DataValue(-2.0)),
+            transformAlignment: Alignment.center,
+            motion: const Motion(DataValue(Duration(milliseconds: 200)), Curves.easeInOut),
+            foregroundDecoration: const DataValue(BoxDecoration(color: Color(0x11FF0000))),
+            backgroundBlendMode: BlendMode.colorBurn,
+          );
+      expect(build(), equals(build()));
+      expect(build().hashCode, equals(build().hashCode));
+      expect(build(), isNot(equals(build(shadow: _Colors.white))));
+    });
 
-        expect(styleA, equals(styleB));
-        expect(styleA.hashCode, equals(styleB.hashCode));
-        expect(styleA, isNot(equals(styleC)));
-      },
-    );
-
-    test('BoxStyle.merge preserves animation properties', () {
-      const animatedBox = BoxStyle(
+    test('BoxStyle.merge keeps motion and merges borders field by field', () {
+      const base = BoxStyle(
         color: _Colors.blue,
-        animates: true,
-        animationDuration: Duration(milliseconds: 300),
-        curve: Curves.bounceOut,
+        motion: Motion(DataValue(Duration(milliseconds: 300)), Curves.bounceOut),
+        border: StyledBorder.all(color: _Colors.grey, width: DataValue(1.0), radius: DataValue(8.0)),
       );
-      const overrideBox = BoxStyle(color: _Colors.red);
-
-      final merged = animatedBox.merge(overrideBox);
+      final merged = base.merge(const BoxStyle(color: _Colors.red, border: StyledBorder(color: _Colors.blue)));
       expect(merged.color, _Colors.red);
-      expect(merged.animates, isTrue);
-      expect(merged.animationDuration, const Duration(milliseconds: 300));
-      expect(merged.curve, Curves.bounceOut);
+      expect(merged.motion, const Motion(DataValue(Duration(milliseconds: 300)), Curves.bounceOut));
+      expect(merged.border, const StyledBorder(color: _Colors.blue, width: DataValue(1.0), radius: DataValue(8.0)));
+      const theme = StyledTheme();
+      expect(merged.decoration(theme).borderRadius, BorderRadius.circular(8));
+      expect((merged.decoration(theme).border! as Border).top.color, _Colors.blue.defaultValue);
     });
 
-    test(
-      'StyleResolver mergeText and mergeIcon apply properties correctly',
-      () {
-        const resolver = Style(box: BoxStyle(color: _Colors.white));
-        final modified = resolver
-            .mergeText(color: _Colors.green, fontSize: 20)
-            .mergeIcon(color: _Colors.purple, size: 30);
+    test('StyledBorder draws a uniform side only when colour and width are known', () {
+      const theme = StyledTheme();
+      expect(const StyledBorder.all(radius: DataValue(8.0)).boxBorder(theme), isNull);
+      expect(const StyledBorder.all(color: _Colors.red).boxBorder(theme), isNull);
+      final sides = const StyledBorder(color: _Colors.red, width: DataValue(2.0), bottom: StyledBorderSide(color: _Colors.blue))
+          .boxBorder(theme)! as Border;
+      expect(sides.top.color, _Colors.red.defaultValue);
+      expect(sides.bottom.color, _Colors.blue.defaultValue);
+    });
 
-        // Build context mock
-        final contextMock = _MockBuildContext();
-        final resolved = modified.resolve(contextMock);
+    test('StyleResolver.map and merge defer until resolve', () {
+      final resolver = const Style(box: BoxStyle(color: _Colors.white))
+          .map((s) => s.add(text: const StyledTextStyle(color: _Colors.green)))
+          .merge(const Style(icon: IconStyle(size: DataValue(30.0))));
+      final resolved = resolver.resolve(_MockBuildContext());
+      expect(resolved.box.color, _Colors.white);
+      expect(resolved.text.color, _Colors.green);
+      expect(resolved.icon.size, const DataValue(30.0));
+    });
 
-        expect(resolved.text.color, _Colors.green);
-        expect(resolved.text.fontSize, 20);
-        expect(resolved.icon.color, _Colors.purple);
-        expect(resolved.icon.size, 30);
-      },
-    );
+    test('sub-style merge, equality and hashCode', () {
+      const flexA = FlexStyle(direction: Axis.horizontal, spacing: DataValue(12.0), wrap: true, runSpacing: DataValue(8.0));
+      expect(flexA, equals(const FlexStyle(direction: Axis.horizontal, spacing: DataValue(12.0), wrap: true, runSpacing: DataValue(8.0))));
+      expect(flexA.hashCode, equals(const FlexStyle(direction: Axis.horizontal, spacing: DataValue(12.0), wrap: true, runSpacing: DataValue(8.0)).hashCode));
+      final merged = const FlexStyle(spacing: DataValue(10.0), clipBehavior: Clip.hardEdge).merge(const FlexStyle(spacing: DataValue(20.0)));
+      expect(merged.spacing, const DataValue(20.0));
+      expect(merged.clipBehavior, Clip.hardEdge);
+
+      const textA = StyledTextStyle(color: _Colors.blue, fontSize: DataValue(16.0), shadows: DataValue([Shadow(color: Color(0xFF000000), blurRadius: 2)]), maxLines: 3);
+      final textB = const StyledTextStyle(color: _Colors.red).merge(textA);
+      expect(textB, equals(textA));
+      expect(textB.hashCode, equals(textA.hashCode));
+
+      const iconA = IconStyle(color: _Colors.amber, size: DataValue(24.0), shadows: DataValue([Shadow(color: Color(0xFF000000), blurRadius: 4)]));
+      expect(const IconStyle(size: DataValue(12.0)).merge(iconA), equals(iconA));
+
+      final img = const ImageStyle(width: DataValue(100.0), height: DataValue(100.0)).merge(const ImageStyle(width: DataValue(200.0), fit: BoxFit.contain));
+      expect(img.width, const DataValue(200.0));
+      expect(img.height, const DataValue(100.0));
+      expect(img.fit, BoxFit.contain);
+    });
   });
 
-  group('Widget Rendering & Interactive Parameter Tests', () {
-    testWidgets('StyledBox renders container with correct style', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        testApp(
-          const StyledBox(
-            style: Style(
-              box: BoxStyle(width: 100, height: 100, color: _Colors.blue),
-            ),
-            child: Text('Box Child'),
-          ),
-        ),
+  group('Style values', () {
+    const opacity = ThemeToken<double>('test.opacity', 0.25);
+    const gap = ThemeToken<double>('test.gap', 8);
+    const level = ThemeToken<ShadowLevel>('test.level', ShadowLevel(opacity: 0.5, blurRadius: 10, dy: 2));
+    const size = ThemeToken<double>('test.size', 40);
+    const lift = ThemeToken<double>('test.lift', -2);
+    const stroke = ThemeToken<double>('test.stroke', 1);
+    const textSize = ThemeToken<double>('test.textSize', 14);
+
+    test('tokens resolve against the theme and fall back to their defaults', () {
+      expect(_Colors.blue.resolve(const StyledTheme()), _Colors.blue.defaultValue);
+      final theme = const StyledTheme().set(_Colors.blue, _Colors.red.defaultValue);
+      expect(_Colors.blue.resolve(theme), _Colors.red.defaultValue);
+    });
+
+    test('AlphaOf takes its opacity from a token', () {
+      const value = AlphaOf(_Colors.blue, opacity);
+      expect(value.resolve(const StyledTheme()), _Colors.blue.defaultValue.withValues(alpha: 0.25));
+      expect(value.resolve(const StyledTheme().set(opacity, 0.5)).a, closeTo(0.5, 0.001));
+      expect(const AlphaOf(DataValue(Color(0xFF00FF00)), opacity), const AlphaOf(DataValue(Color(0xFF00FF00)), opacity));
+    });
+
+    test('DataValue.of wraps non-null values only', () {
+      expect(DataValue.of<Color>(null), isNull);
+      expect(DataValue.of(const Color(0xFF123456))?.value, const Color(0xFF123456));
+    });
+
+    test('layout constants resolve to themselves', () {
+      expect(StyleValue.infinity.resolve(const StyledTheme()), double.infinity);
+      expect(StyleValue.zero.resolve(const StyledTheme()), 0);
+    });
+
+    test('wrappers resolve to Flutter types', () {
+      final theme = const StyledTheme().set(gap, 12).set(size, 300).set(lift, -4).set(stroke, 2);
+      expect(const StyledEdgeInsets.symmetric(horizontal: gap).resolve(theme), const EdgeInsets.symmetric(horizontal: 12));
+      expect(const StyledEdgeInsets.only(top: gap, left: StyleValue.zero).resolve(theme), const EdgeInsets.only(top: 12));
+      expect(const StyledBoxConstraints(maxWidth: size).resolve(theme), const BoxConstraints(maxWidth: 300));
+      expect(const StyledTransform.translate(y: lift).resolve(theme), Matrix4.translationValues(0, -4, 0));
+      expect(
+        const StyledBoxShadow.level(_Colors.blue, level).resolve(theme),
+        BoxShadow(color: _Colors.blue.defaultValue.withValues(alpha: 0.5), blurRadius: 10, offset: const Offset(0, 2)),
+      );
+      expect(const StyledBorderSide(color: _Colors.red, width: stroke).resolve(theme), BorderSide(color: _Colors.red.defaultValue, width: 2));
+    });
+
+    test('wrappers offer the core Flutter constructors', () {
+      final theme = const StyledTheme().set(gap, 12).set(size, 300).set(stroke, 2);
+      expect(const StyledBoxConstraints.expand().resolve(theme), const BoxConstraints.expand());
+      expect(const StyledBoxConstraints.expand(height: size).resolve(theme), const BoxConstraints.expand(height: 300));
+      expect(const StyledBoxConstraints.tightFor(width: size).resolve(theme), const BoxConstraints.tightFor(width: 300));
+      expect(
+        const StyledEdgeInsets.fromLTRB(gap, StyleValue.zero, gap, gap).resolve(theme),
+        const EdgeInsets.fromLTRB(12, 0, 12, 12),
       );
 
+      const side = StyledBorderSide(color: _Colors.red, width: stroke);
+      final all = const StyledBorder.fromBorderSide(side).boxBorder(theme)! as Border;
+      expect(all.left, BorderSide(color: _Colors.red.defaultValue, width: 2));
+      expect(all.bottom, BorderSide(color: _Colors.red.defaultValue, width: 2));
+
+      final symmetric = const StyledBorder.symmetric(horizontal: side).boxBorder(theme)! as Border;
+      expect(symmetric.top.width, 2);
+      expect(symmetric.left.style, BorderStyle.none);
+    });
+
+    test('wrappers work with dot shorthand', () {
+      const style = BoxStyle(
+        padding: .symmetric(horizontal: gap),
+        border: .all(color: _Colors.red, width: stroke, radius: gap),
+        transform: .translate(y: lift),
+        constraints: .tightFor(width: size),
+        width: .infinity,
+      );
+      expect(style.padding, const StyledEdgeInsets.symmetric(horizontal: gap));
+      expect(style.width, StyleValue.infinity);
+    });
+
+    test('ThemedStyle produces Flutter types', () {
+      const style = Style(text: StyledTextStyle(color: _Colors.green, fontSize: textSize));
+      final bound = style.bind(const StyledTheme().set(textSize, 18));
+      expect(bound.textStyle.color, _Colors.green.defaultValue);
+      expect(bound.textStyle.fontSize, 18);
+    });
+
+    testWidgets('changing the theme re-resolves every token in place', (tester) async {
+      final controller = StyledThemeController();
+      await tester.pumpWidget(StyledThemeControllerProvider(
+        controller: controller,
+        child: const Directionality(
+          textDirection: TextDirection.ltr,
+          child: StyledBox(style: Style(box: BoxStyle(color: _Colors.blue, padding: StyledEdgeInsets.all(gap))), child: SizedBox()),
+        ),
+      ));
+      Container container() => tester.widget<Container>(find.byType(Container));
+      expect((container().decoration! as BoxDecoration).color, _Colors.blue.defaultValue);
+      expect(container().padding, const EdgeInsets.all(8));
+
+      controller.updateTheme(const StyledTheme().set(_Colors.blue, _Colors.orange.defaultValue).set(gap, 20));
+      await tester.pump();
+      expect((container().decoration! as BoxDecoration).color, _Colors.orange.defaultValue);
+      expect(container().padding, const EdgeInsets.all(20));
+    });
+  });
+
+  group('StyledBox', () {
+    testWidgets('renders a container and publishes its style', (tester) async {
+      await tester.pumpWidget(testApp(
+        const StyledBox(
+          style: Style(box: BoxStyle(width: DataValue(100.0), height: DataValue(100.0), color: _Colors.blue)),
+          child: Text('Box Child'),
+        ),
+      ));
       expect(find.text('Box Child'), findsOneWidget);
-      final inheritedStyle = tester.widget<InheritedStyle>(
-        find.byType(InheritedStyle),
-      );
-      expect(inheritedStyle.style.box.color, _Colors.blue);
+      expect(_innermostStyle(tester).box.color, _Colors.blue);
     });
 
-    test(
-      'FlexStyle copyWith, merge, equality and hashCode handle all properties',
-      () {
-        const flexA = FlexStyle(
-          direction: Axis.horizontal,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          textDirection: TextDirection.rtl,
-          verticalDirection: VerticalDirection.up,
-          spacing: 12.0,
-          runSpacing: 8.0,
-          wrapAlignment: WrapAlignment.center,
-          wrapCrossAxisAlignment: WrapCrossAlignment.center,
-          runAlignment: WrapAlignment.end,
-          clipBehavior: Clip.antiAlias,
-        );
-
-        final flexB = const FlexStyle().copyWith(
-          direction: Axis.horizontal,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          textDirection: TextDirection.rtl,
-          verticalDirection: VerticalDirection.up,
-          spacing: 12.0,
-          runSpacing: 8.0,
-          wrapAlignment: WrapAlignment.center,
-          wrapCrossAxisAlignment: WrapCrossAlignment.center,
-          runAlignment: WrapAlignment.end,
-          clipBehavior: Clip.antiAlias,
-        );
-
-        final flexC = flexA.copyWith(spacing: 16.0);
-
-        expect(flexA, equals(flexB));
-        expect(flexA.hashCode, equals(flexB.hashCode));
-        expect(flexA, isNot(equals(flexC)));
-
-        final merged = const FlexStyle(
-          spacing: 10.0,
-          clipBehavior: Clip.hardEdge,
-        ).merge(const FlexStyle(spacing: 20.0));
-        expect(merged.spacing, 20.0);
-        expect(merged.clipBehavior, Clip.hardEdge);
-      },
-    );
-
-    testWidgets(
-      'StyledFlex renders native spacing and clipBehavior from Style',
-      (tester) async {
-        await tester.pumpWidget(
-          testApp(
-            const StyledFlex(
-              style: Style(
-                flex: FlexStyle(
-                  direction: Axis.horizontal,
-                  spacing: 24,
-                  clipBehavior: Clip.hardEdge,
-                ),
-              ),
-              children: [Text('Child 1'), Text('Child 2')],
-            ),
-          ),
-        );
-
-        final flexFinder = find.byType(Flex);
-        expect(flexFinder, findsOneWidget);
-        final Flex flexWidget = tester.widget(flexFinder);
-        expect(flexWidget.spacing, 24.0);
-        expect(flexWidget.clipBehavior, Clip.hardEdge);
-        expect(flexWidget.children.length, 2);
-      },
-    );
-
-    testWidgets('StyledRow and StyledColumn render with spacing from Style', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        testApp(
-          const Column(
-            children: [
-              StyledRow(
-                style: Style(flex: FlexStyle(spacing: 16)),
-                children: [Text('Row 1'), Text('Row 2')],
-              ),
-              StyledColumn(
-                style: Style(flex: FlexStyle(spacing: 20)),
-                children: [Text('Col 1'), Text('Col 2')],
-              ),
-            ],
-          ),
+    testWidgets('lays out children as a Flex from style.flex', (tester) async {
+      await tester.pumpWidget(testApp(
+        const StyledBox(
+          style: Style(flex: FlexStyle(direction: Axis.horizontal, spacing: DataValue(24.0), clipBehavior: Clip.hardEdge)),
+          children: [Text('Child 1'), Text('Child 2')],
         ),
-      );
-
-      expect(find.text('Row 1'), findsOneWidget);
-      expect(find.text('Col 1'), findsOneWidget);
+      ));
+      final flex = tester.widget<Flex>(find.byType(Flex));
+      expect(flex.direction, Axis.horizontal);
+      expect(flex.spacing, 24.0);
+      expect(flex.clipBehavior, Clip.hardEdge);
+      expect(flex.children.length, 2);
     });
 
-    testWidgets('StyledWrap renders with Wrap properties from Style', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        testApp(
-          const StyledWrap(
-            style: Style(
-              flex: FlexStyle(
-                direction: Axis.horizontal,
-                spacing: 12.0,
-                runSpacing: 16.0,
-                wrapAlignment: WrapAlignment.center,
-                wrapCrossAxisAlignment: WrapCrossAlignment.end,
-                runAlignment: WrapAlignment.spaceBetween,
-                clipBehavior: Clip.antiAlias,
-              ),
+    testWidgets('lays out children as a Wrap when flex.wrap is true', (tester) async {
+      await tester.pumpWidget(testApp(
+        const StyledBox(
+          style: Style(
+            flex: FlexStyle(
+              wrap: true,
+              spacing: DataValue(12.0),
+              runSpacing: DataValue(16.0),
+              wrapAlignment: WrapAlignment.center,
+              wrapCrossAxisAlignment: WrapCrossAlignment.end,
+              runAlignment: WrapAlignment.spaceBetween,
             ),
-            children: [Text('Wrap 1'), Text('Wrap 2')],
           ),
+          children: [Text('Wrap 1'), Text('Wrap 2')],
         ),
-      );
-
-      final wrapFinder = find.byType(Wrap);
-      expect(wrapFinder, findsOneWidget);
-      final Wrap wrapWidget = tester.widget(wrapFinder);
-      expect(wrapWidget.spacing, 12.0);
-      expect(wrapWidget.runSpacing, 16.0);
-      expect(wrapWidget.alignment, WrapAlignment.center);
-      expect(wrapWidget.crossAxisAlignment, WrapCrossAlignment.end);
-      expect(wrapWidget.runAlignment, WrapAlignment.spaceBetween);
-      expect(wrapWidget.clipBehavior, Clip.antiAlias);
+      ));
+      final wrap = tester.widget<Wrap>(find.byType(Wrap));
+      expect(wrap.spacing, 12.0);
+      expect(wrap.runSpacing, 16.0);
+      expect(wrap.alignment, WrapAlignment.center);
+      expect(wrap.crossAxisAlignment, WrapCrossAlignment.end);
+      expect(wrap.runAlignment, WrapAlignment.spaceBetween);
     });
 
-    testWidgets(
-      'StyledPressableRow, StyledPressableColumn, and StyledPressableWrap respond to interactions',
-      (tester) async {
-        bool rowTapped = false;
-        bool colTapped = false;
-        bool wrapTapped = false;
+    testWidgets('StyledRow and StyledColumn force their direction', (tester) async {
+      await tester.pumpWidget(testApp(
+        const Column(
+          children: [
+            StyledRow(style: Style(flex: FlexStyle(spacing: DataValue(16.0))), children: [Text('Row 1')]),
+            StyledColumn(style: Style(flex: FlexStyle(direction: Axis.horizontal)), children: [Text('Col 1')]),
+          ],
+        ),
+      ));
+      final flexes = tester.widgetList<Flex>(find.byType(Flex)).toList();
+      expect(flexes[0].direction, Axis.horizontal);
+      expect(flexes[0].spacing, 16.0);
+      expect(flexes[1].direction, Axis.vertical);
+    });
 
-        await tester.pumpWidget(
-          testApp(
-            Column(
-              children: [
-                StyledPressableRow(
-                  style: const Style(box: BoxStyle(color: _Colors.blue)),
-                  onTap: () => rowTapped = true,
-                  children: const [Text('Pressable Row Child')],
-                ),
-                StyledPressableColumn(
-                  style: const Style(box: BoxStyle(color: _Colors.green)),
-                  onTap: () => colTapped = true,
-                  children: const [Text('Pressable Col Child')],
-                ),
-                StyledPressableWrap(
-                  style: const Style(box: BoxStyle(color: _Colors.red)),
-                  onTap: () => wrapTapped = true,
-                  children: const [Text('Pressable Wrap Child')],
-                ),
-              ],
+    testWidgets('animates when style.box.motion is set, without widget flags', (tester) async {
+      await tester.pumpWidget(testApp(
+        const StyledBox(
+          style: Style(box: BoxStyle(color: _Colors.blue, motion: Motion(DataValue(Duration(milliseconds: 250))))),
+          child: SizedBox(),
+        ),
+      ));
+      final animated = tester.widget<AnimatedContainer>(find.byType(AnimatedContainer));
+      expect(animated.duration, const Duration(milliseconds: 250));
+
+      await tester.pumpWidget(testApp(const StyledBox(style: Style(box: BoxStyle(color: _Colors.blue)), child: SizedBox())));
+      expect(find.byType(AnimatedContainer), findsNothing);
+    });
+
+    testWidgets('renders transform and foregroundDecoration', (tester) async {
+      await tester.pumpWidget(testApp(
+        const StyledBox(
+          style: Style(
+            box: BoxStyle(
+              width: DataValue(100.0),
+              height: DataValue(100.0),
+              transform: StyledTransform.translate(x: DataValue(4.0), y: DataValue(-2.0)),
+              transformAlignment: Alignment.center,
+              foregroundDecoration: DataValue(BoxDecoration(color: Color(0x11FF0000))),
             ),
           ),
-        );
+          child: Text('Transformed Box'),
+        ),
+      ));
+      final container = tester.widget<Container>(find.byType(Container));
+      expect(container.transform, Matrix4.translationValues(4, -2, 0));
+      expect(container.transformAlignment, Alignment.center);
+      expect(container.foregroundDecoration, isNotNull);
+    });
 
-        await tester.tap(find.text('Pressable Row Child'));
-        expect(rowTapped, isTrue);
+    testWidgets('activates application states passed in states', (tester) async {
+      final style = const Style(box: BoxStyle(color: _Colors.white)).on(_selected, box: const BoxStyle(color: _Colors.purple));
+      await tester.pumpWidget(testApp(StyledBox(style: style, states: const [_selected], child: const SizedBox())));
+      expect(_innermostStyle(tester).box.color, _Colors.purple);
+    });
 
-        await tester.tap(find.text('Pressable Col Child'));
-        expect(colTapped, isTrue);
+    testWidgets('activates the current screen tier as a state', (tester) async {
+      tester.view.physicalSize = const Size(500, 800);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
 
-        await tester.tap(find.text('Pressable Wrap Child'));
-        expect(wrapTapped, isTrue);
-      },
-    );
-
-    testWidgets('StyledPressableBox handles focused and disabled overrides', (
-      tester,
-    ) async {
       final style = const Style(box: BoxStyle(color: _Colors.white))
-          .on(StyledToken.focused, box: const BoxStyle(color: _Colors.blue))
-          .on(StyledToken.disabled, box: const BoxStyle(color: _Colors.grey));
-
-      // Test focused override
-      await tester.pumpWidget(
-        testApp(
-          StyledPressableBox(
-            style: style,
-            focused: true,
-            onTap: () {},
-            child: const Text('Focused Button'),
-          ),
-        ),
-      );
-      var inheritedStyle = tester.widget<InheritedStyle>(
-        find.byType(InheritedStyle).last,
-      );
-      expect(inheritedStyle.style.box.color, _Colors.blue);
-
-      // Test explicit disabled: true override even with onTap non-null
-      await tester.pumpWidget(
-        testApp(
-          StyledPressableBox(
-            style: style,
-            disabled: true,
-            onTap: () {},
-            child: const Text('Disabled Button'),
-          ),
-        ),
-      );
-      inheritedStyle = tester.widget<InheritedStyle>(
-        find.byType(InheritedStyle).last,
-      );
-      expect(inheritedStyle.style.box.color, _Colors.grey);
+          .on(StyledScreen.mobile.state, box: const BoxStyle(color: _Colors.orange))
+          .on(StyledScreen.desktop.state, box: const BoxStyle(color: _Colors.cyan));
+      await tester.pumpWidget(testApp(StyledBox(style: style, child: const SizedBox())));
+      expect(_innermostStyle(tester).box.color, _Colors.orange);
     });
 
-    testWidgets('StyledPressableBox fires full gestures and callbacks', (
-      tester,
-    ) async {
-      bool tapped = false;
-      bool doubleTapped = false;
-      bool longPressed = false;
-      bool secondaryTapped = false;
+    testWidgets('screen breakpoints come from theme tokens', (tester) async {
+      tester.view.physicalSize = const Size(500, 800);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      late StyledScreen screen;
+      await tester.pumpWidget(testApp(
+        null,
+        (context) {
+          screen = context.screen;
+          return const SizedBox();
+        },
+        const StyledTheme().set(StyledBreakpoints.mobile, 400),
+      ));
+      expect(screen, StyledScreen.tablet);
+    });
+
+    testWidgets('text and icon properties cascade to StyledText and StyledIcon', (tester) async {
+      await tester.pumpWidget(testApp(
+        const StyledBox(
+          style: Style(text: StyledTextStyle(color: _Colors.red, fontSize: DataValue(18.0)), icon: IconStyle(size: DataValue(22.0))),
+          children: [
+            StyledText('Inherited'),
+            StyledText('Own', style: Style(text: StyledTextStyle(fontSize: DataValue(10.0)))),
+            StyledIcon(IconData(0xe123, fontFamily: 'TestIcons')),
+          ],
+        ),
+      ));
+      expect(tester.widget<Text>(find.text('Inherited')).style?.color, _Colors.red.defaultValue);
+      final own = tester.widget<Text>(find.text('Own'));
+      expect(own.style?.color, _Colors.red.defaultValue);
+      expect(own.style?.fontSize, 10);
+      expect(tester.widget<Icon>(find.byType(Icon)).size, 22);
+    });
+  });
+
+  group('Interactive StyledBox', () {
+    testWidgets('handles focused and disabled overrides', (tester) async {
+      final style = const Style(box: BoxStyle(color: _Colors.white))
+          .on(StyleState.focused, box: const BoxStyle(color: _Colors.blue))
+          .on(StyleState.disabled, box: const BoxStyle(color: _Colors.grey));
+
+      await tester.pumpWidget(testApp(StyledBox(
+        style: style,
+        interaction: Interaction(focused: true, onTap: () {}),
+        child: const Text('Focused Button'),
+      )));
+      expect(_innermostStyle(tester).box.color, _Colors.blue);
+
+      await tester.pumpWidget(testApp(StyledBox(
+        style: style,
+        interaction: Interaction(enabled: false, onTap: () {}),
+        child: const Text('Disabled Button'),
+      )));
+      expect(_innermostStyle(tester).box.color, _Colors.grey);
+    });
+
+    testWidgets('a box without handlers is not visually disabled', (tester) async {
+      final style = const Style(box: BoxStyle(color: _Colors.white)).on(StyleState.disabled, box: const BoxStyle(color: _Colors.grey));
+      await tester.pumpWidget(testApp(StyledBox(style: style, interaction: const Interaction(), child: const Text('Passive'))));
+      expect(_innermostStyle(tester).box.color, _Colors.white);
+    });
+
+    testWidgets('pressed wins over hovered while both are active', (tester) async {
+      final style = const Style(
+        box: BoxStyle(width: DataValue(100.0), height: DataValue(100.0), color: _Colors.white),
+      )
+          .on(StyleState.pressed, box: const BoxStyle(color: _Colors.green))
+          .on(StyleState.hovered, box: const BoxStyle(color: _Colors.blue));
+
+      await tester.pumpWidget(testApp(StyledBox(style: style, interaction: Interaction(onTap: () {}), child: const Text('Target'))));
+
+      final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      await mouse.addPointer(location: Offset.zero);
+      await mouse.moveTo(tester.getCenter(find.text('Target')));
+      await tester.pump();
+      expect(_innermostStyle(tester).box.color, _Colors.blue);
+
+      await mouse.down(tester.getCenter(find.text('Target')));
+      await tester.pump(const Duration(milliseconds: 150));
+      expect(_innermostStyle(tester).box.color, _Colors.green);
+
+      await mouse.up();
+      await tester.pump(const Duration(milliseconds: 350));
+      expect(_innermostStyle(tester).box.color, _Colors.blue);
+      await mouse.removePointer();
+    });
+
+    testWidgets('fires full gestures and callbacks', (tester) async {
+      var tapped = false;
+      var doubleTapped = false;
+      var longPressed = false;
+      var secondaryTapped = false;
       bool? hoverState;
       bool? pressState;
 
-      await tester.pumpWidget(
-        testApp(
-          StyledPressableBox(
-            style: const Style(
-              box: BoxStyle(width: 100, height: 100, color: _Colors.blue),
-            ),
-            onTap: () => tapped = true,
-            onDoubleTap: () => doubleTapped = true,
-            onLongPress: () => longPressed = true,
-            onSecondaryTap: () => secondaryTapped = true,
-            onHoverChange: (h) => hoverState = h,
-            onPressedChange: (p) => pressState = p,
-            child: const Text('Interact'),
-          ),
+      await tester.pumpWidget(testApp(StyledBox(
+        style: const Style(box: BoxStyle(width: DataValue(100.0), height: DataValue(100.0), color: _Colors.blue)),
+        interaction: Interaction(
+          onTap: () => tapped = true,
+          onDoubleTap: () => doubleTapped = true,
+          onLongPress: () => longPressed = true,
+          onSecondaryTap: () => secondaryTapped = true,
+          onHoverChange: (h) => hoverState = h,
+          onPressedChange: (p) => pressState = p,
         ),
-      );
+        child: const Text('Interact'),
+      )));
 
       final target = find.text('Interact');
-
-      // Tap
       await tester.tap(target);
       await tester.pump(const Duration(milliseconds: 350));
       expect(tapped, isTrue);
 
-      // Double tap
       await tester.tap(target);
       await tester.pump(const Duration(milliseconds: 50));
       await tester.tap(target);
       await tester.pumpAndSettle();
       expect(doubleTapped, isTrue);
 
-      // Long press
       await tester.longPress(target);
       await tester.pumpAndSettle();
       expect(longPressed, isTrue);
 
-      // Secondary tap (right click)
       await tester.tap(target, buttons: kSecondaryMouseButton);
       await tester.pumpAndSettle();
       expect(secondaryTapped, isTrue);
 
-      // Hover
       final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
       await gesture.addPointer(location: Offset.zero);
       await gesture.moveTo(tester.getCenter(target));
       await tester.pumpAndSettle();
       expect(hoverState, isTrue);
-
       await gesture.moveTo(const Offset(500, 500));
       await gesture.removePointer();
       await tester.pumpAndSettle();
       expect(hoverState, isFalse);
 
-      // Press
-      final pressGesture = await tester.startGesture(tester.getCenter(target));
+      final press = await tester.startGesture(tester.getCenter(target));
       await tester.pump(const Duration(milliseconds: 150));
       expect(pressState, isTrue);
-      await pressGesture.up();
+      await press.up();
       await tester.pump(const Duration(milliseconds: 350));
       expect(pressState, isFalse);
     });
 
-    testWidgets(
-      'StyledPressableBox fires fine-grained onTapDown, onTapUp and onTapCancel',
-      (tester) async {
-        bool tapDown = false;
-        bool tapUp = false;
-        bool tapCancel = false;
+    testWidgets('fires onTapDown, onTapUp and onTapCancel', (tester) async {
+      var tapDown = false;
+      var tapUp = false;
+      var tapCancel = false;
 
-        await tester.pumpWidget(
-          testApp(
-            StyledPressableBox(
-              style: const Style(
-                box: BoxStyle(width: 100, height: 100, color: _Colors.blue),
-              ),
-              onTapDown: (_) => tapDown = true,
-              onTapUp: (_) => tapUp = true,
-              onTapCancel: () => tapCancel = true,
-              onTap: () {},
-              child: const Text('Touch Target'),
-            ),
+      await tester.pumpWidget(testApp(StyledBox(
+        style: const Style(box: BoxStyle(width: DataValue(100.0), height: DataValue(100.0))),
+        interaction: Interaction(
+          onTapDown: (_) => tapDown = true,
+          onTapUp: (_) => tapUp = true,
+          onTapCancel: () => tapCancel = true,
+          onTap: () {},
+        ),
+        child: const Text('Touch Target'),
+      )));
+
+      final gesture = await tester.startGesture(tester.getCenter(find.text('Touch Target')));
+      expect(tapDown, isTrue);
+      await gesture.up();
+      expect(tapUp, isTrue);
+      expect(tapCancel, isFalse);
+    });
+
+    testWidgets('interactive rows, columns and wraps respond to taps', (tester) async {
+      var rowTapped = false;
+      var colTapped = false;
+      var wrapTapped = false;
+      await tester.pumpWidget(testApp(Column(
+        children: [
+          StyledRow(interaction: Interaction(onTap: () => rowTapped = true), children: const [Text('Row Child')]),
+          StyledColumn(interaction: Interaction(onTap: () => colTapped = true), children: const [Text('Col Child')]),
+          StyledBox(
+            style: const Style(flex: FlexStyle(wrap: true)),
+            interaction: Interaction(onTap: () => wrapTapped = true),
+            children: const [Text('Wrap Child')],
           ),
-        );
+        ],
+      )));
+      await tester.tap(find.text('Row Child'));
+      await tester.tap(find.text('Col Child'));
+      await tester.tap(find.text('Wrap Child'));
+      expect([rowTapped, colTapped, wrapTapped], everyElement(isTrue));
+    });
 
-        final target = find.text('Touch Target');
-
-        final gesture = await tester.startGesture(tester.getCenter(target));
-        expect(tapDown, isTrue);
-        await gesture.up();
-        expect(tapUp, isTrue);
-        expect(tapCancel, isFalse);
-      },
-    );
-
-    testWidgets(
-      'StyledBox renders container with transform and foregroundDecoration',
-      (tester) async {
-        final transform = Matrix4.rotationZ(0.2);
-        await tester.pumpWidget(
-          testApp(
-            StyledBox(
-              style: Style(
-                box: BoxStyle(
-                  width: 100,
-                  height: 100,
-                  color: _Colors.blue,
-                  transform: transform,
-                  transformAlignment: Alignment.center,
-                  foregroundDecoration: const BoxDecoration(color: _Colors.red),
-                ),
-              ),
-              child: const Text('Transformed Box'),
-            ),
-          ),
-        );
-
-        final containerFinder = find.byType(Container);
-        expect(containerFinder, findsOneWidget);
-        final Container container = tester.widget(containerFinder);
-        expect(container.transform, transform);
-        expect(container.transformAlignment, Alignment.center);
-        expect(container.foregroundDecoration, isNotNull);
-      },
-    );
-
-    test(
-      'StyledTextStyle and IconStyle copyWith, merge, equality and hashCode handle all properties',
-      () {
-        const textA = StyledTextStyle(
-          color: _Colors.blue,
-          backgroundColor: _Colors.yellow,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic,
-          letterSpacing: 1.5,
-          wordSpacing: 2.0,
-          height: 1.2,
-          textBaseline: TextBaseline.alphabetic,
-          shadows: [Shadow(color: _Colors.black, blurRadius: 2)],
-          decoration: TextDecoration.underline,
-          decorationColor: _Colors.red,
-          decorationStyle: TextDecorationStyle.dashed,
-          decorationThickness: 2.0,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          softWrap: true,
-          textDirection: TextDirection.ltr,
-          maxLines: 3,
-          selectionColor: _Colors.cyan,
-        );
-
-        final textB = const StyledTextStyle().copyWith(
-          color: _Colors.blue,
-          backgroundColor: _Colors.yellow,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic,
-          letterSpacing: 1.5,
-          wordSpacing: 2.0,
-          height: 1.2,
-          textBaseline: TextBaseline.alphabetic,
-          shadows: const [Shadow(color: _Colors.black, blurRadius: 2)],
-          decoration: TextDecoration.underline,
-          decorationColor: _Colors.red,
-          decorationStyle: TextDecorationStyle.dashed,
-          decorationThickness: 2.0,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          softWrap: true,
-          textDirection: TextDirection.ltr,
-          maxLines: 3,
-          selectionColor: _Colors.cyan,
-        );
-
-        expect(textA, equals(textB));
-        expect(textA.hashCode, equals(textB.hashCode));
-
-        const iconA = IconStyle(
-          color: _Colors.amber,
-          size: 24,
-          fill: 1.0,
-          weight: 600,
-          grade: 0.25,
-          opticalSize: 24,
-          shadows: [Shadow(color: _Colors.black, blurRadius: 4)],
-          applyTextScaling: true,
-        );
-
-        final iconB = const IconStyle().copyWith(
-          color: _Colors.amber,
-          size: 24,
-          fill: 1.0,
-          weight: 600,
-          grade: 0.25,
-          opticalSize: 24,
-          shadows: const [Shadow(color: _Colors.black, blurRadius: 4)],
-          applyTextScaling: true,
-        );
-
-        expect(iconA, equals(iconB));
-        expect(iconA.hashCode, equals(iconB.hashCode));
-      },
-    );
-
-    testWidgets(
-      'StyledText and StyledIcon render properties strictly from Style',
-      (tester) async {
-        await tester.pumpWidget(
-          testApp(
-            const Column(
-              children: [
-                StyledText(
-                  'Sample Text',
-                  style: Style(
-                    text: StyledTextStyle(
-                      fontSize: 12,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      backgroundColor: _Colors.yellow,
-                    ),
-                  ),
-                ),
-                StyledIcon(
-                  IconData(0xe123, fontFamily: "TestIcons"),
-                  style: Style(
-                    icon: IconStyle(
-                      size: 32,
-                      color: _Colors.amber,
-                      fill: 1.0,
-                      weight: 700,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-
-        final textWidget = tester.widget<Text>(find.text('Sample Text'));
-        expect(textWidget.maxLines, 2);
-        expect(textWidget.overflow, TextOverflow.ellipsis);
-        expect(textWidget.textAlign, TextAlign.center);
-        expect(textWidget.style?.backgroundColor, _Colors.yellow);
-
-        final iconWidget = tester.widget<Icon>(
-          find.byIcon(const IconData(0xe123, fontFamily: "TestIcons")),
-        );
-        expect(iconWidget.size, 32.0);
-        expect(iconWidget.color, _Colors.amber);
-        expect(iconWidget.fill, 1.0);
-        expect(iconWidget.weight, 700.0);
-      },
-    );
-
-    testWidgets(
-      'StyledSelectableText, StyledPressableText and StyledPressableIcon function correctly',
-      (tester) async {
-        bool textTapped = false;
-        bool iconTapped = false;
-
-        await tester.pumpWidget(
-          testApp(
-            Column(
-              children: [
-                const StyledSelectableText(
-                  'Selectable Content',
-                  style: Style(
-                    text: StyledTextStyle(
-                      fontSize: 14,
-                      color: _Colors.black,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-                StyledPressableText(
-                  'Clickable Link',
-                  style: const Style(
-                    box: BoxStyle(padding: EdgeInsets.all(8)),
-                    text: StyledTextStyle(
-                      color: _Colors.blue,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                  onTap: () => textTapped = true,
-                ),
-                StyledPressableIcon(
-                  const IconData(0xe124, fontFamily: "TestIcons"),
-                  style: const Style(
-                    icon: IconStyle(color: _Colors.red, size: 28),
-                  ),
-                  onTap: () => iconTapped = true,
-                ),
-              ],
-            ),
-          ),
-        );
-
-        expect(find.text('Selectable Content'), findsOneWidget);
-
-        await tester.tap(find.text('Clickable Link'));
-        expect(textTapped, isTrue);
-
-        await tester.tap(
-          find.byIcon(const IconData(0xe124, fontFamily: "TestIcons")),
-        );
-        expect(iconTapped, isTrue);
-      },
-    );
-
-    test(
-      'ImageStyle copyWith, merge, equality and hashCode handle all properties',
-      () {
-        const imgA = ImageStyle(
-          fit: BoxFit.cover,
-          alignment: Alignment.topLeft,
-          width: 120,
-          height: 80,
-          color: _Colors.red,
-          colorBlendMode: BlendMode.srcOver,
-          repeat: ImageRepeat.repeatX,
-          centerSlice: Rect.fromLTWH(10, 10, 20, 20),
-          matchTextDirection: true,
-          gaplessPlayback: true,
-          isAntiAlias: true,
-          filterQuality: FilterQuality.high,
-          opacity: 0.8,
-          scale: 2.0,
-          cacheWidth: 300,
-          cacheHeight: 200,
-          invertColors: true,
-        );
-
-        final imgB = const ImageStyle().copyWith(
-          fit: BoxFit.cover,
-          alignment: Alignment.topLeft,
-          width: 120,
-          height: 80,
-          color: _Colors.red,
-          colorBlendMode: BlendMode.srcOver,
-          repeat: ImageRepeat.repeatX,
-          centerSlice: const Rect.fromLTWH(10, 10, 20, 20),
-          matchTextDirection: true,
-          gaplessPlayback: true,
-          isAntiAlias: true,
-          filterQuality: FilterQuality.high,
-          opacity: 0.8,
-          scale: 2.0,
-          cacheWidth: 300,
-          cacheHeight: 200,
-          invertColors: true,
-        );
-
-        final imgC = imgA.copyWith(width: 150);
-
-        expect(imgA, equals(imgB));
-        expect(imgA.hashCode, equals(imgB.hashCode));
-        expect(imgA, isNot(equals(imgC)));
-
-        final merged = const ImageStyle(
-          width: 100,
-          height: 100,
-        ).merge(const ImageStyle(width: 200, fit: BoxFit.contain));
-        expect(merged.width, 200.0);
-        expect(merged.height, 100.0);
-        expect(merged.fit, BoxFit.contain);
-      },
-    );
-
-    testWidgets(
-      'StyledImage and StyledPressableImage render properties strictly from Style',
-      (tester) async {
-        bool imgTapped = false;
+    testWidgets('a tappable image is a StyledImage inside an interactive box', (tester) async {
+      var tapped = false;
         final testBytes = Uint8List.fromList([
           0x89,
           0x50,
@@ -871,72 +660,56 @@ void main() {
           0x60,
           0x82,
         ]);
-
-        await tester.pumpWidget(
-          testApp(
-            Column(
-              children: [
-                StyledImage.memory(
-                  testBytes,
-                  style: const Style(
-                    image: ImageStyle(
-                      width: 64,
-                      height: 64,
-                      fit: BoxFit.contain,
-                      repeat: ImageRepeat.noRepeat,
-                      filterQuality: FilterQuality.medium,
-                      opacity: 0.9,
-                    ),
-                  ),
-                ),
-                StyledPressableImage.memory(
-                  testBytes,
-                  style: const Style(image: ImageStyle(width: 48, height: 48)),
-                  onTap: () => imgTapped = true,
-                ),
-              ],
+      await tester.pumpWidget(testApp(Column(
+        children: [
+          StyledImage.memory(
+            testBytes,
+            style: const Style(
+              image: ImageStyle(width: DataValue(64.0), height: DataValue(64.0), fit: BoxFit.contain, filterQuality: FilterQuality.medium, opacity: DataValue(0.9)),
             ),
           ),
-        );
-
-        final imageWidgets = tester.widgetList<Image>(find.byType(Image));
-        expect(imageWidgets.length, 2);
-
-        final firstImage = imageWidgets.first;
-        expect(firstImage.width, 64.0);
-        expect(firstImage.height, 64.0);
-        expect(firstImage.fit, BoxFit.contain);
-        expect(firstImage.repeat, ImageRepeat.noRepeat);
-        expect(firstImage.filterQuality, FilterQuality.medium);
-
-        await tester.tap(find.byType(StyledPressableImage));
-        expect(imgTapped, isTrue);
-      },
-    );
-
-    testWidgets(
-      'StyledTextField integrates enabled: false and applies disabledToken',
-      (tester) async {
-        final inputStyle = const Style(
-          box: BoxStyle(color: _Colors.white),
-        ).on(StyledToken.disabled, box: const BoxStyle(color: _Colors.grey));
-
-        await tester.pumpWidget(
-          testApp(
-            StyledTextField(
-              style: inputStyle,
-              enabled: false,
-              hint: 'Enter text',
-            ),
+          StyledBox(
+            style: const Style(image: ImageStyle(width: DataValue(48.0), height: DataValue(48.0))),
+            interaction: Interaction(onTap: () => tapped = true),
+            child: StyledImage.memory(testBytes),
           ),
-        );
+        ],
+      )));
 
-        final inheritedFinder = find.byType(InheritedStyle);
-        expect(inheritedFinder, findsWidgets);
-        final InheritedStyle inherited = tester.widget(inheritedFinder.first);
-        expect(inherited.style.box.color, _Colors.grey);
-      },
-    );
+      final images = tester.widgetList<Image>(find.byType(Image)).toList();
+      expect(images.length, 2);
+      expect(images.first.width, 64.0);
+      expect(images.first.fit, BoxFit.contain);
+      expect(images.first.filterQuality, FilterQuality.medium);
+      expect(images.last.width, 48.0);
+
+      await tester.tap(find.byType(Image).last);
+      expect(tapped, isTrue);
+    });
+  });
+
+  group('StyledTextField', () {
+    testWidgets('enabled: false activates the disabled state', (tester) async {
+      final inputStyle = const Style(box: BoxStyle(color: _Colors.white)).on(StyleState.disabled, box: const BoxStyle(color: _Colors.grey));
+      await tester.pumpWidget(testApp(StyledTextField(style: inputStyle, enabled: false, hint: 'Enter text')));
+      final inherited = tester.widget<InheritedStyle>(find.byType(InheritedStyle).first);
+      expect(inherited.style.box.color, _Colors.grey);
+    });
+
+    testWidgets('error message uses the error state text by default', (tester) async {
+      final inputStyle = const Style(box: BoxStyle(color: _Colors.white))
+          .on(StyleState.error, text: const StyledTextStyle(color: _Colors.red, fontSize: DataValue(11.0)));
+      await tester.pumpWidget(testApp(StyledTextField(style: inputStyle, label: 'Email', error: 'Required')));
+      final error = tester.widget<Text>(find.text('Required'));
+      expect(error.style?.color, _Colors.red.defaultValue);
+      expect(error.style?.fontSize, 11);
+      expect(find.text('Email'), findsOneWidget);
+    });
+
+    testWidgets('cursor colour follows text colour rather than a built-in brand colour', (tester) async {
+      await tester.pumpWidget(testApp(const StyledTextField(style: Style(text: StyledTextStyle(color: _Colors.purple)))));
+      expect(tester.widget<EditableText>(find.byType(EditableText)).cursorColor, _Colors.purple.defaultValue);
+    });
 
     testWidgets(
       'StyledTextField handles text selection, typing, and backspace deletion',
@@ -950,11 +723,11 @@ void main() {
           testApp(
             StyledTextField(
               style: const Style(
-                box: BoxStyle(color: _Colors.white, padding: EdgeInsets.all(8)),
+                box: BoxStyle(color: _Colors.white, padding: StyledEdgeInsets.all(DataValue(8.0))),
                 text: StyledTextStyle(
-                  fontSize: 16,
+                  fontSize: DataValue(16.0),
                   color: _Colors.black,
-                  selectionColor: Color(0x553B82F6),
+                  selectionColor: DataValue(Color(0x553B82F6)),
                 ),
               ),
               controller: controller,
@@ -997,11 +770,11 @@ void main() {
           testApp(
             StyledTextField(
               style: const Style(
-                box: BoxStyle(color: _Colors.white, padding: EdgeInsets.all(8)),
+                box: BoxStyle(color: _Colors.white, padding: StyledEdgeInsets.all(DataValue(8.0))),
                 text: StyledTextStyle(
-                  fontSize: 16,
+                  fontSize: DataValue(16.0),
                   color: _Colors.black,
-                  selectionColor: Color(0x553B82F6),
+                  selectionColor: DataValue(Color(0x553B82F6)),
                 ),
               ),
               controller: controller,
@@ -1069,7 +842,7 @@ void main() {
             const StyledTextField(
               style: Style(
                 box: BoxStyle(color: _Colors.white),
-                text: StyledTextStyle(fontSize: 14, color: _Colors.black),
+                text: StyledTextStyle(fontSize: DataValue(14.0), color: _Colors.black),
               ),
               hint: 'Search companies by name, slug, or ID...',
             ),
@@ -1087,6 +860,7 @@ void main() {
       },
     );
   });
+
 
   group('StyledTheme & ThemeToken Architecture Tests', () {
     const testPrimary = ThemeToken<Color>('testPrimary', Color(0xFF1E3A8A));
@@ -1109,25 +883,25 @@ void main() {
       final theme = const StyledTheme().copyWith(
         overrides: {
           testSidebarWidth.key: 320.0,
-          testBrandAccent.key: _Colors.purple,
-          testPrimary.key: _Colors.red,
+          testBrandAccent.key: _Colors.purple.defaultValue,
+          testPrimary.key: _Colors.red.defaultValue,
         },
       );
 
       expect(theme.get(testSidebarWidth), 320.0);
-      expect(theme(testBrandAccent), _Colors.purple);
-      expect(theme.get(testPrimary), _Colors.red);
+      expect(theme(testBrandAccent), _Colors.purple.defaultValue);
+      expect(theme.get(testPrimary), _Colors.red.defaultValue);
       expect(theme.get(testRadius), 8.0); // Unmodified fallback
     });
 
     test('StyledTheme.fromMap initializes values correctly', () {
       final theme = StyledTheme.fromMap({
-        testPrimary.key: _Colors.amber,
+        testPrimary.key: _Colors.amber.defaultValue,
         testRadius.key: 24.0,
         testSidebarWidth.key: 280.0,
       });
 
-      expect(theme.get(testPrimary), _Colors.amber);
+      expect(theme.get(testPrimary), _Colors.amber.defaultValue);
       expect(theme.get(testRadius), 24.0);
       expect(theme.get(testSidebarWidth), 280.0);
     });
@@ -1172,11 +946,11 @@ void main() {
     );
 
     test('StyledTheme merge combines values', () {
-      final base = const StyledTheme().set(testPrimary, _Colors.green);
+      final base = const StyledTheme().set(testPrimary, _Colors.green.defaultValue);
       final update = const StyledTheme().set(testRadius, 30.0);
 
       final merged = base.merge(update);
-      expect(merged.get(testPrimary), _Colors.green);
+      expect(merged.get(testPrimary), _Colors.green.defaultValue);
       expect(merged.get(testRadius), 30.0);
     });
 
@@ -1201,11 +975,11 @@ void main() {
         expect(observedPrimary, const Color(0xFF1E3A8A));
 
         controller.updateTheme(
-          const StyledTheme().set(testPrimary, _Colors.orange),
+          const StyledTheme().set(testPrimary, _Colors.orange.defaultValue),
         );
         await tester.pump();
 
-        expect(observedPrimary, _Colors.orange);
+        expect(observedPrimary, _Colors.orange.defaultValue);
       },
     );
 
@@ -1263,7 +1037,7 @@ void main() {
       'StyledThemeProvider.test isolates theme without global state',
       (tester) async {
         late StyledTheme retrievedTheme;
-        final customTheme = const StyledTheme().set(testPrimary, _Colors.amber);
+        final customTheme = const StyledTheme().set(testPrimary, _Colors.amber.defaultValue);
 
         await tester.pumpWidget(
           StyledThemeControllerProvider.test(
@@ -1277,7 +1051,7 @@ void main() {
           ),
         );
 
-        expect(retrievedTheme.get(testPrimary), _Colors.amber);
+        expect(retrievedTheme.get(testPrimary), _Colors.amber.defaultValue);
       },
     );
   });

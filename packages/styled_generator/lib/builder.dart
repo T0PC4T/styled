@@ -14,5 +14,5 @@ Builder styledBuilder(BuilderOptions options) => PartBuilder(
       ],
       '.styled.g.dart',
       header: '// GENERATED CODE - DO NOT MODIFY BY HAND\n\n'
-          '// ignore_for_file: unused_element, unnecessary_cast, override_on_non_overriding_member, unused_local_variable\n',
+          '// ignore_for_file: unused_element, unused_local_variable\n',
     );

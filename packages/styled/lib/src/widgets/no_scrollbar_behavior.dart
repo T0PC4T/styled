@@ -5,7 +5,5 @@ class NoScrollbarBehavior extends ScrollBehavior {
   const NoScrollbarBehavior();
 
   @override
-  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
-    return child;
-  }
+  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) => child;
 }

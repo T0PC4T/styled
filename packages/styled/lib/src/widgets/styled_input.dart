@@ -4,10 +4,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/style.dart';
+import '../theme/styled_theme.dart';
 import 'styled_box.dart';
 import 'styled_text.dart';
 
-/// A styled input wrapper providing label, icon, hint, and error message slots.
+/// The chassis of a styled field: optional label, the decorated box with
+/// leading and trailing icons, and an optional error message.
+///
+/// The box activates [StyleState.focused], [StyleState.error] and
+/// [StyleState.disabled] in that order of precedence. The gap between icons
+/// and the field is `style.flex.spacing`. The label and error inherit text
+/// from the surrounding style unless [labelStyle] or [errorStyle] is given;
+/// the error message defaults to the text of the style's error state.
 class StyledInput extends StatelessWidget {
   final StyleResolver style;
   final String? label;
@@ -24,6 +32,9 @@ class StyledInput extends StatelessWidget {
   final String? semanticLabel;
   final int? maxLines;
   final TextOverflow? overflow;
+
+  /// Vertical gap between the label, the box and the error message.
+  final double labelSpacing;
 
   const StyledInput({
     super.key,
@@ -42,75 +53,46 @@ class StyledInput extends StatelessWidget {
     this.semanticLabel,
     this.maxLines,
     this.overflow,
+    this.labelSpacing = 4.0,
   });
+
+  bool get _hasError => error != null && error!.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
-    final resolvedStyle = style.resolve(context);
+    final resolved = style.resolve(context);
+    final current = resolved.resolveStates([
+      if (isFocused && enabled) StyleState.focused,
+      if (_hasError) StyleState.error,
+      if (!enabled) StyleState.disabled,
+    ], context: context);
 
-    // Compute active state tokens (disabled, error, focused) for dynamic box styling.
-    final activeTokens = <String>{
-      if (!enabled) StyledToken.disabled,
-      if (error != null && error!.isNotEmpty) StyledToken.error,
-      if (isFocused && enabled) StyledToken.focused,
-    };
-
-    final currentStyle = resolvedStyle.resolveTokens(activeTokens);
-
-    final defaultLabelStyle = labelStyle ??
-        const Style(
-          text: StyledTextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-          ),
-        );
-
-    final defaultErrorStyle = errorStyle ??
-        const Style(
-          text: StyledTextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFFEF4444),
-          ),
-        );
-
-    // Assemble the visual chassis: label slot -> styled container box -> error slot.
-    Widget inputContent = Column(
+    Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
+      spacing: labelSpacing,
       children: [
-        if (label case String label when label.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4.0),
-            child: StyledText(label, style: defaultLabelStyle),
-          ),
+        if (label case final label? when label.isNotEmpty) StyledText(label, style: labelStyle),
         StyledBox(
-          style: StaticStyleResolver(currentStyle),
+          style: current,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: StyledTheme.of(context).read(current.flex.spacing) ?? 0.0,
             children: [
-              if (icon != null)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0, left: 4.0),
-                  child: icon!,
-                ),
+              ?icon,
               Expanded(
                 child: Stack(
                   alignment: Alignment.centerLeft,
                   children: [
-                    // Hint layer: ignores pointer events and truncates on single line.
                     if (showHint && hint != null && hint!.isNotEmpty)
                       IgnorePointer(
                         child: Opacity(
                           opacity: 0.5,
                           child: StyledText(
                             hint!,
-                            style: StaticStyleResolver(
-                              currentStyle.add(
-                                text: StyledTextStyle(
-                                  maxLines: maxLines ?? 1,
-                                  overflow: overflow ?? TextOverflow.ellipsis,
-                                ),
+                            style: Style(
+                              text: StyledTextStyle(
+                                maxLines: maxLines ?? 1,
+                                overflow: overflow ?? TextOverflow.ellipsis,
                               ),
                             ),
                           ),
@@ -120,33 +102,22 @@ class StyledInput extends StatelessWidget {
                   ],
                 ),
               ),
-              if (suffixIcon != null)
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 4.0),
-                  child: suffixIcon!,
-                ),
+              ?suffixIcon,
             ],
           ),
         ),
-        if (error != null && error!.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: StyledText(error!, style: defaultErrorStyle),
+        if (_hasError)
+          StyledText(
+            error!,
+            style: errorStyle ?? Style(text: resolved.states[StyleState.error]?.text ?? const StyledTextStyle()),
           ),
       ],
     );
 
-    // Expose accessibility semantics when a label is supplied.
     if (semanticLabel != null) {
-      inputContent = Semantics(
-        label: semanticLabel,
-        textField: true,
-        enabled: enabled,
-        child: inputContent,
-      );
+      content = Semantics(label: semanticLabel, textField: true, enabled: enabled, child: content);
     }
-
-    return inputContent;
+    return content;
   }
 }
 
@@ -190,6 +161,11 @@ class StyledTextField extends StatefulWidget {
   final String? error;
   final StyleResolver? errorStyle;
   final String? semanticLabel;
+  final double cursorWidth;
+  final Radius? cursorRadius;
+
+  /// Vertical gap between the label, the box and the error message.
+  final double labelSpacing;
 
   const StyledTextField({
     super.key,
@@ -227,6 +203,9 @@ class StyledTextField extends StatefulWidget {
     this.contextMenuBuilder,
     this.controller,
     this.semanticLabel,
+    this.cursorWidth = 2.0,
+    this.cursorRadius = const Radius.circular(1.0),
+    this.labelSpacing = 4.0,
   });
 
   @override
@@ -396,7 +375,7 @@ class _StyledTextFieldState extends State<StyledTextField>
     final resolvedStyle = widget.style.resolve(context);
 
     return StyledInput(
-      style: StaticStyleResolver(resolvedStyle),
+      style: resolvedStyle,
       label: widget.label,
       labelStyle: widget.labelStyle,
       error: widget.error,
@@ -409,17 +388,22 @@ class _StyledTextFieldState extends State<StyledTextField>
       showHint: _controller.text.isEmpty,
       semanticLabel: widget.semanticLabel,
       maxLines: widget.maxLines,
+      labelSpacing: widget.labelSpacing,
       child: Builder(
         builder: (context) {
           final style = InheritedStyle.of(context)?.style ?? resolvedStyle;
-          final effectiveTextStyle = style.textStyle;
+          final theme = StyledTheme.of(context);
+          final effectiveTextStyle = style.text.toTextStyle(theme);
 
           // Resolve effective cursor & text selection highlight colors from style cascade.
+          final selectionStyle = DefaultSelectionStyle.of(context);
           final effectiveCursorColor = widget.cursorColor ??
-              style.text.color ??
-              const Color(0xFF2563EB);
+              selectionStyle.cursorColor ??
+              theme.read(style.text.color) ??
+              const Color(0xFF000000);
           final effectiveSelectionColor = widget.selectionColor ??
-              style.text.selectionColor ??
+              theme.read(style.text.selectionColor) ??
+              selectionStyle.selectionColor ??
               effectiveCursorColor.withValues(alpha: 0.28);
 
           final effectiveSelectionControls = widget.selectionControls;
@@ -467,8 +451,8 @@ class _StyledTextFieldState extends State<StyledTextField>
               enableInteractiveSelection: widget.enableInteractiveSelection,
               selectionHeightStyle: ui.BoxHeightStyle.tight,
               selectionWidthStyle: ui.BoxWidthStyle.tight,
-              cursorWidth: 2.0,
-              cursorRadius: const Radius.circular(1.0),
+              cursorWidth: widget.cursorWidth,
+              cursorRadius: widget.cursorRadius,
               paintCursorAboveText: true,
               scrollPadding: const EdgeInsets.all(20.0),
               mouseCursor: widget.enabled

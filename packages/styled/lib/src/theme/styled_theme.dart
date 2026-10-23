@@ -1,31 +1,10 @@
-import 'dart:ui' show Color, FontWeight;
+import 'package:flutter/foundation.dart' show mapEquals;
+import 'package:flutter/widgets.dart';
 
-import 'package:flutter/foundation.dart';
+import '../core/values.dart';
+import 'theme_provider.dart';
 
-/// A strongly-typed design token key paired with its default fallback value.
-///
-/// Designed to be defined by downstream design systems and applications
-/// (e.g. `package:analytics_ui`) rather than hardcoded in the core styling engine.
-@immutable
-final class ThemeToken<T> {
-  final String key;
-  final T defaultValue;
-
-  const ThemeToken(this.key, this.defaultValue);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ThemeToken<dynamic> &&
-          runtimeType == other.runtimeType &&
-          key == other.key);
-
-  @override
-  int get hashCode => key.hashCode;
-
-  @override
-  String toString() => 'ThemeToken<$T>($key, default: $defaultValue)';
-}
+export '../core/values.dart' show ThemeToken;
 
 /// An immutable, open-ended token dictionary representing an active application theme.
 ///
@@ -111,13 +90,31 @@ final class StyledTheme {
   /// Type-safe retrieval with guaranteed fallback to [token.defaultValue].
   T get<T>(ThemeToken<T> token) {
     final val = _values[token.key];
-    if (val is T) return val;
+    // Check for null first: when T is inferred as nullable from the call
+    // site's context, `null is T` would otherwise skip the default.
+    if (val == null) return token.defaultValue;
     return switch (val) {
+      final T value => value,
       final num n when T == double => n.toDouble() as T,
       final num n when T == int => n.toInt() as T,
       _ => token.defaultValue,
     };
   }
+
+  /// The theme's mode name from [metadata] (for example `'dark'`), if any.
+  String? get mode => metadata['mode'] as String?;
+
+  /// Whether [mode] is `'dark'`.
+  bool get isDark => mode == 'dark';
+
+  /// Resolves [value] in this theme, or null when [value] is null.
+  T? read<T>(StyleValue<T>? value) => value?.resolve(this);
+
+  /// The theme provided above [context], or the default theme (every token
+  /// at its default) when there is none. Registers a dependency, so the
+  /// caller rebuilds when the theme changes.
+  static StyledTheme of(BuildContext context) =>
+      StyledThemeControllerProvider.of(context, listen: true)?.value ?? const StyledTheme();
 
   /// Ergonomic shorthand for [get].
   T call<T>(ThemeToken<T> token) => get(token);

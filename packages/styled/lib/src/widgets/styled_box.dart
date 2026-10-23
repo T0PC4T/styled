@@ -1,155 +1,50 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 import '../core/style.dart';
+import '../theme/styled_theme.dart';
 
-/// A styled container widget that applies a resolved [Style.box] decoration and constraints.
-class StyledBox extends StatelessWidget {
-  final StyleResolver style;
-  final Widget? child;
-  final bool animates;
-  final Duration? animationDuration;
-  final Curve? curve;
-  final VoidCallback? onEnd;
-  final HitTestBehavior? behavior;
-  final String? semanticLabel;
-
-  const StyledBox({
-    super.key,
-    required this.style,
-    this.child,
-    this.animates = false,
-    this.animationDuration,
-    this.curve,
-    this.onEnd,
-    this.behavior,
-    this.semanticLabel,
-  });
-
-  static Container getContainerFromBox(Style style, Widget? child) => Container(
-        clipBehavior: style.box.clip ?? Clip.none,
-        width: style.box.width,
-        height: style.box.height,
-        constraints: style.box.constraints,
-        padding: style.box.padding,
-        margin: style.box.margin,
-        alignment: style.box.alignment,
-        decoration: style.decoratedBoxStyle,
-        foregroundDecoration: style.box.foregroundDecoration,
-        transform: style.box.transform ??
-            (style.states.values.any((s) => s.box.transform != null)
-                ? Matrix4.identity()
-                : null),
-        transformAlignment: style.box.transformAlignment,
-        child: child,
-      );
-
-  static AnimatedContainer animatedContainerFromBox(
-    Style style,
-    Widget? child, {
-    Duration? duration,
-    Curve? curve,
-    VoidCallback? onEnd,
-  }) =>
-      AnimatedContainer(
-        clipBehavior: style.box.clip ?? Clip.none,
-        duration: duration ?? style.box.animationDuration ?? const Duration(milliseconds: 150),
-        curve: curve ?? style.box.curve ?? Curves.linear,
-        onEnd: onEnd,
-        width: style.box.width,
-        height: style.box.height,
-        constraints: style.box.constraints,
-        padding: style.box.padding,
-        margin: style.box.margin,
-        alignment: style.box.alignment,
-        decoration: style.decoratedBoxStyle,
-        foregroundDecoration: style.box.foregroundDecoration,
-        transform: style.box.transform ?? Matrix4.identity(),
-        transformAlignment: style.box.transformAlignment,
-        child: child,
-      );
-
-  @override
-  Widget build(BuildContext context) {
-    final resolvedStyle = style.resolve(context);
-
-    var appliedStyle = resolvedStyle;
-    final parentStyle = InheritedStyle.of(context)?.style;
-    if (parentStyle != null) {
-      appliedStyle = appliedStyle.overwrite(
-        text: parentStyle.text.merge(appliedStyle.text),
-        icon: parentStyle.icon.merge(appliedStyle.icon),
-      );
-    }
-
-    Widget content = animates
-        ? StyledBox.animatedContainerFromBox(
-            appliedStyle,
-            child,
-            duration: animationDuration,
-            curve: curve,
-            onEnd: onEnd,
-          )
-        : StyledBox.getContainerFromBox(appliedStyle, child);
-
-    if (semanticLabel != null) {
-      content = Semantics(label: semanticLabel, container: true, child: content);
-    }
-
-    return InheritedStyle(style: appliedStyle, child: content);
-  }
-}
-
-/// An interactive [StyledBox] responding to hover, press, focus, and disabled states.
-class StyledPressableBox extends StatefulWidget {
-  final StyleResolver style;
-  final Widget child;
-  final bool? animates;
-  final Duration? animationDuration;
-  final Curve? curve;
-  final VoidCallback? onEnd;
-
-  // Gesture Callbacks
+/// Gesture, focus and cursor behaviour for an interactive [StyledBox].
+///
+/// A box with an [Interaction] tracks hover, press and focus and activates
+/// the matching [StyleState]s. A box is visually disabled only when
+/// [enabled] is false; a box without handlers is simply not clickable.
+@immutable
+class Interaction {
   final VoidCallback? onTap;
   final VoidCallback? onDoubleTap;
   final VoidCallback? onLongPress;
   final VoidCallback? onSecondaryTap;
   final GestureTapDownCallback? onTapDown;
   final GestureTapUpCallback? onTapUp;
-  final GestureTapCallback? onTapCancel;
+  final GestureTapCancelCallback? onTapCancel;
   final ValueChanged<bool>? onHoverChange;
   final ValueChanged<bool>? onFocusChange;
   final ValueChanged<bool>? onPressedChange;
-  final bool enableFeedback;
 
-  // Interaction & State Overrides
-  final bool? disabled;
+  /// When false, gestures are ignored and [StyleState.disabled] is active.
+  final bool enabled;
+
+  /// Forces the focused state on or off instead of following [focusNode].
   final bool? focused;
-
-  // Focus & Keyboard
   final FocusNode? focusNode;
   final bool autofocus;
   final bool canRequestFocus;
-
-  // Cursors & Hit Testing
+  final bool enableFeedback;
   final HitTestBehavior behavior;
+
+  /// Cursor while clickable. Defaults to [SystemMouseCursors.click].
   final MouseCursor? cursor;
+
+  /// Cursor while disabled or without handlers. Defaults to [SystemMouseCursors.basic].
   final MouseCursor? disabledCursor;
 
-  // Accessibility & Tooltips
-  final String? semanticLabel;
+  /// Tooltip text exposed to assistive technology.
   final String? tooltip;
 
-  const StyledPressableBox({
-    super.key,
-    required this.style,
-    required this.child,
-    this.animates,
-    this.animationDuration,
-    this.curve,
-    this.onEnd,
+  const Interaction({
     this.onTap,
     this.onDoubleTap,
     this.onLongPress,
@@ -160,270 +55,415 @@ class StyledPressableBox extends StatefulWidget {
     this.onHoverChange,
     this.onFocusChange,
     this.onPressedChange,
-    this.enableFeedback = true,
-    this.disabled,
+    this.enabled = true,
     this.focused,
     this.focusNode,
     this.autofocus = false,
     this.canRequestFocus = true,
+    this.enableFeedback = true,
     this.behavior = HitTestBehavior.opaque,
     this.cursor,
     this.disabledCursor,
-    this.semanticLabel,
     this.tooltip,
   });
 
-  @override
-  State<StyledPressableBox> createState() => _StyledPressableBoxState();
+  /// Whether any tap or press handler is set.
+  bool get hasHandlers =>
+      onTap != null ||
+      onDoubleTap != null ||
+      onLongPress != null ||
+      onSecondaryTap != null ||
+      onTapDown != null ||
+      onTapUp != null;
+
+  /// Whether the box responds to taps.
+  bool get isActive => enabled && hasHandlers;
+
+  Interaction copyWith({bool? enabled, bool? canRequestFocus, String? tooltip}) => Interaction(
+        onTap: onTap,
+        onDoubleTap: onDoubleTap,
+        onLongPress: onLongPress,
+        onSecondaryTap: onSecondaryTap,
+        onTapDown: onTapDown,
+        onTapUp: onTapUp,
+        onTapCancel: onTapCancel,
+        onHoverChange: onHoverChange,
+        onFocusChange: onFocusChange,
+        onPressedChange: onPressedChange,
+        enabled: enabled ?? this.enabled,
+        focused: focused,
+        focusNode: focusNode,
+        autofocus: autofocus,
+        canRequestFocus: canRequestFocus ?? this.canRequestFocus,
+        enableFeedback: enableFeedback,
+        behavior: behavior,
+        cursor: cursor,
+        disabledCursor: disabledCursor,
+        tooltip: tooltip ?? this.tooltip,
+      );
 }
 
-class _StyledPressableBoxState extends State<StyledPressableBox> {
-  bool _isHovered = false;
-  bool _isPressed = false;
-  bool _descendantClaimedActivePointer = false;
-  late FocusNode _focusNode;
-  bool _internalFocusNode = false;
+/// The single styled container: decoration, size, layout and interaction.
+///
+/// - With [child], it is a decorated box.
+/// - With [children], it lays them out from `style.flex` (a [Flex], or a
+///   [Wrap] when `flex.wrap` is true).
+/// - With [interaction], it tracks hover, press and focus.
+/// - [states] activates application states such as `selected` or `loading`.
+///
+/// Motion comes from `style.box.motion`. Text and icon properties cascade
+/// to descendant [StyledText] and [StyledIcon] widgets.
+class StyledBox extends StatelessWidget {
+  final StyleResolver style;
+  final Widget? child;
+  final List<Widget>? children;
+  final Interaction? interaction;
 
-  void _claimPointerFromAncestors() {
-    _StyledPressableBoxState? ancestor =
-        context.findAncestorStateOfType<_StyledPressableBoxState>();
-    while (ancestor != null) {
-      ancestor._onDescendantClaimedPointer();
-      ancestor =
-          ancestor.context.findAncestorStateOfType<_StyledPressableBoxState>();
-    }
-  }
+  /// Application states to activate, lowest precedence first. Interaction
+  /// states always take precedence over these.
+  final Iterable<StyleState> states;
+  final String? semanticLabel;
 
-  void _onDescendantClaimedPointer() {
-    _descendantClaimedActivePointer = true;
-    if (_isPressed) {
-      _handlePressed(false);
-    }
-  }
+  /// Called when an implicit animation finishes.
+  final VoidCallback? onEnd;
 
-  void _scheduleReleaseDescendantPointerClaim() {
-    scheduleMicrotask(() {
-      if (!mounted) return;
-      _descendantClaimedActivePointer = false;
-      _StyledPressableBoxState? ancestor =
-          context.findAncestorStateOfType<_StyledPressableBoxState>();
-      while (ancestor != null) {
-        ancestor._descendantClaimedActivePointer = false;
-        ancestor = ancestor.context
-            .findAncestorStateOfType<_StyledPressableBoxState>();
-      }
-    });
-  }
+  const StyledBox({
+    super.key,
+    this.style = const Style(),
+    this.child,
+    this.children,
+    this.interaction,
+    this.states = const [],
+    this.semanticLabel,
+    this.onEnd,
+  }) : assert(child == null || children == null, 'Pass either child or children, not both.');
 
   @override
-  void initState() {
-    super.initState();
-    if (widget.focusNode == null) {
-      _focusNode = FocusNode();
-      _internalFocusNode = true;
-    } else {
-      _focusNode = widget.focusNode!;
+  Widget build(BuildContext context) {
+    final resolved = style.resolve(context).inheritFrom(InheritedStyle.maybeStyleOf(context));
+    if (interaction case final interaction?) {
+      return _InteractiveBox(
+        style: resolved,
+        interaction: interaction,
+        states: states,
+        semanticLabel: semanticLabel,
+        onEnd: onEnd,
+        child: child,
+        children: children,
+      );
     }
+    final theme = StyledTheme.of(context);
+    final applied = resolved.resolveStates(states, context: context);
+    Widget content = _paint(
+      applied,
+      _content(applied, child, children, theme),
+      theme,
+      keepTransform: _hasStateTransform(resolved),
+      onEnd: onEnd,
+    );
+    if (semanticLabel != null) {
+      content = Semantics(label: semanticLabel, container: true, child: content);
+    }
+    return content;
   }
+}
+
+/// A [StyledBox] whose children run horizontally.
+class StyledRow extends StatelessWidget {
+  final StyleResolver style;
+  final List<Widget> children;
+  final Interaction? interaction;
+  final Iterable<StyleState> states;
+  final String? semanticLabel;
+
+  const StyledRow({
+    super.key,
+    this.style = const Style(),
+    required this.children,
+    this.interaction,
+    this.states = const [],
+    this.semanticLabel,
+  });
 
   @override
-  void didUpdateWidget(StyledPressableBox oldWidget) {
+  Widget build(BuildContext context) => StyledBox(
+        style: style.map((s) => s.add(flex: const FlexStyle(direction: Axis.horizontal))),
+        interaction: interaction,
+        states: states,
+        semanticLabel: semanticLabel,
+        children: children,
+      );
+}
+
+/// A [StyledBox] whose children run vertically.
+class StyledColumn extends StatelessWidget {
+  final StyleResolver style;
+  final List<Widget> children;
+  final Interaction? interaction;
+  final Iterable<StyleState> states;
+  final String? semanticLabel;
+
+  const StyledColumn({
+    super.key,
+    this.style = const Style(),
+    required this.children,
+    this.interaction,
+    this.states = const [],
+    this.semanticLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) => StyledBox(
+        style: style.map((s) => s.add(flex: const FlexStyle(direction: Axis.vertical))),
+        interaction: interaction,
+        states: states,
+        semanticLabel: semanticLabel,
+        children: children,
+      );
+}
+
+Widget? _content(Style style, Widget? child, List<Widget>? children, StyledTheme theme) =>
+    children != null ? style.flex.build(children, theme) : child;
+
+bool _hasStateTransform(Style style) =>
+    style.box.transform != null || style.states.values.any((s) => s.box.transform != null);
+
+/// Paints [style.box] around [child] in [theme] and publishes [style] to descendants.
+Widget _paint(Style style, Widget? child, StyledTheme theme, {required bool keepTransform, VoidCallback? onEnd}) {
+  final box = style.box;
+  final width = theme.read(box.width);
+  final height = theme.read(box.height);
+  final constraints = box.constraints?.resolve(theme);
+  final padding = box.padding?.resolve(theme);
+  final margin = box.margin?.resolve(theme);
+  final decoration = box.decoration(theme);
+  final foreground = theme.read(box.foregroundDecoration);
+  final transform = box.transform?.resolve(theme);
+  final Widget container;
+  if (box.motion case final motion?) {
+    container = AnimatedContainer(
+      duration: motion.duration.resolve(theme),
+      curve: motion.curve,
+      onEnd: onEnd,
+      clipBehavior: box.clip ?? Clip.none,
+      width: width,
+      height: height,
+      constraints: constraints,
+      padding: padding,
+      margin: margin,
+      alignment: box.alignment,
+      decoration: decoration,
+      foregroundDecoration: foreground,
+      transform: transform ?? Matrix4.identity(),
+      transformAlignment: box.transformAlignment,
+      child: child,
+    );
+  } else {
+    container = Container(
+      clipBehavior: box.clip ?? Clip.none,
+      width: width,
+      height: height,
+      constraints: constraints,
+      padding: padding,
+      margin: margin,
+      alignment: box.alignment,
+      decoration: decoration,
+      foregroundDecoration: foreground,
+      // Keep a Transform in the tree when any state uses one, so toggling
+      // the state does not rebuild (and reset) the subtree.
+      transform: transform ?? (keepTransform ? Matrix4.identity() : null),
+      transformAlignment: box.transformAlignment,
+      child: child,
+    );
+  }
+  return InheritedStyle(style: style, child: container);
+}
+
+class _InteractiveBox extends StatefulWidget {
+  final Style style;
+  final Interaction interaction;
+  final Iterable<StyleState> states;
+  final String? semanticLabel;
+  final VoidCallback? onEnd;
+  final Widget? child;
+  final List<Widget>? children;
+
+  const _InteractiveBox({
+    required this.style,
+    required this.interaction,
+    required this.states,
+    this.semanticLabel,
+    this.onEnd,
+    this.child,
+    this.children,
+  });
+
+  @override
+  State<_InteractiveBox> createState() => _InteractiveBoxState();
+}
+
+class _InteractiveBoxState extends State<_InteractiveBox> {
+  bool _hovered = false;
+  bool _pressed = false;
+  bool _descendantClaimedPointer = false;
+  FocusNode? _internalFocusNode;
+
+  Interaction get _i => widget.interaction;
+  FocusNode get _focusNode => _i.focusNode ?? (_internalFocusNode ??= FocusNode());
+  bool get _disabled => !_i.enabled;
+  bool get _active => _i.isActive;
+  bool get _focused => _i.focused ?? _focusNode.hasFocus;
+
+  @override
+  void didUpdateWidget(_InteractiveBox oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.focusNode != oldWidget.focusNode) {
-      if (_internalFocusNode) {
-        _focusNode.dispose();
-        _internalFocusNode = false;
-      }
-      if (widget.focusNode == null) {
-        _focusNode = FocusNode();
-        _internalFocusNode = true;
-      } else {
-        _focusNode = widget.focusNode!;
-      }
+    if (_i.focusNode != null && _internalFocusNode != null) {
+      _internalFocusNode!.dispose();
+      _internalFocusNode = null;
     }
+    if (!_active && _pressed) _pressed = false;
   }
 
   @override
   void dispose() {
-    if (_internalFocusNode) {
-      _focusNode.dispose();
-    }
+    _internalFocusNode?.dispose();
     super.dispose();
   }
 
-  bool get _isDisabled =>
-      widget.disabled ??
-      (widget.onTap == null &&
-          widget.onDoubleTap == null &&
-          widget.onLongPress == null &&
-          widget.onSecondaryTap == null &&
-          widget.onTapDown == null &&
-          widget.onTapUp == null);
-
-  bool get _isFocused => widget.focused ?? _focusNode.hasFocus;
-
-  void _handleHover(bool hovering) {
-    if (_isHovered != hovering) {
-      setState(() => _isHovered = hovering);
-      widget.onHoverChange?.call(hovering);
+  // Nested interactive boxes: the innermost one that receives a pointer down
+  // owns the gesture, and its ancestors drop their pressed state.
+  Iterable<_InteractiveBoxState> get _ancestors sync* {
+    var ancestor = context.findAncestorStateOfType<_InteractiveBoxState>();
+    while (ancestor != null) {
+      yield ancestor;
+      ancestor = ancestor.context.findAncestorStateOfType<_InteractiveBoxState>();
     }
   }
 
-  void _handlePressed(bool pressed) {
-    if (_isPressed != pressed) {
-      setState(() => _isPressed = pressed);
-      widget.onPressedChange?.call(pressed);
+  void _claimPointer() {
+    for (final ancestor in _ancestors) {
+      ancestor._descendantClaimedPointer = true;
+      if (ancestor._pressed) ancestor._setPressed(false);
     }
   }
+
+  void _releasePointerClaim() {
+    scheduleMicrotask(() {
+      if (!mounted) return;
+      _descendantClaimedPointer = false;
+      for (final ancestor in _ancestors) {
+        ancestor._descendantClaimedPointer = false;
+      }
+    });
+  }
+
+  void _setHovered(bool value) {
+    if (_hovered == value) return;
+    setState(() => _hovered = value);
+    _i.onHoverChange?.call(value);
+  }
+
+  void _setPressed(bool value) {
+    if (_pressed == value) return;
+    setState(() => _pressed = value);
+    _i.onPressedChange?.call(value);
+  }
+
+  VoidCallback? _guard(VoidCallback? callback) =>
+      !_active || callback == null ? null : () => _descendantClaimedPointer ? null : callback();
 
   @override
   Widget build(BuildContext context) {
-    final resolvedStyle = widget.style.resolve(context);
-    var appliedStyle = resolvedStyle;
+    final style = widget.style;
+    final applied = style.resolveStates([
+      ...widget.states,
+      if (_hovered && !_disabled) StyleState.hovered,
+      if (_focused && !_disabled) StyleState.focused,
+      if (_pressed && _active) StyleState.pressed,
+      if (_disabled) StyleState.disabled,
+    ], context: context);
 
-    final parentStyle = InheritedStyle.of(context)?.style;
-    if (parentStyle != null) {
-      appliedStyle = appliedStyle.overwrite(
-        text: parentStyle.text.merge(appliedStyle.text),
-        icon: parentStyle.icon.merge(appliedStyle.icon),
-      );
-    }
+    final theme = StyledTheme.of(context);
+    final painted = _paint(
+      applied,
+      _content(applied, widget.child, widget.children, theme),
+      theme,
+      keepTransform: _hasStateTransform(style),
+      onEnd: widget.onEnd,
+    );
 
-    final bool animates = widget.animates ?? appliedStyle.box.animates ?? false;
-
-    final activeTokens = <String>{
-      if (_isDisabled) StyledToken.disabled,
-      if (_isFocused && !_isDisabled) StyledToken.focused,
-      if (_isPressed && !_isDisabled) StyledToken.pressed,
-      if (_isHovered && !_isDisabled) StyledToken.hovered,
-    };
-
-    final currentStyle = appliedStyle.resolveTokens(activeTokens);
-
-    Widget box = animates
-        ? StyledBox.animatedContainerFromBox(
-            currentStyle,
-            widget.child,
-            duration: widget.animationDuration,
-            curve: widget.curve,
-            onEnd: widget.onEnd,
-          )
-        : StyledBox.getContainerFromBox(currentStyle, widget.child);
-
-    final MouseCursor effectiveCursor = _isDisabled
-        ? (widget.disabledCursor ?? SystemMouseCursors.basic)
-        : (widget.cursor ?? SystemMouseCursors.click);
-
-    Widget interactive = MouseRegion(
-      onEnter: (_) => _handleHover(true),
-      onExit: (_) => _handleHover(false),
-      cursor: effectiveCursor,
+    Widget result = MouseRegion(
+      onEnter: (_) => _setHovered(true),
+      onExit: (_) => _setHovered(false),
+      cursor: _active
+          ? (_i.cursor ?? SystemMouseCursors.click)
+          : (_i.disabledCursor ?? SystemMouseCursors.basic),
       child: Focus(
         focusNode: _focusNode,
-        autofocus: widget.autofocus,
-        canRequestFocus: widget.canRequestFocus && !_isDisabled,
+        autofocus: _i.autofocus,
+        canRequestFocus: _i.canRequestFocus && _active,
         onFocusChange: (hasFocus) {
           setState(() {});
-          widget.onFocusChange?.call(hasFocus);
+          _i.onFocusChange?.call(hasFocus);
         },
         onKeyEvent: (node, event) {
-          if (_isDisabled || !node.hasPrimaryFocus) return KeyEventResult.ignored;
+          if (!_active || !node.hasPrimaryFocus) return KeyEventResult.ignored;
           if (event is KeyDownEvent &&
               (event.logicalKey == LogicalKeyboardKey.enter || event.logicalKey == LogicalKeyboardKey.space)) {
-            if (widget.enableFeedback) Feedback.forTap(context);
-            widget.onTap?.call();
+            if (_i.enableFeedback) Feedback.forTap(context);
+            _i.onTap?.call();
             return KeyEventResult.handled;
           }
           return KeyEventResult.ignored;
         },
         child: Listener(
           behavior: HitTestBehavior.deferToChild,
-          onPointerDown: _isDisabled
-              ? null
-              : (_) {
-                  if (!_descendantClaimedActivePointer) {
-                    _claimPointerFromAncestors();
-                  }
-                },
-          onPointerUp: _isDisabled
-              ? null
-              : (_) => _scheduleReleaseDescendantPointerClaim(),
-          onPointerCancel: _isDisabled
-              ? null
-              : (_) => _scheduleReleaseDescendantPointerClaim(),
+          onPointerDown: _active ? (_) => _descendantClaimedPointer ? null : _claimPointer() : null,
+          onPointerUp: _active ? (_) => _releasePointerClaim() : null,
+          onPointerCancel: _active ? (_) => _releasePointerClaim() : null,
           child: GestureDetector(
-            behavior: widget.behavior,
-            onTapDown: _isDisabled
-                ? null
-                : (details) {
-                    if (_descendantClaimedActivePointer) return;
-                    _handlePressed(true);
-                    if (widget.enableFeedback) Feedback.forTap(context);
-                    widget.onTapDown?.call(details);
-                  },
-            onTapUp: _isDisabled
-                ? null
-                : (details) {
-                    _handlePressed(false);
-                    if (_descendantClaimedActivePointer) return;
-                    widget.onTapUp?.call(details);
-                  },
-            onTapCancel: _isDisabled
-                ? null
-                : () {
-                    _handlePressed(false);
-                    if (_descendantClaimedActivePointer) return;
-                    widget.onTapCancel?.call();
-                  },
-            onTap: _isDisabled
-                ? null
-                : () {
-                    if (_descendantClaimedActivePointer) return;
-                    widget.onTap?.call();
-                  },
-            onDoubleTap: _isDisabled
-                ? null
-                : (widget.onDoubleTap == null
-                    ? null
-                    : () {
-                        if (_descendantClaimedActivePointer) return;
-                        widget.onDoubleTap?.call();
-                      }),
-            onLongPress: _isDisabled
-                ? null
-                : (widget.onLongPress == null
-                    ? null
-                    : () {
-                        if (_descendantClaimedActivePointer) return;
-                        widget.onLongPress?.call();
-                      }),
-            onSecondaryTap: _isDisabled
-                ? null
-                : (widget.onSecondaryTap == null
-                    ? null
-                    : () {
-                        if (_descendantClaimedActivePointer) return;
-                        widget.onSecondaryTap?.call();
-                      }),
-            child: InheritedStyle(style: currentStyle, child: box),
+            behavior: _i.behavior,
+            onTapDown: _active
+                ? (details) {
+                    if (_descendantClaimedPointer) return;
+                    _setPressed(true);
+                    if (_i.enableFeedback) Feedback.forTap(context);
+                    _i.onTapDown?.call(details);
+                  }
+                : null,
+            onTapUp: _active
+                ? (details) {
+                    _setPressed(false);
+                    if (!_descendantClaimedPointer) _i.onTapUp?.call(details);
+                  }
+                : null,
+            onTapCancel: _active
+                ? () {
+                    _setPressed(false);
+                    if (!_descendantClaimedPointer) _i.onTapCancel?.call();
+                  }
+                : null,
+            onTap: _guard(_i.onTap ?? () {}),
+            onDoubleTap: _guard(_i.onDoubleTap),
+            onLongPress: _guard(_i.onLongPress),
+            onSecondaryTap: _guard(_i.onSecondaryTap),
+            child: painted,
           ),
         ),
       ),
     );
 
-    if (widget.tooltip != null && widget.tooltip!.isNotEmpty) {
-      interactive = Semantics(tooltip: widget.tooltip!, child: interactive);
+    if (_i.tooltip case final tooltip? when tooltip.isNotEmpty) {
+      result = Semantics(tooltip: tooltip, child: result);
     }
-
     if (widget.semanticLabel != null) {
-      interactive = Semantics(
+      result = Semantics(
         label: widget.semanticLabel,
-        button: true,
-        enabled: !_isDisabled,
-        child: interactive,
+        button: _i.hasHandlers,
+        enabled: !_disabled,
+        child: result,
       );
     }
-
-    return interactive;
+    return result;
   }
 }

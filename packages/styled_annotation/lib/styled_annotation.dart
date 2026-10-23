@@ -1,110 +1,121 @@
 import 'package:meta/meta_meta.dart';
 
-/// Annotation for generating a [StyleResolver] preset class and variants.
+/// Generates a `StyleResolver` preset class from a spec class.
 ///
-/// Annotate a specification class (e.g. `_StyleBadgeSpec`) to generate:
-/// - A typed [StyleResolver] class (e.g. `StyleBadge`)
-/// - A variant enum (e.g. `BadgeVariant`)
-/// - `const` default and named variant constructors
-/// - Context resolution with automatic theme token injection and base style merging
-/// - `copyWith`, `operator ==`, and `hashCode` implementations
+/// Spec members are static `Style` fields (preferred: `static const`) or
+/// static methods returning `Style`. Styles reference tokens directly
+/// (`AppTokens.primary`), so members never read the theme: a `StyledTheme`,
+/// `BuildContext` or `Size` parameter is a build error. Methods may take named
+/// parameters, which become fields on the preset, and `StyledScreen screen`,
+/// which is injected.
+///
+/// Methods are classified by name and annotation:
+///
+/// | Member                         | Role                                             |
+/// |--------------------------------|--------------------------------------------------|
+/// | `@Variant()`                   | A variant: a constructor and an enum value        |
+/// | `base`                         | Merged under every variant                        |
+/// | `hovered`, `pressed`, `focused`, `disabled`, `error`, `mobile`, `tablet`, `desktop` | State override for every variant |
+/// | `primaryHovered` (`${variant}${State}`) | State override for one variant           |
+/// | `@On('selected')`              | Override for an application state                 |
+/// | other public `Style` members   | A variant                                        |
+///
+/// ```dart
+/// @StyledPreset()
+/// abstract class _StyleButtonSpec {
+///   static const base = Style(box: BoxStyle(padding: StyledEdgeInsets.all(AppTokens.padding)));
+///   @Variant(isDefault: true)
+///   static const primary = Style(box: BoxStyle(color: AppTokens.primary));
+///   static const primaryHovered = Style(box: BoxStyle(color: AppTokens.primaryVariant));
+///   static const disabled = Style(box: BoxStyle(color: AppTokens.disabledFill));
+///   @On('selected')
+///   static const selectedRing = Style(box: BoxStyle(border: StyledBorder(color: AppTokens.primary)));
+/// }
+/// ```
 @Target({TargetKind.classType})
 class StyledPreset {
-  /// Custom name for the generated StyleResolver class.
-  /// If null, derived from the annotated spec class (e.g. `_StyleBadgeSpec` -> `StyleBadge`).
+  /// Name of the generated class. Defaults to the spec name without the
+  /// leading `_` and trailing `Spec`, prefixed with `Style`.
   final String? name;
 
-  /// Whether to generate an enum containing all variant names (e.g. `BadgeVariant`).
-  final bool generateVariantsEnum;
+  /// Name of the generated variant enum. Defaults to the class name without
+  /// `Style`, plus `Variant` (`StyleButton` → `ButtonVariant`).
+  final String? variantEnumName;
 
-  /// Whether each variant automatically merges on top of the base style.
-  /// Defaults to `true` if a `base` method is defined.
-  final bool mergeBase;
-
-  const StyledPreset({
-    this.name,
-    this.generateVariantsEnum = true,
-    this.mergeBase = true,
-  });
+  const StyledPreset({this.name, this.variantEnumName});
 }
 
-/// Annotation for marking variant methods on a [@StyledPreset] spec.
-@Target({TargetKind.method})
+/// Marks a spec method or static field as a variant of a [StyledPreset].
+@Target({TargetKind.method, TargetKind.field})
 class Variant {
-  /// Whether this variant serves as the default constructor `StyleX()`.
+  /// Whether this variant backs the unnamed constructor.
   final bool isDefault;
 
-  /// Alternative named constructor aliases (e.g. `['danger']` for an `error` variant).
+  /// Extra constructor names for this variant (for example `['danger']`).
   final List<String> aliases;
 
-  const Variant({
-    this.isDefault = false,
-    this.aliases = const [],
-  });
+  const Variant({this.isDefault = false, this.aliases = const []});
 }
 
-/// Annotation for configuring responsive breakpoint resolution on a [@Variant] method.
+/// Marks a spec method as the override for an application state, such as
+/// `selected` or `loading`.
 ///
-/// Can specify method names for different screen sizes:
-/// - [mobile]: Name of the static method to call for mobile viewports (< 650px).
-/// - [tablet]: Name of the static method to call for tablet viewports (< 1360px).
-/// - [desktop]: Name of the static method to call for desktop viewports (>= 1360px).
-///   If not specified, the annotated method itself is used for desktop (and as fallback).
-/// - [attachStates]: Whether to also attach responsive styles as states via `.on('mobile', ...)`
-///   and `.on('tablet', ...)`. Defaults to `false`.
-@Target({TargetKind.method, TargetKind.classType})
-class Responsive {
-  /// Name of the static method for mobile breakpoint.
-  final String? mobile;
+/// Applies to every variant unless [variants] names some.
+@Target({TargetKind.method, TargetKind.field})
+class On {
+  /// The state key, matching a `StyleState('...')` constant.
+  final String state;
 
-  /// Name of the static method for tablet breakpoint.
-  final String? tablet;
+  /// Variant names this override applies to. Empty means all.
+  final List<String> variants;
 
-  /// Name of the static method for desktop breakpoint.
-  final String? desktop;
-
-  /// Whether to also register breakpoint styles as `.on(...)` states on the returned Style.
-  final bool attachStates;
-
-  const Responsive({
-    this.mobile,
-    this.tablet,
-    this.desktop,
-    this.attachStates = false,
-  });
+  const On(this.state, {this.variants = const []});
 }
 
-/// Annotation for generating design token classes and [StyledTheme] extension getters.
+/// Generates token constants, theme getters, typed overrides and theme modes
+/// from a spec class of `static const` values.
 ///
-/// Annotate a specification class (e.g. `_AnalyticsTokensSpec`) to generate:
-/// - A tokens class with typed `ThemeToken<T>` constants (e.g. `AnalyticsTokens`)
-/// - A [StyledTheme] extension with typed getters (`theme.primary`, `theme.padding`)
-/// - A `toDefaultMap()` helper on the tokens class
+/// For `_AppTokensSpec` this generates:
+/// - `AppTokens` with a `ThemeToken<T>` per field, `all`, and `toDefaultMap()`
+/// - `extension AppTokensExtension on StyledTheme` with a getter per token
+/// - `theme.withAppTokens(primary: ..., radius: ...)`, typed overrides
+/// - `AppTokens.overridesFor(mode)`, `AppTokens.themeFor(mode)` and, when any
+///   token declares a dark value, `AppTokens.dark`
 @Target({TargetKind.classType})
 class StyledTokens {
-  /// Custom name for the generated tokens container class.
-  /// If null, derived from the annotated spec class (e.g. `_AnalyticsTokensSpec` -> `AnalyticsTokens`).
+  /// Name of the tokens class. Defaults to the spec name without `_` and
+  /// `Spec`, ending in `Tokens`.
   final String? className;
 
-  /// Custom name for the generated StyledTheme extension.
-  /// If null, defaults to `${className}Extension`.
+  /// Name of the getter extension. Defaults to `${className}Extension`.
   final String? extensionName;
 
-  /// Whether to generate a `toDefaultMap()` helper on the tokens class.
+  /// Whether to generate `toDefaultMap()`.
   final bool generateDefaultMap;
+
+  /// Prefix for every token key, joined with a dot (`'analytics'` →
+  /// `'analytics.primary'`). Keeps keys from colliding in a shared theme.
+  final String? prefix;
 
   const StyledTokens({
     this.className,
     this.extensionName,
     this.generateDefaultMap = true,
+    this.prefix,
   });
 }
 
-/// Annotation for customizing individual token key names.
+/// Customises one token field of a [StyledTokens] spec.
 @Target({TargetKind.field})
 class Token {
-  /// Explicit key name for the token. If null, the field name is used.
+  /// Explicit key. Defaults to the field name.
   final String? key;
 
-  const Token({this.key});
+  /// Value used by the generated `dark` theme.
+  final Object? dark;
+
+  /// Values for other named modes, for example `{'highContrast': Color(0xFF000000)}`.
+  final Map<String, Object?> modes;
+
+  const Token({this.key, this.dark, this.modes = const {}});
 }

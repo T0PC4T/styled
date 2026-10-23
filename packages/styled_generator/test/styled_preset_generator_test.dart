@@ -3,33 +3,33 @@ import 'package:source_gen/source_gen.dart';
 import 'package:styled_generator/styled_generator.dart';
 import 'package:test/test.dart';
 
-void main() {
-  group('StyledPresetGenerator', () {
-    test('generates enum, class, named constructors, resolve, copyWith and equals', () async {
-      final builder = PartBuilder([const StyledPresetGenerator()], '.styled.g.dart');
+String _squash(String s) => s.replaceAll(RegExp(r'[\s,]+'), '');
 
-      await testBuilder(
-        builder,
-        {
-          'styled_annotation|lib/styled_annotation.dart': '''
+/// Matches generated source containing [snippet], ignoring formatting.
+Matcher _has(String snippet) =>
+    predicate<String>((source) => _squash(source).contains(_squash(snippet)), 'contains `$snippet`');
+
+const _annotations = '''
 class StyledPreset {
   final String? name;
-  final bool generateVariantsEnum;
-  final bool mergeBase;
-  const StyledPreset({this.name, this.generateVariantsEnum = true, this.mergeBase = true});
+  final String? variantEnumName;
+  const StyledPreset({this.name, this.variantEnumName});
 }
 class Variant {
   final bool isDefault;
   final List<String> aliases;
   const Variant({this.isDefault = false, this.aliases = const []});
 }
-''',
-          'a|lib/test_badge.dart': '''
-import 'package:styled_annotation/styled_annotation.dart';
+class On {
+  final String state;
+  final List<String> variants;
+  const On(this.state, {this.variants = const []});
+}
+''';
 
-part 'test_badge.styled.g.dart';
-
+const _stubs = '''
 class StyledTheme {}
+enum StyledScreen { mobile, tablet, desktop }
 class BuildContext {}
 class Color {
   final int value;
@@ -39,178 +39,218 @@ class Style {
   const Style();
   Style merge(Style? other) => this;
 }
+''';
 
+Future<TestBuilderResult> _build(String spec, {Object? output, void Function(String)? onError}) => testBuilder(
+      PartBuilder([const StyledPresetGenerator()], '.styled.g.dart'),
+      {
+        'styled_annotation|lib/styled_annotation.dart': _annotations,
+        'a|lib/spec.dart': '''
+import 'package:styled_annotation/styled_annotation.dart';
+
+part 'spec.styled.g.dart';
+
+$_stubs
+$spec
+''',
+      },
+      outputs: output == null ? null : {'a|lib/spec.styled.g.dart': output},
+      onLog: (log) {
+        if (log.level.value >= 1000) onError?.call(log.message);
+      },
+    );
+
+void main() {
+  group('StyledPresetGenerator', () {
+    test('generates enum, constructors, base merge, copyWith, equality and toString', () async {
+      await _build(
+        '''
+/// Badge presets.
 @StyledPreset(name: 'StyleBadge')
 abstract class _StyleBadgeSpec {
-  static Style base(StyledTheme theme, {Color? customColor, bool isPill = false}) => const Style();
+  static Style base({Color? customColor, bool isPill = false}) => const Style();
 
+  /// The neutral badge.
   @Variant(isDefault: true)
-  static Style standard(StyledTheme theme, {Color? customColor, bool isPill = false}) => const Style();
+  static Style standard({Color? customColor}) => const Style();
 
   @Variant(aliases: ['danger'])
-  static Style error(StyledTheme theme, {Color? customColor, bool isPill = false}) => const Style();
+  static Style error() => const Style();
 }
 ''',
-        },
-        outputs: {
-          'a|lib/test_badge.styled.g.dart': decodedMatches(
-            allOf([
-              contains('enum BadgeVariant { standard, error }'),
-              contains('class StyleBadge extends StyleResolver {'),
-              contains('final BadgeVariant variant;'),
-              contains('final Color? customColor;'),
-              contains('final bool isPill;'),
-              contains('const StyleBadge({'),
-              contains('const StyleBadge.standard({'),
-              contains('const StyleBadge.error({'),
-              contains('const StyleBadge.danger({'),
-              contains('const StyleBadge.fromVariant('),
-              contains('Style resolve(BuildContext context) {'),
-              contains('final baseStyle = _StyleBadgeSpec.base('),
-              contains('BadgeVariant.standard => _StyleBadgeSpec.standard('),
-              contains('BadgeVariant.error => _StyleBadgeSpec.error('),
-              contains('return baseStyle.merge(variantStyle) as Style;'),
-              contains('StyleBadge copyWith({'),
-              contains('bool operator ==(Object other)'),
-              contains('int get hashCode => Object.hash('),
-            ]),
-          ),
-        },
+        output: decodedMatches(allOf([
+          _has('enum BadgeVariant {'),
+          _has('/// The neutral badge.'),
+          _has('/// Badge presets.'),
+          _has('class StyleBadge extends StyleResolver {'),
+          _has('final Color? customColor;'),
+          _has('final bool isPill;'),
+          _has('const StyleBadge({'),
+          _has('this.isPill = false,'),
+          _has('const StyleBadge.standard({'),
+          _has('const StyleBadge.danger({'),
+          _has('}) : variant = BadgeVariant.error;'),
+          _has('const StyleBadge.fromVariant('),
+          isNot(_has('context.theme')),
+          _has('final base = _StyleBadgeSpec.base(customColor: customColor, isPill: isPill);'),
+          _has('BadgeVariant.standard => base.merge(_StyleBadgeSpec.standard(customColor: customColor)),'),
+          _has('BadgeVariant.error => base.merge(_StyleBadgeSpec.error()),'),
+          _has('StyleBadge copyWith({'),
+          _has('int get hashCode => Object.hash(variant, customColor, isPill);'),
+          _has(r"String toString() => 'StyleBadge.${variant.name}(customColor: $customColor, isPill: $isPill)';"),
+          isNot(_has(' as Style')),
+        ])),
       );
     });
 
-    test('generates @Responsive breakpoint switching and propagates doc comments', () async {
-      final builder = PartBuilder([const StyledPresetGenerator()], '.styled.g.dart');
-
-      await testBuilder(
-        builder,
-        {
-          'styled_annotation|lib/styled_annotation.dart': '''
-class StyledPreset {
-  final String? name;
-  final bool generateVariantsEnum;
-  final bool mergeBase;
-  const StyledPreset({this.name, this.generateVariantsEnum = true, this.mergeBase = true});
-}
-class Variant {
-  final bool isDefault;
-  final List<String> aliases;
-  const Variant({this.isDefault = false, this.aliases = const []});
-}
-class Responsive {
-  final String? mobile;
-  final String? tablet;
-  final String? desktop;
-  final bool attachStates;
-  const Responsive({this.mobile, this.tablet, this.desktop, this.attachStates = false});
-}
-''',
-          'a|lib/test_responsive.dart': '''
-import 'package:styled_annotation/styled_annotation.dart';
-
-part 'test_responsive.styled.g.dart';
-
-class StyledTheme {}
-class BuildContext {}
-enum StyledScreen {
-  mobile(650),
-  tablet(1360),
-  desktop(double.infinity);
-  final double width;
-  const StyledScreen(this.width);
-  static ({StyledScreen screen, Object size}) fromContext(BuildContext context) =>
-      (screen: StyledScreen.desktop, size: Object());
-}
-
-class Style {
-  const Style();
-  Style on(String token, {Style? style}) => this;
-}
-
-/// Flexible container preset for responsive layouts.
-@StyledPreset(name: 'StyleLayout', mergeBase: false)
-abstract class _StyleLayoutSpec {
-  /// Horizontal layout for desktop.
+    test('attaches convention-named and @On states', () async {
+      await _build(
+        '''
+@StyledPreset(variantEnumName: 'Kind')
+abstract class _StyleButtonSpec {
   @Variant(isDefault: true)
-  static Style row(StyledTheme theme) => const Style();
-
-  /// Responsive flex switching between column on mobile/tablet and row on desktop.
+  static Style primary() => const Style();
   @Variant()
-  @Responsive(mobile: 'colrowMobile', tablet: 'colrowTablet')
-  static Style colrow(StyledTheme theme) => const Style();
+  static Style ghost() => const Style();
 
-  static Style colrowMobile(StyledTheme theme) => const Style();
-  static Style colrowTablet(StyledTheme theme) => const Style();
+  static Style primaryHovered() => const Style();
+  static Style disabled() => const Style();
+  static Style mobile() => const Style();
 
-  /// Card with states attached.
-  @Variant()
-  @Responsive(mobile: 'cardMobile', attachStates: true)
-  static Style card(StyledTheme theme) => const Style();
-
-  static Style cardMobile(StyledTheme theme) => const Style();
-
-  /// Direct parameter injection of StyledScreen.
-  @Variant()
-  static Style screenDirect(StyledTheme theme, StyledScreen screen) => const Style();
-
-  /// Convention-based responsive detection.
-  @Variant()
-  @Responsive()
-  static Style autoNamed(StyledTheme theme) => const Style();
-
-  static Style autoNamedMobile(StyledTheme theme) => const Style();
-  static Style autoNamedTablet(StyledTheme theme) => const Style();
+  @On('selected', variants: ['ghost'])
+  static Style ghostSelected() => const Style();
 }
 ''',
-        },
-        outputs: {
-          'a|lib/test_responsive.styled.g.dart': decodedMatches(
-            allOf([
-              contains('/// Flexible container preset for responsive layouts.'),
-              contains('/// Reusable style preset generated from [_StyleLayoutSpec].'),
-              contains('class StyleLayout extends StyleResolver {'),
-              contains('/// Variant options for [StyleLayout].'),
-              contains('enum LayoutVariant {'),
-              contains('/// Horizontal layout for desktop.'),
-              contains('row,'),
-              contains('/// Responsive flex switching between column on mobile/tablet and row on desktop.'),
-              contains('colrow,'),
-              contains('card,'),
-              contains('screenDirect,'),
-              // Ensure delegate methods like colrowMobile/colrowTablet are NOT in LayoutVariant
-              isNot(contains('colrowMobile,')),
-              isNot(contains('colrowTablet,')),
-              isNot(contains('cardMobile,')),
-              // Verify constructors have propagated doc comments
-              contains('/// Horizontal layout for desktop.'),
-              contains('const StyleLayout() : variant = LayoutVariant.row;'),
-              contains('const StyleLayout.row() : variant = LayoutVariant.row;'),
-              contains('/// Responsive flex switching between column on mobile/tablet and row on desktop.'),
-              contains('const StyleLayout.colrow() : variant = LayoutVariant.colrow;'),
-              // Verify resolve method extracts screen and switches
-              contains('final (screen: screen, size: _) = StyledScreen.fromContext(context);'),
-              contains('LayoutVariant.row => _StyleLayoutSpec.row(theme),'),
-              contains('LayoutVariant.colrow => switch (screen) {'),
-              contains('StyledScreen.mobile => _StyleLayoutSpec.colrowMobile(theme),'),
-              contains('StyledScreen.tablet => _StyleLayoutSpec.colrowTablet(theme),'),
-              contains('StyledScreen.desktop => _StyleLayoutSpec.colrow(theme),'),
-              // Verify attachStates: true attaches .on(...)
-              contains('.on(StyledScreen.tablet.name, style: tabletStyle)'),
-              contains('.on(StyledScreen.mobile.name, style: mobileStyle)'),
-              // Verify direct screen parameter injection
-              contains('LayoutVariant.screenDirect => _StyleLayoutSpec.screenDirect('),
-              contains('screen,'),
-              // Verify convention-based resolution
-              isNot(contains('autoNamedMobile,')),
-              isNot(contains('autoNamedTablet,')),
-              contains('LayoutVariant.autoNamed => switch (screen) {'),
-              contains('StyledScreen.mobile => _StyleLayoutSpec.autoNamedMobile(theme),'),
-              contains('StyledScreen.tablet => _StyleLayoutSpec.autoNamedTablet(theme),'),
-              contains('StyledScreen.desktop => _StyleLayoutSpec.autoNamed(theme),'),
-            ]),
-          ),
-        },
+        output: decodedMatches(allOf([
+          _has('enum Kind { primary, ghost }'),
+          _has('final base = const Style()'
+              '.on(StyleState.disabled, style: _StyleButtonSpec.disabled())'
+              '.on(StyledScreen.mobile.state, style: _StyleButtonSpec.mobile());'),
+          _has('Kind.primary => base.merge(_StyleButtonSpec.primary())'
+              '.on(StyleState.hovered, style: _StyleButtonSpec.primaryHovered()),'),
+          _has("Kind.ghost => base.merge(_StyleButtonSpec.ghost())"
+              ".on(const StyleState('selected'), style: _StyleButtonSpec.ghostSelected()),"),
+          _has(r"String toString() => 'StyleButton.${variant.name}';"),
+        ])),
       );
+    });
+
+    test('injects the screen tier', () async {
+      await _build(
+        '''
+@StyledPreset()
+abstract class _StylePageSpec {
+  static Style normal(StyledScreen screen) => const Style();
+}
+''',
+        output: decodedMatches(allOf([
+          _has('final screen = StyledScreen.of(context);'),
+          _has('PageVariant.normal => _StylePageSpec.normal(screen),'),
+        ])),
+      );
+    });
+
+    test('rejects BuildContext parameters with a fix in the message', () async {
+      final errors = <String>[];
+      final result = await _build(
+        '''
+@StyledPreset()
+abstract class _StyleCardSpec {
+  static Style normal(BuildContext context) => const Style();
+}
+''',
+        onError: errors.add,
+      );
+      expect(result.succeeded, isFalse);
+      expect(errors.join('\n'), contains('reference tokens directly'));
+    });
+
+    test('rejects two default variants and clashing aliases', () async {
+      final errors = <String>[];
+      await _build(
+        '''
+@StyledPreset()
+abstract class _StyleTagSpec {
+  @Variant(isDefault: true)
+  static Style a() => const Style();
+  @Variant(isDefault: true)
+  static Style b() => const Style();
+}
+''',
+        onError: errors.add,
+      );
+      expect(errors.join('\n'), contains('Only one variant'));
+
+      errors.clear();
+      await _build(
+        '''
+@StyledPreset()
+abstract class _StyleTagSpec {
+  @Variant(aliases: ['b'])
+  static Style a() => const Style();
+  @Variant()
+  static Style b() => const Style();
+}
+''',
+        onError: errors.add,
+      );
+      expect(errors.join('\n'), contains('clashes'));
+    });
+
+    test('rejects @On for an unknown variant', () async {
+      final errors = <String>[];
+      await _build(
+        '''
+@StyledPreset()
+abstract class _StyleTagSpec {
+  @Variant()
+  static Style a() => const Style();
+  @On('selected', variants: ['missing'])
+  static Style picked() => const Style();
+}
+''',
+        onError: errors.add,
+      );
+      expect(errors.join('\n'), contains('unknown variant "missing"'));
+    });
+
+    test('accepts static const fields as base, variants and states', () async {
+      await _build(
+        '''
+@StyledPreset()
+abstract class _StyleChipSpec {
+  static const base = Style();
+  @Variant(isDefault: true)
+  static const neutral = Style();
+  static const neutralHovered = Style();
+  static const disabled = Style();
+  @On('selected')
+  static const picked = Style();
+}
+''',
+        output: decodedMatches(allOf([
+          _has('enum ChipVariant { neutral }'),
+          _has("final base = _StyleChipSpec.base.on(StyleState.disabled, style: _StyleChipSpec.disabled)"
+              ".on(const StyleState('selected'), style: _StyleChipSpec.picked);"),
+          _has('ChipVariant.neutral => base.merge(_StyleChipSpec.neutral)'
+              '.on(StyleState.hovered, style: _StyleChipSpec.neutralHovered),'),
+          isNot(_has('context.theme')),
+        ])),
+      );
+    });
+
+    test('rejects StyledTheme parameters', () async {
+      final errors = <String>[];
+      await _build(
+        '''
+@StyledPreset()
+abstract class _StyleCardSpec {
+  static Style normal(StyledTheme theme) => const Style();
+}
+''',
+        onError: errors.add,
+      );
+      expect(errors.join('\n'), contains('takes a StyledTheme'));
     });
   });
 }
