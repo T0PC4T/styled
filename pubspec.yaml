@@ -1,0 +1,13 @@
+name: styled_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+workspace:
+  - packages/styled
+  - packages/styled_annotation
+  - packages/styled_generator
+
+dev_dependencies:
+  flutter_lints: ^5.0.0

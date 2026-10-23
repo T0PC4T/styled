@@ -1,0 +1,11 @@
+name: styled_annotation
+description: Annotations for package:styled code generation.
+version: 1.0.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  meta: ^1.15.0

@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      styled_generator:styled_builder:
+        generate_for:
+          - test/**.dart
+          - example/**.dart
+
+builders:
+  styled_builder:
+    import: "package:styled_generator/builder.dart"
+    builder_factories: ["styledBuilder"]
+    build_extensions: {".dart": [".styled.g.dart"]}
+    auto_apply: dependents
+    build_to: source

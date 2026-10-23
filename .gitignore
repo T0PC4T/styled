@@ -1,0 +1,40 @@
+# Root .gitignore for Styled Workspace
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows & Linux system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*~
+
+# IDEs and Editors
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.history/
+
+# Flutter, Dart, and Pub packages
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+**/build/
+**/doc/api/
+/build/
+
+# Logs & Temporary debug files
+*.log
+*.tmp
+*.temp
+*.swp
+*.bak
