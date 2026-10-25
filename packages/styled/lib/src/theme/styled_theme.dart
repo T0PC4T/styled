@@ -19,10 +19,8 @@ final class StyledTheme {
   const StyledTheme([this._values = const {}, this.metadata = const {}]);
 
   /// Creates a [StyledTheme] from a map of token keys to values.
-  factory StyledTheme.fromMap(
-    Map<String, Object?> values, [
-    Map<String, dynamic> metadata = const {},
-  ]) => StyledTheme(Map.unmodifiable(values), Map.unmodifiable(metadata));
+  factory StyledTheme.fromMap(Map<String, Object?> values, [Map<String, dynamic> metadata = const {}]) =>
+      StyledTheme(Map.unmodifiable(values), Map.unmodifiable(metadata));
 
   /// Deserializes a [StyledTheme] from a JSON map.
   /// Automatically parses hex color strings (`#RRGGBB` / `#AARRGGBB`) and font weight keys (`w100`..`w900`).
@@ -66,14 +64,8 @@ final class StyledTheme {
   }
 
   static String _formatColor(Color color) {
-    final argb = color
-        .toARGB32()
-        .toRadixString(16)
-        .padLeft(8, '0')
-        .toUpperCase();
-    return ((color.toARGB32() >> 24) & 0xFF == 255)
-        ? '#${argb.substring(2)}'
-        : '#$argb';
+    final argb = color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
+    return ((color.toARGB32() >> 24) & 0xFF == 255) ? '#${argb.substring(2)}' : '#$argb';
   }
 
   /// Serializes this [StyledTheme] into a JSON map.
@@ -123,23 +115,14 @@ final class StyledTheme {
   bool has(ThemeToken<dynamic> token) => _values.containsKey(token.key);
 
   /// Creates a copy of this theme with a single token updated.
-  StyledTheme set<T>(ThemeToken<T> token, T value) =>
-      copyWith(overrides: {token.key: value});
+  StyledTheme set<T>(ThemeToken<T> token, T value) => copyWith(overrides: {token.key: value});
 
   /// Creates a copy of this theme with multiple token overrides and metadata.
-  StyledTheme copyWith({
-    Map<String, Object?>? overrides,
-    Map<String, dynamic>? metadata,
-  }) => StyledTheme({
-    ..._values,
-    if (overrides != null) ...overrides,
-  }, metadata ?? this.metadata);
+  StyledTheme copyWith({Map<String, Object?>? overrides, Map<String, dynamic>? metadata}) =>
+      StyledTheme({..._values, ...?overrides}, metadata ?? this.metadata);
 
   /// Merges another theme's values over this theme.
-  StyledTheme merge(StyledTheme other) => StyledTheme(
-    {..._values, ...other._values},
-    {...metadata, ...other.metadata},
-  );
+  StyledTheme merge(StyledTheme other) => StyledTheme({..._values, ...other._values}, {...metadata, ...other.metadata});
 
   @override
   bool operator ==(Object other) =>
@@ -150,8 +133,5 @@ final class StyledTheme {
           mapEquals(metadata, other.metadata));
 
   @override
-  int get hashCode => Object.hash(
-    Object.hashAllUnordered(_values.entries),
-    Object.hashAllUnordered(metadata.entries),
-  );
+  int get hashCode => Object.hash(Object.hashAllUnordered(_values.entries), Object.hashAllUnordered(metadata.entries));
 }
