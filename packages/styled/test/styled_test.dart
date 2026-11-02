@@ -859,6 +859,35 @@ void main() {
         expect(textWidget.overflow, TextOverflow.ellipsis);
       },
     );
+
+    testWidgets(
+      'StyledTextField aligns hint at the top-left when multiline',
+      (tester) async {
+        await tester.pumpWidget(
+          testApp(
+            const StyledTextField(
+              style: Style(
+                box: BoxStyle(color: _Colors.white),
+                text: StyledTextStyle(fontSize: DataValue(14.0), color: _Colors.black),
+              ),
+              hint: 'Enter detailed notes...',
+              minLines: 4,
+              maxLines: 6,
+            ),
+          ),
+        );
+
+        final hintFinder = find.text('Enter detailed notes...');
+        final editableFinder = find.byType(EditableText);
+        expect(hintFinder, findsOneWidget);
+        expect(editableFinder, findsOneWidget);
+
+        final hintRect = tester.getRect(hintFinder);
+        final editableRect = tester.getRect(editableFinder);
+        expect(editableRect.height, greaterThan(hintRect.height * 2));
+        expect(hintRect.topLeft, editableRect.topLeft);
+      },
+    );
   });
 
 

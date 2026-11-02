@@ -51,12 +51,13 @@ class StyledInput extends StatelessWidget {
     this.hint,
     this.showHint = false,
     this.semanticLabel,
-    this.maxLines,
+    this.maxLines = 1,
     this.overflow,
     this.labelSpacing = 4.0,
   });
 
   bool get _hasError => error != null && error!.isNotEmpty;
+  bool get _isMultiline => maxLines == null || maxLines! > 1;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,15 @@ class StyledInput extends StatelessWidget {
       if (!enabled) StyleState.disabled,
     ], context: context);
 
+    final effectiveCrossAxisAlignment = current.flex.crossAxisAlignment ??
+        (_isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center);
+    final stackAlignment = current.box.alignment ??
+        switch (effectiveCrossAxisAlignment) {
+          CrossAxisAlignment.start => Alignment.topLeft,
+          CrossAxisAlignment.end => Alignment.bottomLeft,
+          _ => Alignment.centerLeft,
+        };
+
     Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -76,12 +86,13 @@ class StyledInput extends StatelessWidget {
         StyledBox(
           style: current,
           child: Row(
+            crossAxisAlignment: effectiveCrossAxisAlignment,
             spacing: StyledTheme.of(context).read(current.flex.spacing) ?? 0.0,
             children: [
               ?icon,
               Expanded(
                 child: Stack(
-                  alignment: Alignment.centerLeft,
+                  alignment: stackAlignment,
                   children: [
                     if (showHint && hint != null && hint!.isNotEmpty)
                       IgnorePointer(
@@ -373,6 +384,9 @@ class _StyledTextFieldState extends State<StyledTextField>
   @override
   Widget build(BuildContext context) {
     final resolvedStyle = widget.style.resolve(context);
+    final effectiveMaxLines = (widget.maxLines != null && widget.maxLines! < widget.minLines)
+        ? widget.minLines
+        : widget.maxLines;
 
     return StyledInput(
       style: resolvedStyle,
@@ -387,7 +401,7 @@ class _StyledTextFieldState extends State<StyledTextField>
       hint: widget.hint,
       showHint: _controller.text.isEmpty,
       semanticLabel: widget.semanticLabel,
-      maxLines: widget.maxLines,
+      maxLines: effectiveMaxLines,
       labelSpacing: widget.labelSpacing,
       child: Builder(
         builder: (context) {
@@ -426,7 +440,7 @@ class _StyledTextFieldState extends State<StyledTextField>
               selectionColor: effectiveSelectionColor,
               selectionControls: effectiveSelectionControls,
               keyboardType: widget.keyboardType ??
-                  (widget.maxLines == 1
+                  (effectiveMaxLines == 1
                       ? TextInputType.text
                       : TextInputType.multiline),
               textInputAction: widget.textInputAction,
@@ -435,7 +449,7 @@ class _StyledTextFieldState extends State<StyledTextField>
               obscureText: widget.obscureText,
               obscuringCharacter: widget.obscuringCharacter,
               minLines: widget.minLines,
-              maxLines: widget.maxLines,
+              maxLines: effectiveMaxLines,
               onChanged: widget.onChanged,
               onSubmitted: widget.onSubmitted,
               onEditingComplete: widget.onEditingComplete,
