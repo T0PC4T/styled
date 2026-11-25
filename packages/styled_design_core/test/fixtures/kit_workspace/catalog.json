@@ -1,7 +1,7 @@
 {
   "format": 1,
   "version": 1,
-  "hash": "sha256:d604281cb32b513f5e3c92eb473ad6299b0df784c5be36f7b28d22d30611177a",
+  "hash": "sha256:b3ea63fc3019da6c7d0b96dfb1b7906d4cd7cb9dfc89ee76494c226308c20b66",
   "modes": [
     "light",
     "dark"
@@ -2324,8 +2324,7 @@
         },
         {
           "name": "icon",
-          "kind": "icon",
-          "default": "info_circle"
+          "kind": "icon"
         },
         {
           "name": "title",
@@ -2502,7 +2501,6 @@
         {
           "name": "mainAxisSize",
           "kind": "choice",
-          "default": "max",
           "values": [
             "min",
             "max"
