@@ -99,7 +99,12 @@ final class _StyleCheck {
     'textAlign': enumOf(const ['left', 'right', 'center', 'justify', 'start', 'end']),
     'maxLines': (value, at) {
       if (value is! int || value < 1) {
-        report('E-style-value', 'maxLines is a whole number of 1 or more, not ${_jsonKindOf(value)}.', at);
+        report(
+          'E-style-value',
+          'maxLines is a whole number of 1 or more, not ${_jsonKindOf(value)}.',
+          at,
+          hint: 'Write a whole number such as 2.',
+        );
       }
     },
     'overflow': enumOf(const ['clip', 'fade', 'ellipsis', 'visible']),
@@ -172,7 +177,9 @@ final class _StyleCheck {
     }, minOne: true);
     // StyledBorder.none keeps an optional radius, so `none` combines with
     // `radius` and nothing else (the codec decodes exactly this).
-    if (json is Map<String, Object?> && json.containsKey('none') && json.keys.any((k) => k != 'none' && k != 'radius')) {
+    if (json is Map<String, Object?> &&
+        json.containsKey('none') &&
+        json.keys.any((k) => k != 'none' && k != 'radius')) {
       report(
         'E-style-value',
         'border.none removes the border, so it takes no other field than radius.',

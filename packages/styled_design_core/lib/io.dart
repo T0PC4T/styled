@@ -34,10 +34,26 @@ final class DesignWorkspace {
         if (json is Map<String, Object?>) {
           files[rel] = json;
         } else {
-          problems.add(Diagnostic.of('E-json', 'A design document is a JSON object.', file: rel, pointer: ''));
+          problems.add(
+            Diagnostic.of(
+              'E-json',
+              'A design document is a JSON object.',
+              file: rel,
+              pointer: '',
+              hint: 'Wrap the document in { ... }.',
+            ),
+          );
         }
       } on FormatException catch (e) {
-        problems.add(Diagnostic.of('E-json', 'Not valid JSON: ${e.message}.', file: rel, pointer: ''));
+        problems.add(
+          Diagnostic.of(
+            'E-json',
+            'Not valid JSON: ${e.message}${e.offset == null ? '' : ' (at character ${e.offset})'}.',
+            file: rel,
+            pointer: '',
+            hint: 'Fix the commas, quotes or brackets there; design fmt only rewrites files that parse.',
+          ),
+        );
       }
     }
 

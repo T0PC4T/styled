@@ -529,14 +529,22 @@ final class _ScreenCheck {
                 PropKind.stringList,
                 PropKind.integerList,
               }.contains(def.kind):
-            report('E-prop-kind', '$what takes ${propKindText(def)}, but \$text gives text.', at, node: ref);
+            report(
+              'E-prop-kind',
+              '$what takes ${propKindText(def)}, but \$text gives text.',
+              at,
+              node: ref,
+              hint: 'Bind the value itself with \$bind, or write ${exampleValue(def)}.',
+            );
           case 'bool' when def.kind != PropKind.boolean && def.kind != PropKind.json:
             report(
               'E-prop-kind',
               '$what takes ${propKindText(def)}, but this test gives true or false.',
               at,
               node: ref,
-              hint: def.kind == PropKind.string ? r'Use $if to choose text: {"$if": [test, "yes", "no"]}.' : null,
+              hint: def.kind == PropKind.string
+                  ? r'Use $if to choose text: {"$if": [test, "yes", "no"]}.'
+                  : 'Write ${exampleValue(def)}, or bind a value of that kind.',
             );
         }
       }
@@ -546,14 +554,26 @@ final class _ScreenCheck {
       switch (def.kind) {
         case PropKind.rows || PropKind.stringList || PropKind.integerList:
           if (raw is! List<Object?>) {
-            report('E-prop-kind', '$what takes ${propKindText(def)}, not ${_show(raw)}.', pp, node: ref);
+            report(
+              'E-prop-kind',
+              '$what takes ${propKindText(def)}, not ${_show(raw)}.',
+              pp,
+              node: ref,
+              hint: 'Write ${exampleValue(def)}.',
+            );
           }
         case PropKind.style:
           styleRef(def, raw, pp, ref, owner);
         case PropKind.json:
           break;
         default:
-          report('E-prop-kind', '$what takes ${propKindText(def)}, not ${_show(raw)}.', pp, node: ref);
+          report(
+            'E-prop-kind',
+            '$what takes ${propKindText(def)}, not ${_show(raw)}.',
+            pp,
+            node: ref,
+            hint: 'Write ${exampleValue(def)}.',
+          );
       }
       return;
     }
@@ -563,8 +583,13 @@ final class _ScreenCheck {
   void literal(DesignProp def, Object? value, String at, String ref, String owner) {
     if (value == null) return;
     final what = 'props.${def.name} of $owner';
-    void wrong({String? hint}) =>
-        report('E-prop-kind', '$what takes ${propKindText(def)}, not ${_show(value)}.', at, node: ref, hint: hint);
+    void wrong({String? hint}) => report(
+      'E-prop-kind',
+      '$what takes ${propKindText(def)}, not ${_show(value)}.',
+      at,
+      node: ref,
+      hint: hint ?? 'Write ${exampleValue(def)}.',
+    );
     bool whole(Object? x) => x is num && x == x.roundToDouble();
     switch (def.kind) {
       case PropKind.string:
@@ -647,7 +672,13 @@ final class _ScreenCheck {
       return;
     }
     if (value is! String) {
-      report('E-prop-kind', '$what takes ${propKindText(def)}, not ${_show(value)}.', at, node: ref);
+      report(
+        'E-prop-kind',
+        '$what takes ${propKindText(def)}, not ${_show(value)}.',
+        at,
+        node: ref,
+        hint: 'Write ${exampleValue(def)}.',
+      );
       return;
     }
     final actual = v.tokens[value];

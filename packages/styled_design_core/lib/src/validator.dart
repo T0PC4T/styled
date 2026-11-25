@@ -324,6 +324,7 @@ final class _Validator {
         '$id is opened with a push (from ${edge.from}#${edge.node}.${edge.event}) but has no back action.',
         file: target.path,
         pointer: '/root',
+        node: '$id#${target.doc.root.id}',
         hint:
             'Add a back control, such as OnboardingPageHeader with on.back: [{"do": "back", "fallback": "${edge.from}"}].',
       );

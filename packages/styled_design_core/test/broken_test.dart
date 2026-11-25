@@ -29,6 +29,21 @@ List<Directory> _cases() =>
       ..sort((a, b) => a.path.compareTo(b.path));
 
 void main() {
+  test('every diagnostic the broken cases produce says what would be right, and names its node in a screen tree', () {
+    final catalog = _catalog();
+    final noHint = <String>[];
+    final noNode = <String>[];
+    for (final dir in _cases()) {
+      for (final d in validateWorkspace(_input(dir.path), catalog)) {
+        if (d.hint == null && d.allowed == null) noHint.add('${p.basename(dir.path)}: ${d.code} ${d.message}');
+        final inTree = (d.file ?? '').startsWith('screens/') && (d.pointer ?? '').startsWith('/root');
+        if (inTree && d.node == null) noNode.add('${p.basename(dir.path)}: ${d.code} ${d.message}');
+      }
+    }
+    expect(noHint, isEmpty, reason: 'diagnostics without a hint or allowed values');
+    expect(noNode, isEmpty, reason: 'diagnostics inside a node without screen#node');
+  });
+
   final catalog = _catalog();
 
   test('the base workspace validates with no diagnostics', () {

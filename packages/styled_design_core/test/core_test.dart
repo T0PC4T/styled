@@ -360,7 +360,9 @@ void main() {
     );
     expect(
       () => DesignWorkspace.load(dir).toBundle(),
-      throwsA(isA<DesignError>().having((e) => e.diagnostics.map((d) => d.pointer), 'pointers', contains('/root/note'))),
+      throwsA(
+        isA<DesignError>().having((e) => e.diagnostics.map((d) => d.pointer), 'pointers', contains('/root/note')),
+      ),
     );
   });
 }
