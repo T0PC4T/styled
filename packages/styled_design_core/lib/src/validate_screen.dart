@@ -319,7 +319,9 @@ final class _ScreenCheck {
     if (raw.containsKey('when')) checkValue(raw['when'], '$p/when', scope, ref);
     checkProps(node, comp, raw, scope, ref);
     if (comp != null) checkSlots(node, comp, raw, ref);
-    checkEvents(node, comp, raw, scope, ref);
+    final parent = ancestors.isEmpty ? null : ancestors.last;
+    final inAnchor = parent?.comp?.slot(parent.slot)?.anchor ?? false;
+    checkEvents(node, comp, raw, scope, ref, inAnchor: inAnchor);
     if (comp != null) nodeRules(node, comp, raw, ancestors, ref);
 
     for (final MapEntry(key: slot, value: children) in node.slots.entries) {
@@ -923,7 +925,14 @@ final class _ScreenCheck {
 
   // ----------------------------------------------------------------- events
 
-  void checkEvents(NodeDoc node, DesignComponent? comp, Map<String, Object?> raw, _Scope scope, String ref) {
+  void checkEvents(
+    NodeDoc node,
+    DesignComponent? comp,
+    Map<String, Object?> raw,
+    _Scope scope,
+    String ref, {
+    bool inAnchor = false,
+  }) {
     final eventScope = scope.add('event', _unknown, 'the event');
     for (final MapEntry(key: name, value: actions) in node.on.entries) {
       final ep = '${node.pointer}/on/${pointerSegment(name)}';
@@ -941,7 +950,7 @@ final class _ScreenCheck {
       checkActions(actions, eventScope, ref);
     }
     final primary = comp?.primaryEvent;
-    if (comp == null || primary == null || node.on.containsKey(primary.name)) return;
+    if (comp == null || primary == null || node.on.containsKey(primary.name) || inAnchor) return;
     final props = raw['props'];
     final disabled = props is Map<String, Object?> && (props['disabled'] == true || props['enabled'] == false);
     if (disabled) return;

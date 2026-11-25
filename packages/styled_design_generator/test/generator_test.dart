@@ -37,6 +37,7 @@ class MyButton extends Widget {
   final StyleResolver style;
   final Size size;
   final List<Widget> children;
+  @DesignAnchor()
   final Widget? leading;
   final TextEditingController? controller;
   @DesignIgnore()
@@ -120,7 +121,7 @@ void main() {
             contains("DesignProp.style('style', families: ['StyleButton'])"),
             contains("DesignProp('labels', PropKind.stringList, defaultValue: ['a', 'b'])"),
             contains("DesignSlot('children', many: true, required: true)"),
-            contains("DesignSlot('leading')"),
+            contains("DesignSlot('leading', anchor: true)"),
             contains("DesignEvent('tap', primary: true)"),
             contains("DesignEvent('changed', payload: {'value': 'string'})"),
             contains("ctx.icon('icon') ?? const IconData(0)"),

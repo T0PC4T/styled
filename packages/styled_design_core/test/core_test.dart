@@ -332,7 +332,7 @@ void main() {
               DesignProp.string('label'),
               DesignProp.style('style', families: ['StyleButton']),
             ],
-            slots: [DesignSlot('leading')],
+            slots: [DesignSlot('leading'), DesignSlot('anchor', anchor: true)],
             events: [DesignEvent('tap', primary: true)],
             rules: [
               DesignRule.notInside(['OnboardingCard'], code: 'W-x'),
@@ -364,5 +364,47 @@ void main() {
         isA<DesignError>().having((e) => e.diagnostics.map((d) => d.pointer), 'pointers', contains('/root/note')),
       ),
     );
+  });
+
+  test('a button in an anchor slot need not bind its primary event; elsewhere it must', () {
+    const catalog = Catalog(
+      components: {
+        'Page': DesignComponent(type: 'Page', slots: [DesignSlot('children', many: true)]),
+        'Menu': DesignComponent(
+          type: 'Menu',
+          slots: [DesignSlot('child', anchor: true)],
+          events: [DesignEvent('open')],
+        ),
+        'Button': DesignComponent(type: 'Button', events: [DesignEvent('tap', primary: true)]),
+      },
+    );
+    const input = WorkspaceInput({
+      'design.json': {'format': 1, 'name': 'W', 'start': 'a.b'},
+      'screens/a/b.json': {
+        'format': 1,
+        'id': 'a.b',
+        'kind': 'page',
+        'title': 'B',
+        'route': '/a/b',
+        'root': {
+          'id': 'page',
+          'type': 'Page',
+          'children': [
+            {
+              'id': 'menu',
+              'type': 'Menu',
+              'slots': {
+                'child': [
+                  {'id': 'anchored', 'type': 'Button'},
+                ],
+              },
+            },
+            {'id': 'loose', 'type': 'Button'},
+          ],
+        },
+      },
+    });
+    final unbound = validateWorkspace(input, catalog).where((d) => d.code == 'W-unbound-primary').map((d) => d.node);
+    expect(unbound, ['a.b#loose']);
   });
 }

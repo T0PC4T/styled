@@ -199,6 +199,10 @@ final class DesignSlot {
   /// such as `row` for a table cell or `items` for a collection view.
   final String? template;
 
+  /// The slot holds its owner's anchor, such as a popup menu's button: the
+  /// owner handles the taps, so nodes here need not bind their primary event.
+  final bool anchor;
+
   final String? doc;
 
   const DesignSlot(
@@ -207,6 +211,7 @@ final class DesignSlot {
     this.many = false,
     this.required = false,
     this.template,
+    this.anchor = false,
     this.doc,
   });
 
@@ -219,6 +224,7 @@ final class DesignSlot {
     many: json['many'] as bool? ?? false,
     required: json['required'] as bool? ?? false,
     template: (json['template'] as Map<String, Object?>?)?['as'] as String?,
+    anchor: json['anchor'] as bool? ?? false,
     doc: json['doc'] as String?,
   );
 
@@ -228,6 +234,7 @@ final class DesignSlot {
     'many': many,
     if (required) 'required': true,
     if (template != null) 'template': {'as': template},
+    if (anchor) 'anchor': true,
     'doc': ?doc,
   };
 }

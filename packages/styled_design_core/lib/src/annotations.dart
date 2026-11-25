@@ -70,3 +70,10 @@ final class DesignPath {
 final class DesignIgnore {
   const DesignIgnore();
 }
+
+/// On a widget parameter that is its owner's anchor, such as a popup menu's
+/// button: the owner handles its taps, so documents need not link them.
+@Target({TargetKind.parameter, TargetKind.field})
+final class DesignAnchor {
+  const DesignAnchor();
+}

@@ -9,6 +9,7 @@ const designableChecker = TypeChecker.fromUrl('$_annotations#Designable');
 const _templateChecker = TypeChecker.fromUrl('$_annotations#DesignTemplate');
 const _pathChecker = TypeChecker.fromUrl('$_annotations#DesignPath');
 const _ignoreChecker = TypeChecker.fromUrl('$_annotations#DesignIgnore');
+const _anchorChecker = TypeChecker.fromUrl('$_annotations#DesignAnchor');
 
 /// How one constructor parameter appears in a design document, and the Dart
 /// expression that reads it from a `DesignBuildContext ctx`.
@@ -401,8 +402,10 @@ ParamPlan? _planParam(ClassElement cls, FormalParameterElement p, {required bool
   if (_isWidget(type)) {
     final specific = (type as InterfaceType).element.name;
     final generic = specific == 'Widget' || specific == 'PreferredSizeWidget';
+    final anchor = _paramAnnotation(_anchorChecker, p) != null;
     final slot =
-        "DesignSlot('$name'${generic ? '' : ", accepts: ['$specific']"}${required && !nullable ? ', required: true' : ''})";
+        "DesignSlot('$name'${generic ? '' : ", accepts: ['$specific']"}${required && !nullable ? ', required: true' : ''}"
+        "${anchor ? ', anchor: true' : ''})";
     final read = generic
         ? "ctx.child('$name')"
         : "switch (ctx.child('$name')) { final ${typeCode(type).replaceAll('?', '')} w => w, _ => null }";
