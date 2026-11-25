@@ -6,6 +6,7 @@ import 'package:source_gen/source_gen.dart';
 
 const _annotations = 'package:styled_design_core/src/annotations.dart';
 const designableChecker = TypeChecker.fromUrl('$_annotations#Designable');
+const notDesignableChecker = TypeChecker.fromUrl('$_annotations#NotDesignable');
 const _templateChecker = TypeChecker.fromUrl('$_annotations#DesignTemplate');
 const _pathChecker = TypeChecker.fromUrl('$_annotations#DesignPath');
 const _ignoreChecker = TypeChecker.fromUrl('$_annotations#DesignIgnore');

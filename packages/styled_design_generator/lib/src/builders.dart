@@ -98,7 +98,17 @@ class DesignIndexBuilder implements Builder {
 }
 
 /// `$lib$` → `lib/design.g.dart`.
+///
+/// With [checkCoverage] (the `check_coverage` builder option, off by default) it also resolves the
+/// package's barrel ([coverageBarrel], `lib/<package>.dart` unless `coverage_barrel` names another) and
+/// fails the build listing every `Widget` subclass the barrel exports from this package that carries
+/// neither `@Designable` nor `@NotDesignable`.
 class DesignRegistryBuilder implements Builder {
+  final bool checkCoverage;
+  final String? coverageBarrel;
+
+  DesignRegistryBuilder({this.checkCoverage = false, this.coverageBarrel});
+
   @override
   final buildExtensions = const {
     r'$lib$': ['design.g.dart'],
@@ -106,6 +116,7 @@ class DesignRegistryBuilder implements Builder {
 
   @override
   Future<void> build(BuildStep step) async {
+    if (checkCoverage) await _checkCoverage(step);
     final definitions = <DefinitionRef>[];
     final presets = <PresetFamilyPlan>[];
     final ids = await step.findAssets(Glob('lib/**.design_index.json')).toList()
@@ -125,6 +136,40 @@ class DesignRegistryBuilder implements Builder {
     final out = AssetId(step.inputId.package, 'lib/design.g.dart');
     await step.writeAsString(out, _format(writeRegistry(unique, presets), out));
   }
+
+  /// Fails the build when the barrel exports a widget of this package with neither annotation.
+  Future<void> _checkCoverage(BuildStep step) async {
+    final package = step.inputId.package;
+    final barrel = AssetId(package, coverageBarrel ?? 'lib/$package.dart');
+    if (!await step.canRead(barrel) || !await step.resolver.isLibrary(barrel)) {
+      throw StateError('check_coverage: ${barrel.path} is not a library of $package; set coverage_barrel.');
+    }
+    final missing = unannotatedWidgets(await step.resolver.libraryFor(barrel), package);
+    if (missing.isEmpty) return;
+    throw InvalidGenerationSourceError(
+      '${missing.length} widget(s) exported from ${barrel.path} carry neither @Designable nor @NotDesignable:\n'
+      '${missing.map((m) => '  - $m').join('\n')}\n'
+      'Annotate each with @Designable(...) if a design document may place it, else @NotDesignable(\'reason\').',
+    );
+  }
+}
+
+/// `Widget` subclasses declared in [package] and exported by [library] without `@Designable` or
+/// `@NotDesignable`, as `Name (lib/src/path.dart)`, sorted.
+List<String> unannotatedWidgets(LibraryElement library, String package) {
+  final missing = <String>[];
+  for (final element in library.exportNamespace.definedNames2.values) {
+    if (element is! ClassElement) continue;
+    final uri = element.library.uri;
+    if (uri.scheme != 'package' || uri.pathSegments.first != package) continue;
+    if (!element.allSupertypes.any((t) => t.element.name == 'Widget')) continue;
+    if (designableChecker.hasAnnotationOf(element, throwOnUnresolved: false) ||
+        notDesignableChecker.hasAnnotationOf(element, throwOnUnresolved: false)) {
+      continue;
+    }
+    missing.add('${element.name} (lib/${uri.pathSegments.skip(1).join('/')})');
+  }
+  return missing..sort();
 }
 
 // Keep source_gen's error type in the public surface of this library.

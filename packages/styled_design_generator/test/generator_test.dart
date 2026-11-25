@@ -193,4 +193,76 @@ class Odd extends Widget {
       },
     );
   });
+
+  group('the registry coverage check', () {
+    const extra = r'''
+import 'package:styled_design_core/styled_design_core.dart';
+
+import 'fakes.dart';
+
+class Loose extends Widget {
+  const Loose({super.key});
+}
+
+@NotDesignable('Plumbing.')
+class Quiet extends Widget {
+  const Quiet({super.key});
+}
+
+class Helper {}
+''';
+    const hidden = r'''
+import 'fakes.dart';
+
+class Hidden extends Widget {
+  const Hidden({super.key});
+}
+''';
+    const barrel = "export 'widgets.dart';\nexport 'extra.dart';\n";
+    final sources = {
+      'pkg|lib/fakes.dart': _fakes,
+      'pkg|lib/widgets.dart': _widgets,
+      'pkg|lib/extra.dart': extra,
+      'pkg|lib/hidden.dart': hidden,
+      'pkg|lib/pkg.dart': barrel,
+    };
+
+    Future<TestBuilderResult> build(Map<String, Object?> options, Map<String, String> sources) async => testBuilders(
+      [designIndexBuilder(BuilderOptions.empty), designRegistryBuilder(BuilderOptions(options))],
+      sources,
+      rootPackage: 'pkg',
+      readerWriter: await _reader(),
+    );
+
+    test('is off by default', () async {
+      final result = await build(const {}, sources);
+      expect(result.succeeded, isTrue);
+    });
+
+    test('fails the build naming every exported widget with neither annotation', () async {
+      final result = await build(const {'check_coverage': true}, sources);
+      expect(result.succeeded, isFalse);
+      final errors = result.errors.join('\n');
+      expect(errors, contains('1 widget(s) exported from lib/pkg.dart'));
+      expect(errors, contains('Loose (lib/extra.dart)'));
+      expect(errors, allOf(isNot(contains('Quiet')), isNot(contains('MyButton')), isNot(contains('MyItem'))));
+      expect(errors, allOf(isNot(contains('Hidden')), isNot(contains('Helper'))));
+    });
+
+    test('passes once every exported widget is annotated', () async {
+      final annotated = {
+        ...sources,
+        'pkg|lib/extra.dart': extra.replaceFirst('class Loose', "@NotDesignable('Plumbing.')\nclass Loose"),
+      };
+      final result = await build(const {'check_coverage': true}, annotated);
+      expect(result.succeeded, isTrue);
+    });
+
+    test('resolves coverage_barrel when the barrel is not lib/<package>.dart', () async {
+      final moved = {...sources, 'pkg|lib/kit.dart': barrel}..remove('pkg|lib/pkg.dart');
+      final result = await build(const {'check_coverage': true, 'coverage_barrel': 'lib/kit.dart'}, moved);
+      expect(result.succeeded, isFalse);
+      expect(result.errors.join('\n'), contains('Loose (lib/extra.dart)'));
+    });
+  });
 }
