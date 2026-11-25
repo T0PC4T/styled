@@ -1,0 +1,22 @@
+name: styled_design
+description: Flutter runtime of the styled design engine. DesignScreen draws screen documents with a component registry.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  crypto: ^3.0.6
+  styled:
+    path: ../styled
+  styled_design_core:
+    path: ../styled_design_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
