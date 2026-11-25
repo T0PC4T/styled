@@ -65,6 +65,26 @@ final class DesignPath {
   const DesignPath(this.name);
 }
 
+/// On a style parameter: the preset families a design document may pass, such as
+/// `@DesignFamilies([StyleCard, StyleCardSection])`.
+///
+/// The generator takes a style parameter's families from this annotation, else from the parameter's
+/// type, else from its default; a style parameter with none fails the build. [DesignFamilies.any] is for a
+/// style that truly takes a preset of any family.
+@Target({TargetKind.parameter, TargetKind.field})
+final class DesignFamilies {
+  /// The accepted preset families.
+  final List<Type> families;
+
+  /// Whether a preset of any family is accepted.
+  final bool any;
+
+  const DesignFamilies(this.families) : any = false;
+
+  /// Any family: the catalog lists no families, and the validator accepts any preset.
+  const DesignFamilies.any() : families = const [], any = true;
+}
+
 /// On a parameter designers do not set.
 @Target({TargetKind.parameter, TargetKind.field})
 final class DesignIgnore {

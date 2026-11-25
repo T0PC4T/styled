@@ -11,6 +11,7 @@ const _templateChecker = TypeChecker.fromUrl('$_annotations#DesignTemplate');
 const _pathChecker = TypeChecker.fromUrl('$_annotations#DesignPath');
 const _ignoreChecker = TypeChecker.fromUrl('$_annotations#DesignIgnore');
 const _anchorChecker = TypeChecker.fromUrl('$_annotations#DesignAnchor');
+const _familiesChecker = TypeChecker.fromUrl('$_annotations#DesignFamilies');
 
 /// How one constructor parameter appears in a design document, and the Dart
 /// expression that reads it from a `DesignBuildContext ctx`.
@@ -485,7 +486,7 @@ ParamPlan? _planParam(ClassElement cls, FormalParameterElement p, {required bool
     return plan(orDefault("ctx.icon('$name')", 'const IconData(0)'), prop: "DesignProp.icon('$name'${common()})");
   }
   if (_isA(type, 'StyleResolver')) {
-    final families = _styleFamilies(type, p.computeConstantValue());
+    final families = _styleFamilies(cls, p, type, p.computeConstantValue());
     return plan(
       orDefault("ctx.style('$name')", 'const Style()'),
       prop: "DesignProp.style('$name', families: [${families.map(_str).join(', ')}]${common(withDefault: false)})",
@@ -522,15 +523,53 @@ String _slotNameFor(String param) => param.endsWith('Builder') && param.length >
     ? param.substring(0, param.length - 'Builder'.length)
     : param;
 
-/// The preset families a style parameter accepts: the parameter's own type
-/// when it is a family, else the family of its default.
-List<String> _styleFamilies(DartType type, DartObject? defaultValue) {
+/// The preset families a style parameter accepts: its `@DesignFamilies` (`.any()` gives none, meaning
+/// any family), else the parameter's own type when it is a family, else the family of its default. A style
+/// parameter with none of the three fails the build: a catalog entry without families would accept any
+/// preset by accident.
+List<String> _styleFamilies(ClassElement cls, FormalParameterElement p, DartType type, DartObject? defaultValue) {
   bool isFamily(DartType t) => t is InterfaceType && t.element.getNamedConstructor('fromVariant') != null;
+  final name = p.name!;
+  if (_paramAnnotation(_familiesChecker, p) case final annotation?) {
+    final reader = ConstantReader(annotation);
+    final any = reader.peek('any');
+    final listed = reader.peek('families');
+    if (any == null || listed == null || !listed.isList) {
+      throw InvalidGenerationSourceError(
+        '${cls.name}: @DesignFamilies on `$name` does not resolve. Import the families it names.',
+        element: cls,
+      );
+    }
+    if (any.boolValue) return const [];
+    final families = [
+      for (final family in listed.listValue)
+        if (family.toTypeValue() case final t?)
+          isFamily(t)
+              ? (t as InterfaceType).element.name!
+              : throw InvalidGenerationSourceError(
+                  '${cls.name}: @DesignFamilies on `$name` names `${t.getDisplayString()}`, which is not a preset '
+                  'family (a @StyledPreset class with a fromVariant constructor).',
+                  element: cls,
+                ),
+    ];
+    if (families.isEmpty) {
+      throw InvalidGenerationSourceError(
+        '${cls.name}: @DesignFamilies on `$name` lists no family. Name them, or write @DesignFamilies.any().',
+        element: cls,
+      );
+    }
+    return families;
+  }
   final own = type is InterfaceType ? type.element.name : null;
   if (own != null && own != 'StyleResolver' && isFamily(type)) return [own];
   final d = defaultValue?.type;
   if (d is InterfaceType && isFamily(d)) return [d.element.name!];
-  return const [];
+  throw InvalidGenerationSourceError(
+    '${cls.name}: style parameter `$name` names no preset family: its type is not a family and its default '
+    'is not a preset. Add @DesignFamilies([...]) with the families a document may pass, '
+    '@DesignFamilies.any() if any preset fits, or @DesignIgnore() if documents may not set it.',
+    element: cls,
+  );
 }
 
 bool _samePackage(Uri a, Uri b) =>

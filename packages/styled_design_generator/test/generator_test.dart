@@ -21,6 +21,12 @@ class StyleButton extends StyleResolver {
 }
 class TextEditingController {}
 enum Size { sm, md }
+enum CardVariant { surface, flush }
+class StyleCard extends StyleResolver {
+  final CardVariant variant;
+  const StyleCard() : variant = CardVariant.surface;
+  const StyleCard.fromVariant(this.variant);
+}
 ''';
 
 const _widgets = r'''
@@ -263,6 +269,71 @@ class Hidden extends Widget {
       final result = await build(const {'check_coverage': true, 'coverage_barrel': 'lib/kit.dart'}, moved);
       expect(result.succeeded, isFalse);
       expect(result.errors.join('\n'), contains('Loose (lib/extra.dart)'));
+    });
+  });
+
+  group('a style parameter\'s families', () {
+    const framed = r'''
+import 'package:styled_design_core/styled_design_core.dart';
+import 'fakes.dart';
+
+@Designable()
+class Framed extends Widget {
+  @DesignFamilies([StyleCard, StyleButton])
+  final StyleResolver? style;
+  @DesignFamilies.any()
+  final StyleResolver? frame;
+  const Framed({super.key, this.style, this.frame});
+}
+''';
+
+    Future<TestBuilderResult> build(String widget, {Map<String, Object>? outputs}) async => testBuilder(
+      designDefinitionsBuilder(BuilderOptions.empty),
+      {'pkg|lib/fakes.dart': _fakes, 'pkg|lib/framed.dart': widget},
+      rootPackage: 'pkg',
+      readerWriter: await _reader(),
+      outputs: outputs,
+    );
+
+    test('come from @DesignFamilies, a list or any', () async {
+      await build(
+        framed,
+        outputs: {
+          'pkg|lib/framed.design.g.dart': decodedMatches(
+            allOf([
+              contains("DesignProp.style('style', families: ['StyleCard', 'StyleButton'])"),
+              contains("DesignProp.style('frame', families: [])"),
+              contains("style: ctx.style('style')"),
+            ]),
+          ),
+        },
+      );
+    });
+
+    test('fail the build when a style parameter names none', () async {
+      final result = await build(
+        framed
+            .replaceFirst('  const Framed(', '  final StyleResolver? loose;\n  const Framed(')
+            .replaceFirst('this.frame});', 'this.frame, this.loose});'),
+      );
+      expect(result.succeeded, isFalse);
+      expect(
+        result.errors.join('\n'),
+        allOf(
+          contains('Framed'),
+          contains('`loose`'),
+          contains('@DesignFamilies([...])'),
+          contains('@DesignFamilies.any()'),
+        ),
+      );
+    });
+
+    test('must be preset families', () async {
+      final result = await build(
+        framed.replaceFirst('@DesignFamilies([StyleCard, StyleButton])', '@DesignFamilies([Size])'),
+      );
+      expect(result.succeeded, isFalse);
+      expect(result.errors.join('\n'), allOf(contains('Framed'), contains('`style`'), contains('not a preset family')));
     });
   });
 }
