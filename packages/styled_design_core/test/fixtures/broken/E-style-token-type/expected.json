@@ -1,0 +1,20 @@
+{
+  "description": "",
+  "tolerate": [
+    "W-preset-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-style-token-type",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/color",
+      "allowed": true
+    },
+    {
+      "code": "E-style-token-type",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/text/fontWeight",
+      "allowed": true
+    }
+  ]
+}

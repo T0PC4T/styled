@@ -1,0 +1,14 @@
+{
+  "format": 1,
+  "id": "StyleCard.test",
+  "extends": "StyleCard.surface",
+  "style": {
+    "box": {
+      "color": "#59B0E3",
+      "padding": {
+        "all": 8
+      },
+      "width": 100
+    }
+  }
+}

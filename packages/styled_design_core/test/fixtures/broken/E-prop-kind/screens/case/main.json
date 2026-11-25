@@ -1,0 +1,79 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "fixtures": {
+    "default": {
+      "k": "a"
+    }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "s",
+        "type": "Showcase",
+        "props": {
+          "title": 5,
+          "enabled": "true",
+          "count": 2.5,
+          "ratio": "x",
+          "align": "centre",
+          "style": "StyleCard.surfac",
+          "anyStyle": "primary",
+          "gap": "primary",
+          "due": "tomorrow",
+          "idPath": "a b",
+          "rows": "x",
+          "tags": [
+            "a",
+            1
+          ],
+          "sizes": [
+            1,
+            "2"
+          ],
+          "picture": 5,
+          "iconStyle": {
+            "preset": "StyleIconToken.success",
+            "args": {
+              "size": "primary"
+            }
+          }
+        }
+      },
+      {
+        "id": "s2",
+        "type": "Showcase",
+        "props": {
+          "enabled": {
+            "$text": "yes"
+          },
+          "title": {
+            "$eq": [
+              1,
+              1
+            ]
+          },
+          "align": {
+            "$match": [
+              {
+                "$bind": "data.k"
+              },
+              {
+                "a": "start"
+              },
+              "middle"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

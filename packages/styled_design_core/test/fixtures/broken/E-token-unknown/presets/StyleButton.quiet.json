@@ -1,0 +1,10 @@
+{
+  "format": 1,
+  "id": "StyleButton.quiet",
+  "extends": "StyleButton.ghost",
+  "style": {
+    "text": {
+      "color": "onSurfac"
+    }
+  }
+}

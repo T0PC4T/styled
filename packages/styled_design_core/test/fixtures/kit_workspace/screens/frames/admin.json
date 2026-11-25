@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../schemas/screen.schema.json",
+  "format": 1,
+  "id": "frames.admin",
+  "kind": "frame",
+  "title": "Admin frame",
+  "description": "Preview-only stand-in for the app's AdminShell. Sidebar buttons change section, so they use replaceAll.",
+  "root": {
+    "id": "shell",
+    "type": "OnboardingSidebarShell",
+    "slots": {
+      "sidebar": [
+        {
+          "id": "sidebar",
+          "type": "OnboardingSidebar",
+          "slots": {
+            "header": [
+              { "id": "brand", "type": "OnboardingSidebarHeader", "props": { "title": "Onboarding360", "subtitle": "360 Care Group" } }
+            ]
+          },
+          "children": [
+            {
+              "id": "manage",
+              "type": "OnboardingSidebarSection",
+              "props": { "title": "Manage" },
+              "children": [
+                {
+                  "id": "navDashboard",
+                  "type": "OnboardingSidebarButton",
+                  "props": {
+                    "label": "Dashboard",
+                    "icon": "layout_dashboard",
+                    "selected": { "$eq": [{ "$bind": "page.id" }, "admin.dashboard"] }
+                  },
+                  "on": { "tap": [{ "do": "navigate", "to": "admin.dashboard", "mode": "replaceAll" }] }
+                },
+                {
+                  "id": "navAutomations",
+                  "type": "OnboardingSidebarButton",
+                  "props": {
+                    "label": "Automations",
+                    "icon": "bolt",
+                    "selected": { "$in": [{ "$bind": "page.id" }, ["admin.automations", "admin.automationEditor"]] }
+                  },
+                  "on": { "tap": [{ "do": "navigate", "to": "admin.automations", "mode": "replaceAll" }] }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "child": [{ "id": "outlet", "type": "DesignOutlet" }]
+    }
+  }
+}

@@ -1,0 +1,3846 @@
+{
+  "format": 1,
+  "version": 1,
+  "hash": "sha256:d604281cb32b513f5e3c92eb473ad6299b0df784c5be36f7b28d22d30611177a",
+  "modes": [
+    "light",
+    "dark"
+  ],
+  "tokens": {
+    "primary": {
+      "type": "color",
+      "light": "#59B0E3",
+      "dark": "#59B0E3"
+    },
+    "primaryVariant": {
+      "type": "color",
+      "light": "#4298CC",
+      "dark": "#7BC2EC"
+    },
+    "primarySubtle": {
+      "type": "color",
+      "light": "#EAF5FC",
+      "dark": "#3D59B0E3"
+    },
+    "onPrimary": {
+      "type": "color",
+      "light": "#FFFFFF"
+    },
+    "accent": {
+      "type": "color",
+      "light": "#F4C101",
+      "dark": "#F7CE3E"
+    },
+    "brandLogoSurface": {
+      "type": "color",
+      "light": "#00FFFFFF",
+      "dark": "#F5F9FC"
+    },
+    "background": {
+      "type": "color",
+      "light": "#F5F9FC",
+      "dark": "#0B1528"
+    },
+    "surface": {
+      "type": "color",
+      "light": "#FFFFFF",
+      "dark": "#111F38"
+    },
+    "surfaceSubtle": {
+      "type": "color",
+      "light": "#E4EEF7",
+      "dark": "#182B49"
+    },
+    "surfaceHover": {
+      "type": "color",
+      "light": "#F2F7FC",
+      "dark": "#1C3254"
+    },
+    "surfaceActive": {
+      "type": "color",
+      "light": "#DCEAF7",
+      "dark": "#25406B"
+    },
+    "onBackground": {
+      "type": "color",
+      "light": "#0E1E38",
+      "dark": "#F2F7FC"
+    },
+    "onSurface": {
+      "type": "color",
+      "light": "#172B4D",
+      "dark": "#E6F0FA"
+    },
+    "onSurfaceSubtle": {
+      "type": "color",
+      "light": "#4A5D75",
+      "dark": "#94AFC9"
+    },
+    "onSurfaceMuted": {
+      "type": "color",
+      "light": "#657589",
+      "dark": "#5E7896"
+    },
+    "border": {
+      "type": "color",
+      "light": "#D8E5F2",
+      "dark": "#1E3456"
+    },
+    "borderSubtle": {
+      "type": "color",
+      "light": "#EDF3F9",
+      "dark": "#152642"
+    },
+    "borderFocus": {
+      "type": "color",
+      "light": "#59B0E3",
+      "dark": "#59B0E3"
+    },
+    "divider": {
+      "type": "color",
+      "light": "#D8E5F2",
+      "dark": "#1E3456"
+    },
+    "shadow": {
+      "type": "color",
+      "light": "#120E1E38",
+      "dark": "#80000000"
+    },
+    "barrier": {
+      "type": "color",
+      "light": "#A60E1E38",
+      "dark": "#B3050B14"
+    },
+    "mediaBackground": {
+      "type": "color",
+      "light": "#0E1E38",
+      "dark": "#070E1B"
+    },
+    "onMedia": {
+      "type": "color",
+      "light": "#FFFFFF"
+    },
+    "success": {
+      "type": "color",
+      "light": "#10B981"
+    },
+    "successVariant": {
+      "type": "color",
+      "light": "#059669"
+    },
+    "successSubtle": {
+      "type": "color",
+      "light": "#ECFDF5",
+      "dark": "#66064E3B"
+    },
+    "onSuccess": {
+      "type": "color",
+      "light": "#FFFFFF"
+    },
+    "warning": {
+      "type": "color",
+      "light": "#F4C101"
+    },
+    "warningVariant": {
+      "type": "color",
+      "light": "#B88600",
+      "dark": "#F7CE3E"
+    },
+    "warningSubtle": {
+      "type": "color",
+      "light": "#FFFBEB",
+      "dark": "#4D6B5200"
+    },
+    "onWarning": {
+      "type": "color",
+      "light": "#1F408A"
+    },
+    "error": {
+      "type": "color",
+      "light": "#DC2626"
+    },
+    "errorSubtle": {
+      "type": "color",
+      "light": "#FEF2F2",
+      "dark": "#667F1D1D"
+    },
+    "onError": {
+      "type": "color",
+      "light": "#FFFFFF"
+    },
+    "info": {
+      "type": "color",
+      "light": "#59B0E3"
+    },
+    "infoVariant": {
+      "type": "color",
+      "light": "#2B7CB3",
+      "dark": "#7BC2EC"
+    },
+    "infoSubtle": {
+      "type": "color",
+      "light": "#EAF5FC",
+      "dark": "#4D1A5276"
+    },
+    "onInfo": {
+      "type": "color",
+      "light": "#FFFFFF"
+    },
+    "chart1": {
+      "type": "color",
+      "light": "#59B0E3"
+    },
+    "chart2": {
+      "type": "color",
+      "light": "#10B981"
+    },
+    "chart3": {
+      "type": "color",
+      "light": "#1F408A"
+    },
+    "chart4": {
+      "type": "color",
+      "light": "#F4C101"
+    },
+    "chart5": {
+      "type": "color",
+      "light": "#EC4899"
+    },
+    "chart6": {
+      "type": "color",
+      "light": "#2C4996"
+    },
+    "chart7": {
+      "type": "color",
+      "light": "#F97316"
+    },
+    "chart8": {
+      "type": "color",
+      "light": "#14B8A6"
+    },
+    "chart9": {
+      "type": "color",
+      "light": "#6366F1"
+    },
+    "chart10": {
+      "type": "color",
+      "light": "#84CC16"
+    },
+    "chart11": {
+      "type": "color",
+      "light": "#D946EF"
+    },
+    "chart12": {
+      "type": "color",
+      "light": "#526884"
+    },
+    "chartGrid": {
+      "type": "color",
+      "light": "#D8E5F2",
+      "dark": "#1E3456"
+    },
+    "chartAxis": {
+      "type": "color",
+      "light": "#BFD2E5",
+      "dark": "#2B4670"
+    },
+    "chartAxisLabel": {
+      "type": "color",
+      "light": "#526884",
+      "dark": "#94AFC9"
+    },
+    "chartCrosshair": {
+      "type": "color",
+      "light": "#526884",
+      "dark": "#94AFC9"
+    },
+    "chartTooltipBackground": {
+      "type": "color",
+      "light": "#0E1E38",
+      "dark": "#070E1B"
+    },
+    "chartTooltipText": {
+      "type": "color",
+      "light": "#F5F9FC",
+      "dark": "#F2F7FC"
+    },
+    "chartPositive": {
+      "type": "color",
+      "light": "#10B981"
+    },
+    "chartNegative": {
+      "type": "color",
+      "light": "#EF4444"
+    },
+    "sidebarWidth": {
+      "type": "double",
+      "light": 260
+    },
+    "topBarHeight": {
+      "type": "double",
+      "light": 60
+    },
+    "mediumWidth": {
+      "type": "double",
+      "light": 1024
+    },
+    "paddingXs": {
+      "type": "double",
+      "light": 4
+    },
+    "paddingSm": {
+      "type": "double",
+      "light": 8
+    },
+    "padding": {
+      "type": "double",
+      "light": 16
+    },
+    "paddingLg": {
+      "type": "double",
+      "light": 24
+    },
+    "margin": {
+      "type": "double",
+      "light": 12
+    },
+    "radiusSm": {
+      "type": "double",
+      "light": 4
+    },
+    "radius": {
+      "type": "double",
+      "light": 8
+    },
+    "radiusLg": {
+      "type": "double",
+      "light": 12
+    },
+    "cardRadius": {
+      "type": "double",
+      "light": 12
+    },
+    "radiusFull": {
+      "type": "double",
+      "light": 999
+    },
+    "strokeWidth": {
+      "type": "double",
+      "light": 1
+    },
+    "strokeWidthThick": {
+      "type": "double",
+      "light": 2
+    },
+    "strokeWidthAccent": {
+      "type": "double",
+      "light": 4
+    },
+    "buttonHeightSm": {
+      "type": "double",
+      "light": 32
+    },
+    "buttonHeight": {
+      "type": "double",
+      "light": 40
+    },
+    "buttonHeightLg": {
+      "type": "double",
+      "light": 48
+    },
+    "minButtonWidth": {
+      "type": "double",
+      "light": 88
+    },
+    "maxButtonWidth": {
+      "type": "double",
+      "light": 720
+    },
+    "tileButtonHeight": {
+      "type": "double",
+      "light": 88
+    },
+    "buttonHoverLift": {
+      "type": "double",
+      "light": 0,
+      "dark": 0
+    },
+    "iconSizeSm": {
+      "type": "double",
+      "light": 16
+    },
+    "iconSize": {
+      "type": "double",
+      "light": 20
+    },
+    "iconSizeLg": {
+      "type": "double",
+      "light": 24
+    },
+    "fontSizeXs": {
+      "type": "double",
+      "light": 11
+    },
+    "fontSizeSm": {
+      "type": "double",
+      "light": 12
+    },
+    "fontSize": {
+      "type": "double",
+      "light": 14
+    },
+    "fontSizeMd": {
+      "type": "double",
+      "light": 16
+    },
+    "fontSizeLg": {
+      "type": "double",
+      "light": 18
+    },
+    "fontSizeXl": {
+      "type": "double",
+      "light": 20
+    },
+    "h3FontSize": {
+      "type": "double",
+      "light": 24
+    },
+    "h2FontSize": {
+      "type": "double",
+      "light": 30
+    },
+    "h1FontSize": {
+      "type": "double",
+      "light": 36
+    },
+    "fontWeightRegular": {
+      "type": "fontWeight",
+      "light": "w400"
+    },
+    "fontWeightMedium": {
+      "type": "fontWeight",
+      "light": "w500"
+    },
+    "fontWeightSemiBold": {
+      "type": "fontWeight",
+      "light": "w600"
+    },
+    "fontWeightBold": {
+      "type": "fontWeight",
+      "light": "w700"
+    },
+    "headerFontFamily": {
+      "type": "string",
+      "light": "Inter"
+    },
+    "generalFontFamily": {
+      "type": "string",
+      "light": "Inter"
+    },
+    "monoFontFamily": {
+      "type": "string",
+      "light": "JetBrains Mono"
+    },
+    "animationDurationFast": {
+      "type": "duration",
+      "light": 100
+    },
+    "animationDuration": {
+      "type": "duration",
+      "light": 200
+    },
+    "animationDurationSlow": {
+      "type": "duration",
+      "light": 350
+    },
+    "cardFlipPerspective": {
+      "type": "double",
+      "light": 0.0012
+    },
+    "opacityNone": {
+      "type": "double",
+      "light": 0
+    },
+    "opacityFaint": {
+      "type": "double",
+      "light": 0.08
+    },
+    "opacitySubtle": {
+      "type": "double",
+      "light": 0.18
+    },
+    "opacityMedium": {
+      "type": "double",
+      "light": 0.3
+    },
+    "opacityBold": {
+      "type": "double",
+      "light": 0.4
+    },
+    "opacityMuted": {
+      "type": "double",
+      "light": 0.65
+    },
+    "shadowSm": {
+      "type": "shadow",
+      "light": {
+        "opacity": 0.04,
+        "blurRadius": 10.0,
+        "dy": 2.0
+      }
+    },
+    "shadowLg": {
+      "type": "shadow",
+      "light": {
+        "opacity": 0.15,
+        "blurRadius": 28.0,
+        "dy": 10.0
+      }
+    },
+    "glowPressed": {
+      "type": "shadow",
+      "light": {
+        "opacity": 0.15,
+        "blurRadius": 4.0,
+        "dy": 1.0
+      }
+    },
+    "glowSm": {
+      "type": "shadow",
+      "light": {
+        "opacity": 0.12,
+        "blurRadius": 8.0,
+        "dy": 2.0
+      }
+    },
+    "glowMd": {
+      "type": "shadow",
+      "light": {
+        "opacity": 0.25,
+        "blurRadius": 12.0,
+        "dy": 4.0
+      }
+    },
+    "glowLg": {
+      "type": "shadow",
+      "light": {
+        "opacity": 0.35,
+        "blurRadius": 14.0,
+        "dy": 4.0
+      }
+    },
+    "radiusChip": {
+      "type": "double",
+      "light": 6
+    },
+    "pressOffset": {
+      "type": "double",
+      "light": 1
+    },
+    "avatarSize": {
+      "type": "double",
+      "light": 36
+    },
+    "iconSizeHero": {
+      "type": "double",
+      "light": 64
+    },
+    "letterSpacingTighter": {
+      "type": "double",
+      "light": -0.5
+    },
+    "letterSpacingTight": {
+      "type": "double",
+      "light": -0.3
+    },
+    "letterSpacingSnug": {
+      "type": "double",
+      "light": -0.2
+    },
+    "letterSpacingWide": {
+      "type": "double",
+      "light": 1.2
+    },
+    "lineHeight": {
+      "type": "double",
+      "light": 1.5
+    },
+    "lineHeightCode": {
+      "type": "double",
+      "light": 1.45
+    },
+    "letterSpacingSlight": {
+      "type": "double",
+      "light": 0.5
+    },
+    "paddingXxs": {
+      "type": "double",
+      "light": 2
+    },
+    "paddingHairline": {
+      "type": "double",
+      "light": 1
+    },
+    "dividerThickness": {
+      "type": "double",
+      "light": 1
+    },
+    "iconSizeXs": {
+      "type": "double",
+      "light": 14
+    },
+    "iconSizeMd": {
+      "type": "double",
+      "light": 18
+    },
+    "iconSizeXl": {
+      "type": "double",
+      "light": 28
+    },
+    "iconBoxSize": {
+      "type": "double",
+      "light": 44
+    },
+    "badgeSizeSm": {
+      "type": "double",
+      "light": 28
+    },
+    "badgeSize": {
+      "type": "double",
+      "light": 36
+    },
+    "badgeSizeLg": {
+      "type": "double",
+      "light": 48
+    },
+    "checkboxSize": {
+      "type": "double",
+      "light": 20
+    },
+    "radioDotSize": {
+      "type": "double",
+      "light": 10
+    },
+    "switchWidth": {
+      "type": "double",
+      "light": 44
+    },
+    "switchHeight": {
+      "type": "double",
+      "light": 24
+    },
+    "tableRowHeight": {
+      "type": "double",
+      "light": 52
+    },
+    "modalWidth": {
+      "type": "double",
+      "light": 600
+    },
+    "modalWidthLg": {
+      "type": "double",
+      "light": 800
+    },
+    "modalHeight": {
+      "type": "double",
+      "light": 960
+    },
+    "modalHeightLg": {
+      "type": "double",
+      "light": 850
+    },
+    "cardHoverLift": {
+      "type": "double",
+      "light": -2
+    },
+    "modalWidthSm": {
+      "type": "double",
+      "light": 440
+    },
+    "modalWidthXl": {
+      "type": "double",
+      "light": 1100
+    },
+    "portalContentWidth": {
+      "type": "double",
+      "light": 720
+    },
+    "contentMaxWidth": {
+      "type": "double",
+      "light": 1200
+    },
+    "gridMinItemWidth": {
+      "type": "double",
+      "light": 280
+    },
+    "menuMinWidth": {
+      "type": "double",
+      "light": 180
+    },
+    "menuMaxHeight": {
+      "type": "double",
+      "light": 320
+    },
+    "switchThumbSize": {
+      "type": "double",
+      "light": 18
+    },
+    "sliderTrackHeight": {
+      "type": "double",
+      "light": 4
+    },
+    "sliderThumbSize": {
+      "type": "double",
+      "light": 16
+    },
+    "progressBarHeight": {
+      "type": "double",
+      "light": 8
+    },
+    "topBarProgressHeight": {
+      "type": "double",
+      "light": 3
+    },
+    "progressRingSize": {
+      "type": "double",
+      "light": 56
+    },
+    "progressRingStroke": {
+      "type": "double",
+      "light": 6
+    },
+    "progressRingSizeLg": {
+      "type": "double",
+      "light": 120
+    },
+    "progressRingStrokeLg": {
+      "type": "double",
+      "light": 8
+    },
+    "dropzoneMinHeight": {
+      "type": "double",
+      "light": 120
+    },
+    "signaturePadHeight": {
+      "type": "double",
+      "light": 160
+    },
+    "toastWidth": {
+      "type": "double",
+      "light": 360
+    },
+    "workspacePaneWidth": {
+      "type": "double",
+      "light": 320
+    },
+    "avatarSizeSm": {
+      "type": "double",
+      "light": 32
+    },
+    "avatarSizeRow": {
+      "type": "double",
+      "light": 40
+    },
+    "avatarSizeLg": {
+      "type": "double",
+      "light": 56
+    },
+    "tabIndicatorHeight": {
+      "type": "double",
+      "light": 2
+    },
+    "workspacePaneWidthSm": {
+      "type": "double",
+      "light": 280
+    },
+    "workspacePaneWidthLg": {
+      "type": "double",
+      "light": 480
+    },
+    "documentThumbnailHeight": {
+      "type": "double",
+      "light": 120
+    },
+    "documentFrameHeight": {
+      "type": "double",
+      "light": 720
+    },
+    "videoThumbnailWidth": {
+      "type": "double",
+      "light": 200
+    },
+    "audioMeterWidth": {
+      "type": "double",
+      "light": 48
+    },
+    "gridMinItemWidthSm": {
+      "type": "double",
+      "light": 140
+    },
+    "gridMinItemWidthLg": {
+      "type": "double",
+      "light": 352
+    },
+    "colorPickerWidth": {
+      "type": "double",
+      "light": 220
+    },
+    "colorPickerSquareHeight": {
+      "type": "double",
+      "light": 148
+    },
+    "filterDropdownWidth": {
+      "type": "double",
+      "light": 220
+    },
+    "tableMinWidth": {
+      "type": "double",
+      "light": 880
+    },
+    "tableSelectionColumnWidth": {
+      "type": "double",
+      "light": 68
+    },
+    "tableActionColumnWidth": {
+      "type": "double",
+      "light": 80
+    },
+    "compactWidth": {
+      "type": "double",
+      "light": 512
+    },
+    "toolbarCompactBreakpoint": {
+      "type": "double",
+      "light": 820
+    },
+    "legendSwatchSize": {
+      "type": "double",
+      "light": 10
+    },
+    "thumbnailSizeSm": {
+      "type": "double",
+      "light": 36
+    },
+    "thumbnailSize": {
+      "type": "double",
+      "light": 44
+    },
+    "thumbnailSizeLg": {
+      "type": "double",
+      "light": 64
+    },
+    "reviewLabelWidth": {
+      "type": "double",
+      "light": 260
+    },
+    "lessonWidthNarrow": {
+      "type": "double",
+      "light": 640
+    },
+    "lessonWidthStandard": {
+      "type": "double",
+      "light": 800
+    },
+    "lessonWidthWide": {
+      "type": "double",
+      "light": 1040
+    },
+    "lessonSheetPadding": {
+      "type": "double",
+      "light": 32
+    },
+    "lessonMediaMinHeight": {
+      "type": "double",
+      "light": 160
+    },
+    "lessonSpacerSm": {
+      "type": "double",
+      "light": 16
+    },
+    "lessonSpacerMd": {
+      "type": "double",
+      "light": 32
+    },
+    "lessonSpacerLg": {
+      "type": "double",
+      "light": 48
+    },
+    "lessonQuoteIconSize": {
+      "type": "double",
+      "light": 32
+    },
+    "hotspotPinSize": {
+      "type": "double",
+      "light": 28
+    },
+    "lineHeightRelaxed": {
+      "type": "double",
+      "light": 1.75
+    },
+    "letterSpacingRelaxed": {
+      "type": "double",
+      "light": 0.4
+    },
+    "gutterWidth": {
+      "type": "double",
+      "light": 24
+    },
+    "dropLineThickness": {
+      "type": "double",
+      "light": 2
+    },
+    "insertHandleSize": {
+      "type": "double",
+      "light": 20
+    },
+    "dragAutoScrollEdge": {
+      "type": "double",
+      "light": 48
+    },
+    "outlineIndent": {
+      "type": "double",
+      "light": 16
+    },
+    "slotMinHeight": {
+      "type": "double",
+      "light": 56
+    },
+    "dragGhostWidth": {
+      "type": "double",
+      "light": 280
+    },
+    "dragGhostTilt": {
+      "type": "double",
+      "light": 0.03
+    },
+    "insertPaletteWidth": {
+      "type": "double",
+      "light": 360
+    },
+    "insertPaletteMaxHeight": {
+      "type": "double",
+      "light": 420
+    },
+    "previewWidthPhone": {
+      "type": "double",
+      "light": 390
+    },
+    "previewWidthTablet": {
+      "type": "double",
+      "light": 820
+    },
+    "dragAutoScrollSpeed": {
+      "type": "double",
+      "light": 900
+    },
+    "disabledFill": {
+      "type": "color",
+      "light": "#CBD9E8",
+      "dark": "#243857"
+    },
+    "onDisabled": {
+      "type": "color",
+      "light": "#637994",
+      "dark": "#6D86A3"
+    },
+    "brandSymbolSizeSm": {
+      "type": "double",
+      "light": 28
+    },
+    "brandSymbolSize": {
+      "type": "double",
+      "light": 36
+    },
+    "brandSymbolSizeLg": {
+      "type": "double",
+      "light": 48
+    },
+    "brandLogoHeightSm": {
+      "type": "double",
+      "light": 40
+    },
+    "brandLogoWidthSm": {
+      "type": "double",
+      "light": 88
+    },
+    "brandLogoHeight": {
+      "type": "double",
+      "light": 64
+    },
+    "brandLogoWidth": {
+      "type": "double",
+      "light": 142
+    },
+    "brandLogoHeightLg": {
+      "type": "double",
+      "light": 80
+    },
+    "brandLogoWidthLg": {
+      "type": "double",
+      "light": 177
+    }
+  },
+  "presets": {
+    "StyleAudioMeter": {
+      "doc": "The microphone level over the camera preview (`OnboardingAudioMeter`): the pill around it, and the meter's track and fill.",
+      "default": "pill",
+      "variants": [
+        "pill",
+        "track",
+        "fill"
+      ]
+    },
+    "StyleAvatar": {
+      "doc": "Circular avatars: a photo filling the circle, else initials, else an icon.",
+      "default": "md",
+      "variants": [
+        "sm",
+        "md",
+        "row",
+        "lg"
+      ]
+    },
+    "StyleBrandLogo": {
+      "doc": "360 Care Group brand symbol and full horizontal logo lockup presets.",
+      "default": "symbol",
+      "variants": [
+        "symbol",
+        "full"
+      ]
+    },
+    "StyleButton": {
+      "doc": "Buttons. `OnboardingButton(style: const StyleButton.danger())`.",
+      "default": "primary",
+      "variants": [
+        "primary",
+        "secondary",
+        "secondarySm",
+        "outline",
+        "ghost",
+        "success",
+        "danger"
+      ]
+    },
+    "StyleCard": {
+      "doc": "Content containers. Tones (`success`, `warning`, `error`, `info`) double as callout banners; `interactive` lifts and glows on hover.",
+      "default": "surface",
+      "variants": [
+        "surface",
+        "subtle",
+        "compact",
+        "page",
+        "inset",
+        "flush",
+        "interactive",
+        "compactInteractive",
+        "media",
+        "mediaInteractive",
+        "success",
+        "warning",
+        "error",
+        "info"
+      ]
+    },
+    "StyleCardSection": {
+      "doc": "Accordion and media cards share the card chrome with no padding, so headers and bodies can draw their own.",
+      "default": "header",
+      "variants": [
+        "header",
+        "bandHeader",
+        "body",
+        "flushBand",
+        "stackHeader"
+      ]
+    },
+    "StyleChecklistStepRow": {
+      "doc": "One step of the candidate checklist dashboard (`OnboardingChecklistStepRow`): a full-bleed row of a flush category card (`StyleCard.flush`), divided from the next by an `OnboardingDivider`. `actionable` rows (every row that answers a tap, a gated one included) tint on hover and press; `inert` rows (completed by the recruiter) stay still. Phones tighten the side padding to the mobile page gutter.",
+      "default": "actionable",
+      "variants": [
+        "actionable",
+        "inert"
+      ]
+    },
+    "StyleCommentBubble": {
+      "doc": "A chat bubble in an `OnboardingFieldFeedback` comment thread: `incoming` (default) sits on a neutral subtle surface, while `outgoing` tints the bubble in the primary brand colour.",
+      "default": "incoming",
+      "variants": [
+        "incoming",
+        "outgoing"
+      ]
+    },
+    "StyleContentList": {
+      "doc": "Scrollable list of page sections (used with `StyledListView`).",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "flush"
+      ]
+    },
+    "StyleCountdown": {
+      "doc": "The time left on an answer, a pill over the camera preview (`OnboardingCountdown`).",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "warning"
+      ]
+    },
+    "StyleDivider": {
+      "doc": "Hairline dividers.",
+      "default": "horizontal",
+      "variants": [
+        "horizontal",
+        "vertical"
+      ]
+    },
+    "StyleDocumentPreview": {
+      "doc": "A stored document: its image `thumbnail` in a review row, and the full-size `frame` in the preview modal.",
+      "default": "thumbnail",
+      "variants": [
+        "thumbnail",
+        "frame",
+        "media",
+        "videoThumbnail"
+      ]
+    },
+    "StyleDragHandle": {
+      "doc": "The grip an item is dragged by (`OnboardingDragHandle`): `overlay` is a small surface chip that sits on an image, such as a course card's cover; `plain` is the bare grip of a reorderable table row.",
+      "default": "overlay",
+      "variants": [
+        "overlay",
+        "plain"
+      ]
+    },
+    "StyleDropLine": {
+      "doc": "The accent line where a dragged block would land.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "dot"
+      ]
+    },
+    "StyleGapInsert": {
+      "doc": "The gap between blocks: invisible until hovered, then a line with a \"+\" handle.",
+      "default": "line",
+      "variants": [
+        "line",
+        "handle"
+      ]
+    },
+    "StyleGutterGrip": {
+      "doc": "The drag grip in the gutter left of a block.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "revealed"
+      ]
+    },
+    "StyleIconBadge": {
+      "doc": "Square icon badges (checklist step icons, card headers, empty states).",
+      "default": "primary",
+      "variants": [
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "info"
+      ]
+    },
+    "StyleIconButton": {
+      "doc": "Square icon-only buttons. `OnboardingIconButton(icon, style: const StyleIconButton.outlined())`.",
+      "default": "naked",
+      "variants": [
+        "naked",
+        "outlined",
+        "outlinedCircle",
+        "success",
+        "primary",
+        "danger"
+      ]
+    },
+    "StyleIconToken": {
+      "doc": "Semantic icon colours. `StyledIcon(TablerIcons.check, style: const StyleIconToken.success())`.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "primary",
+        "secondary",
+        "disabled",
+        "success",
+        "warning",
+        "danger",
+        "info"
+      ],
+      "args": {
+        "size": {
+          "kind": "token",
+          "tokenType": "double"
+        }
+      }
+    },
+    "StyleInput": {
+      "doc": "Text-field chassis shared by every `Onboarding*Input` (plan §3.1).",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "multiline",
+        "compact",
+        "code"
+      ]
+    },
+    "StyleInspectorSection": {
+      "doc": "Section headers inside the Inspector (Content, Style, Layout).",
+      "default": "header",
+      "variants": [
+        "header",
+        "body"
+      ]
+    },
+    "StyleKpiCard": {
+      "doc": "KPI metric cards; `selectable` is used as a filter and reacts to `selected`.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "selectable"
+      ]
+    },
+    "StyleLessonCard": {
+      "doc": "Cards (feature, image, quote, flip): the `tone` variants.",
+      "default": "neutral",
+      "variants": [
+        "neutral",
+        "tinted",
+        "outlined",
+        "dark"
+      ]
+    },
+    "StyleLessonCardText": {
+      "doc": "Text inside cards. These set no colour, so a dark card's inverse text applies.",
+      "default": "title",
+      "variants": [
+        "title",
+        "body",
+        "caption",
+        "hint",
+        "quote"
+      ]
+    },
+    "StyleLessonContainer": {
+      "doc": "Container block: a tinted box around its children, `tone` and `inset` are block props.",
+      "default": "tone",
+      "variants": [
+        "tone"
+      ]
+    },
+    "StyleLessonFeedback": {
+      "doc": "Feedback shown after answering (explanation, rationale).",
+      "default": "info",
+      "variants": [
+        "info",
+        "success",
+        "error"
+      ]
+    },
+    "StyleLessonHeading": {
+      "doc": "Headings: `level` 1–4 maps to the type scale; `tone` and `align` are block props.",
+      "default": "level",
+      "variants": [
+        "level"
+      ]
+    },
+    "StyleLessonMediaFrame": {
+      "doc": "Image and video frames: the `frame` block prop.",
+      "default": "rounded",
+      "variants": [
+        "none",
+        "rounded",
+        "card"
+      ]
+    },
+    "StyleLessonMediaPlaceholder": {
+      "doc": "Placeholder for media without a file yet, and for video until a player exists.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "video"
+      ]
+    },
+    "StyleLessonOption": {
+      "doc": "Quiz and scenario options: `selected` while chosen, variants after checking.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "correct",
+        "incorrect"
+      ]
+    },
+    "StyleLessonParagraph": {
+      "doc": "Body text with a `tone` and `align`.",
+      "default": "body",
+      "variants": [
+        "body"
+      ]
+    },
+    "StyleLessonSheet": {
+      "doc": "The sheet the blocks sit on; the variant is the lesson's `LessonWidth`.",
+      "default": "standard",
+      "variants": [
+        "narrow",
+        "standard",
+        "wide"
+      ]
+    },
+    "StyleMediaCover": {
+      "doc": "The parts of an `OnboardingMediaCard` with a cover: the [cover] image area (a tinted ground with the fallback icon when there is no image), the [overlay] row pinned over its top edge (a drag handle on the left, a status badge on the right) and the padded [body] below.",
+      "default": "cover",
+      "variants": [
+        "cover",
+        "overlay",
+        "body"
+      ]
+    },
+    "StyleMenuItem": {
+      "doc": "Style preset generated from [_StyleMenuItemSpec].",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "destructive"
+      ]
+    },
+    "StyleModal": {
+      "doc": "Modal dialog frame in four sizes.",
+      "default": "md",
+      "variants": [
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ]
+    },
+    "StylePageTitle": {
+      "doc": "Page title block: on a full-bleed surface with a bottom divider ([normal], [tabbed]), or straight on the page background ([plain]) for portal pages whose content sits in cards below it.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "tabbed",
+        "plain"
+      ]
+    },
+    "StyleProgressBar": {
+      "doc": "Progress bar track and fill.",
+      "default": "track",
+      "variants": [
+        "track",
+        "fill",
+        "fillSuccess",
+        "segmentSuccess",
+        "segmentError",
+        "segmentWarning",
+        "edgeTrack",
+        "edgeFill"
+      ]
+    },
+    "StyleProgressRing": {
+      "doc": "The box of an `OnboardingProgressRing`: `normal` beside other content, `hero` for the candidate dashboard's dual-arc ring (`OnboardingProgressRing.hero`).",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "hero"
+      ]
+    },
+    "StyleRadio": {
+      "doc": "Radio outer ring; `selected` fills the ring colour, the inner dot is the thumb.",
+      "default": "ring",
+      "variants": [
+        "ring",
+        "selectedRing",
+        "dot"
+      ]
+    },
+    "StyleRecorderFrame": {
+      "doc": "The interview recorder's camera preview (`OnboardingRecorderFrame`): the media background, rounded and clipped, filling the width; its 16:9 box sets the height. Text and icons laid over it are `onMedia`.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "recording"
+      ]
+    },
+    "StyleRecorderOverlay": {
+      "doc": "Layers over the camera preview (`OnboardingRecorderFrame`).",
+      "default": "bar",
+      "variants": [
+        "bar",
+        "scrim",
+        "figure"
+      ]
+    },
+    "StyleReviewGroupHeader": {
+      "doc": "Full-bleed page-group subheader band inside a flush review card (`PERSONAL DETAILS`, `4 of 12 approved`).",
+      "default": "normal",
+      "variants": [
+        "normal"
+      ]
+    },
+    "StyleReviewRow": {
+      "doc": "A field under review: a full-bleed row of a flush card, divided from the next by a hairline. `rejected` tints the row, `inactive` mutes a not-applicable field shown for reference, `hovered` tints with the subtle token of the row's status (`successSubtle` approved, `warningSubtle` to review or a warning, `errorSubtle` rejected) and with the primary brand subtle token (`primarySubtle`, distinct from `StyleReviewGroupHeader`) for an unfilled or not-applicable field, and a row being edited (`active`) marks the active state while keeping the row surface clean.",
+      "default": "awaiting",
+      "variants": [
+        "awaiting",
+        "pending",
+        "approved",
+        "rejected",
+        "warning",
+        "inactive"
+      ]
+    },
+    "StyleReviewStatus": {
+      "doc": "Inline status icon + label at the trailing edge of an `OnboardingReviewRow` when not hovered.",
+      "default": "awaiting",
+      "variants": [
+        "awaiting",
+        "inProgress",
+        "pending",
+        "approved",
+        "rejected",
+        "warning"
+      ]
+    },
+    "StyleSectionRailItem": {
+      "doc": "Full-bleed checklist section row inside a flush rail card: status-coloured leading icon, status-tinted hover and press fills, and a status left accent bar plus subtle status fill when `selected` (`onSurfaceMuted` / neutral surface tokens for `awaiting`).",
+      "default": "awaiting",
+      "variants": [
+        "awaiting",
+        "inProgress",
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "StyleSidebar": {
+      "doc": "Docked navigation sidebar (desktop) and overlay drawer (mobile).",
+      "default": "docked",
+      "variants": [
+        "docked",
+        "drawer"
+      ]
+    },
+    "StyleSignaturePad": {
+      "doc": "Signature canvas and stored-signature preview frame inside `OnboardingSignatureInput`.",
+      "default": "normal",
+      "variants": [
+        "normal"
+      ]
+    },
+    "StyleSlider": {
+      "doc": "Slider track, fill and thumb.",
+      "default": "track",
+      "variants": [
+        "track",
+        "fill",
+        "thumb"
+      ]
+    },
+    "StyleStatusBadge": {
+      "doc": "Semantic status pills (`OnboardingStatusBadge`).",
+      "default": "neutral",
+      "variants": [
+        "neutral",
+        "primary",
+        "success",
+        "warning",
+        "error",
+        "info"
+      ]
+    },
+    "StyleStatusCard": {
+      "doc": "A page's single status message (`OnboardingStatusCard`): [StyleCard]'s chrome with its content and every line of text centred. `success` is the approved celebration tone.",
+      "default": "surface",
+      "variants": [
+        "surface",
+        "success"
+      ]
+    },
+    "StyleStatusSegment": {
+      "doc": "One block of a status segment bar: a rounded bar coloured by checklist status.",
+      "default": "awaiting",
+      "variants": [
+        "awaiting",
+        "inProgress",
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "StyleStatusSwatch": {
+      "doc": "The square colour key beside a status legend label, in the colours of [_StyleStatusSegmentSpec].",
+      "default": "awaiting",
+      "variants": [
+        "awaiting",
+        "inProgress",
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "StyleSwatch": {
+      "doc": "Colour swatch button for the colour picker; the fill is a data colour.",
+      "default": "swatch",
+      "variants": [
+        "swatch"
+      ]
+    },
+    "StyleTableCell": {
+      "doc": "Cells.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "header"
+      ]
+    },
+    "StyleTagChip": {
+      "doc": "Tag chips carrying a data colour (`TagModel.color`); tint levels come from the scale.",
+      "default": "tag",
+      "variants": [
+        "tag"
+      ]
+    },
+    "StyleTagPill": {
+      "doc": "Compact uppercase pills for table cells and sidebars.",
+      "default": "neutral",
+      "variants": [
+        "neutral",
+        "primary"
+      ]
+    },
+    "StyleText": {
+      "doc": "Text presets built on the shared type scale in [OnboardingTypography], so presets and app code never drift apart. `customColor` is a data colour (a tag or chart series colour), never a design decision.",
+      "default": "body",
+      "variants": [
+        "body",
+        "bodyBold",
+        "bodySubtle",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "subscript",
+        "subscriptMuted",
+        "summary",
+        "metric",
+        "metricWarning",
+        "caption",
+        "overline",
+        "approvedTag",
+        "inReviewTag",
+        "code",
+        "errorCaption",
+        "link",
+        "truncate",
+        "cellTitle",
+        "topBarLabel",
+        "cellSubtitle",
+        "cellText"
+      ]
+    },
+    "StyleTextButton": {
+      "doc": "Inline text buttons and links.",
+      "default": "normal",
+      "variants": [
+        "normal",
+        "subtle",
+        "compact"
+      ]
+    },
+    "StyleThumbnail": {
+      "doc": "Rounded-square image for `OnboardingThumbnail`: a course cover in a table row (`sm`), a list (`md`) or beside a page title (`lg`). With no image (or one that fails to load) the tinted ground shows the fallback icon.",
+      "default": "md",
+      "variants": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    "StyleTileButton": {
+      "doc": "Tile buttons: a large icon over a short title, in a box nearly as tall as it is wide. `OnboardingTileButton(icon: TablerIcons.photo, label: 'Image')`, laid out in an `OnboardingGrid` with `minItemWidth: OnboardingTokens.minButtonWidth` (the lesson editor's Insert pane).",
+      "default": "outlined",
+      "variants": [
+        "outlined"
+      ]
+    },
+    "StyleToast": {
+      "doc": "Toast banners.",
+      "default": "success",
+      "variants": [
+        "success",
+        "error",
+        "warning",
+        "info"
+      ]
+    },
+    "StyleUploadItem": {
+      "doc": "Uploaded file row and upload-progress container inside `OnboardingFileUploadInput`.",
+      "default": "row",
+      "variants": [
+        "row",
+        "progress"
+      ]
+    },
+    "StyleVideoBadge": {
+      "doc": "Inset around the duration badge pinned over the corner of a `StyleDocumentPreview.videoThumbnail`.",
+      "default": "corner",
+      "variants": [
+        "corner"
+      ]
+    },
+    "StyleWorkspacePane": {
+      "doc": "Workspace shell panes (editor sidebars) and its toolbar.",
+      "default": "left",
+      "variants": [
+        "left",
+        "right",
+        "leftNarrow"
+      ]
+    }
+  },
+  "states": [
+    "hovered",
+    "focused",
+    "pressed",
+    "error",
+    "disabled",
+    "selected",
+    "active",
+    "loading",
+    "approved",
+    "mobile",
+    "tablet",
+    "desktop"
+  ],
+  "icons": [
+    "activity",
+    "address_book",
+    "alert_circle",
+    "alert_triangle",
+    "align_left",
+    "apps",
+    "archive",
+    "archive_off",
+    "arrow_back_up",
+    "arrow_down",
+    "arrow_forward_up",
+    "arrow_left",
+    "arrow_right",
+    "arrow_up",
+    "arrows_left_right",
+    "arrows_sort",
+    "arrows_vertical",
+    "badge",
+    "ban",
+    "blockquote",
+    "bold",
+    "bolt",
+    "book",
+    "book_off",
+    "books",
+    "books_off",
+    "box",
+    "braces",
+    "brain",
+    "briefcase",
+    "building",
+    "bulb",
+    "calendar_due",
+    "calendar_off",
+    "calendar_repeat",
+    "camera",
+    "camera_off",
+    "car",
+    "cards",
+    "certificate",
+    "certificate_off",
+    "chart_bar",
+    "chart_line",
+    "check",
+    "checklist",
+    "checks",
+    "chevron_down",
+    "chevron_left",
+    "chevron_right",
+    "chevron_up",
+    "circle",
+    "circle_check",
+    "circle_check_filled",
+    "circle_dashed",
+    "circle_dot",
+    "circle_x",
+    "clipboard",
+    "clipboard_check",
+    "clipboard_list",
+    "clipboard_x",
+    "clock",
+    "clock_check",
+    "clock_off",
+    "clock_pause",
+    "cloud_off",
+    "cloud_upload",
+    "code",
+    "color_picker",
+    "confetti",
+    "copy",
+    "credit_card",
+    "currency_pound",
+    "database_cog",
+    "database_import",
+    "device_desktop",
+    "device_floppy",
+    "device_laptop",
+    "device_mobile",
+    "device_tablet",
+    "dots_vertical",
+    "edit",
+    "eraser",
+    "external_link",
+    "eye",
+    "eye_off",
+    "file_alert",
+    "file_certificate",
+    "file_check",
+    "file_download",
+    "file_off",
+    "file_pencil",
+    "file_search",
+    "file_text",
+    "file_type_pdf",
+    "file_unknown",
+    "file_upload",
+    "file_zip",
+    "filter",
+    "filter_off",
+    "first_aid_kit",
+    "flag",
+    "flask",
+    "flip_vertical",
+    "folder",
+    "folder_off",
+    "folder_open",
+    "folder_plus",
+    "folder_symlink",
+    "forms",
+    "grip_vertical",
+    "h_1",
+    "h_2",
+    "hand_click",
+    "hash",
+    "heading",
+    "heart",
+    "heart_handshake",
+    "heartbeat",
+    "help",
+    "help_octagon",
+    "history",
+    "home",
+    "hourglass",
+    "id",
+    "id_badge_2",
+    "inbox",
+    "indent_increase",
+    "info_circle",
+    "italic",
+    "key",
+    "layout",
+    "layout_board",
+    "layout_cards",
+    "layout_columns",
+    "layout_dashboard",
+    "layout_grid",
+    "layout_rows",
+    "lifebuoy",
+    "link",
+    "link_off",
+    "list",
+    "list_check",
+    "list_details",
+    "loader_2",
+    "lock",
+    "lock_check",
+    "lock_open",
+    "login",
+    "logout",
+    "mail",
+    "mail_check",
+    "mail_forward",
+    "mail_heart",
+    "mail_off",
+    "map_pin",
+    "maximize",
+    "medical_cross",
+    "menu_2",
+    "message_2",
+    "message_circle",
+    "message_exclamation",
+    "microphone",
+    "minus",
+    "mood_smile",
+    "moon",
+    "movie",
+    "note",
+    "pencil",
+    "pencil_plus",
+    "percentage",
+    "phone",
+    "photo",
+    "photo_off",
+    "photo_plus",
+    "pill",
+    "player_pause",
+    "player_play",
+    "player_record",
+    "player_stop",
+    "plus",
+    "point",
+    "point_filled",
+    "progress",
+    "refresh",
+    "replace",
+    "robot",
+    "rocket",
+    "rosette_discount_check",
+    "rotate",
+    "rotate_2",
+    "rotate_clockwise",
+    "scale",
+    "school",
+    "school_off",
+    "search",
+    "send",
+    "separator_horizontal",
+    "server",
+    "settings",
+    "shield",
+    "shield_check",
+    "shield_plus",
+    "signature",
+    "sparkles",
+    "square_rounded",
+    "stack_2",
+    "star",
+    "sun",
+    "table",
+    "tag",
+    "tags",
+    "target",
+    "template",
+    "text_wrap",
+    "thumb_up",
+    "tools",
+    "trash",
+    "trophy",
+    "underline",
+    "upload",
+    "user",
+    "user_check",
+    "user_cog",
+    "user_minus",
+    "user_off",
+    "user_plus",
+    "user_question",
+    "user_search",
+    "user_star",
+    "users",
+    "video",
+    "video_off",
+    "video_plus",
+    "viewport_short",
+    "viewport_tall",
+    "walk",
+    "x"
+  ],
+  "formatters": [
+    "date",
+    "dateTime",
+    "number",
+    "percent",
+    "currency",
+    "count",
+    "upper",
+    "lower",
+    "initials"
+  ],
+  "components": {
+    "CrudToolbar": {
+      "kind": "widget",
+      "category": "crud",
+      "summary": "Search, filters and actions above a collection.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "searchHint",
+          "kind": "string"
+        },
+        {
+          "name": "searchValue",
+          "kind": "string"
+        },
+        {
+          "name": "compactBreakpoint",
+          "kind": "token",
+          "tokenType": "double"
+        }
+      ],
+      "slots": [
+        {
+          "name": "header",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "filterChips",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "filters",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "searchChanged",
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "CrudView": {
+      "kind": "widget",
+      "category": "crud",
+      "summary": "Shows a collection as a table or a grid, with loading and empty states.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "items",
+          "kind": "rows",
+          "required": true
+        },
+        {
+          "name": "isLoading",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "viewMode",
+          "kind": "choice",
+          "default": "card",
+          "values": [
+            "card",
+            "table"
+          ]
+        },
+        {
+          "name": "desktopOnlyTable",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "empty",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "grid",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true,
+          "template": {
+            "as": "items"
+          }
+        },
+        {
+          "name": "table",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "template": {
+            "as": "items"
+          }
+        },
+        {
+          "name": "loading",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "DesignOutlet": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "Where a frame draws the page it frames. Only in a frame screen's tree.",
+      "constructors": [],
+      "props": [],
+      "slots": [],
+      "events": [],
+      "rules": [
+        {
+          "rule": "rootOf",
+          "types": [
+            "frame"
+          ],
+          "code": "E-outlet-outside-frame"
+        }
+      ]
+    },
+    "Expanded": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "Fills the remaining space of its row or column. Must be a direct child of one.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "flex",
+          "kind": "integer",
+          "default": 1
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "Flexible": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "Takes up to its share of its row or column. Must be a direct child of one.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "flex",
+          "kind": "integer",
+          "default": 1
+        },
+        {
+          "name": "fit",
+          "kind": "choice",
+          "default": "loose",
+          "values": [
+            "loose",
+            "tight"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "ModalScaffold": {
+      "kind": "widget",
+      "category": "modals",
+      "summary": "The frame of every modal: title, body, and submit and cancel buttons.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "size",
+          "kind": "choice",
+          "default": "md",
+          "values": [
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
+        },
+        {
+          "name": "submitLabel",
+          "kind": "string",
+          "default": "Save"
+        },
+        {
+          "name": "submitStyle",
+          "kind": "style",
+          "families": [
+            "StyleButton"
+          ]
+        },
+        {
+          "name": "cancelLabel",
+          "kind": "string",
+          "default": "Cancel"
+        },
+        {
+          "name": "showCancel",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "isSubmitting",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "footerActions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "submit",
+          "primary": true,
+          "payload": {}
+        },
+        {
+          "name": "cancel",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingBreadcrumbItem": {
+      "kind": "value",
+      "category": "navigation",
+      "summary": "One step of a breadcrumb trail. Link its tap unless it is the current page.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "isCurrent",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "highlighted",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "payload": {}
+        },
+        {
+          "name": "drop",
+          "payload": {
+            "value": "any"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingBreadcrumbs": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "The trail above a page title.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "separatorIcon",
+          "kind": "icon",
+          "default": "chevron_right"
+        },
+        {
+          "name": "style",
+          "kind": "style"
+        }
+      ],
+      "slots": [
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingBreadcrumbItem"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingButton": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "The button. Pick the look with a named constructor or a StyleButton preset.",
+      "constructors": [
+        "primary",
+        "secondary",
+        "secondarySm",
+        "outline",
+        "ghost",
+        "danger",
+        "success"
+      ],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleButton"
+          ]
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "trailingIcon",
+          "kind": "icon"
+        },
+        {
+          "name": "loading",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "isExpanded",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "disabled",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "tooltip",
+          "kind": "string"
+        },
+        {
+          "name": "collapseTextOnMobile",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingCalloutBanner": {
+      "kind": "widget",
+      "category": "feedback",
+      "summary": "A tinted banner with an icon, a title and a message. Pick the tone with a named constructor.",
+      "constructors": [
+        "info",
+        "success",
+        "warning",
+        "error"
+      ],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        },
+        {
+          "name": "icon",
+          "kind": "icon",
+          "default": "info_circle"
+        },
+        {
+          "name": "title",
+          "kind": "string"
+        },
+        {
+          "name": "message",
+          "kind": "string",
+          "default": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "trailing",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A surface card. Becomes interactive when its tap is linked.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        },
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "loading",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingCardMenu": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A card's title row with a badge and a menu of actions.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        }
+      ],
+      "slots": [
+        {
+          "name": "leading",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "titleBadge",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingPopupMenuItem"
+          ],
+          "many": true
+        },
+        {
+          "name": "trailing",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingColumn": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "A vertical flex with token spacing.",
+      "constructors": [
+        "stretch",
+        "center"
+      ],
+      "props": [
+        {
+          "name": "spacing",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "crossAxisAlignment",
+          "kind": "choice",
+          "default": "start",
+          "values": [
+            "start",
+            "end",
+            "center",
+            "stretch",
+            "baseline"
+          ]
+        },
+        {
+          "name": "mainAxisAlignment",
+          "kind": "choice",
+          "default": "start",
+          "values": [
+            "start",
+            "end",
+            "center",
+            "spaceBetween",
+            "spaceAround",
+            "spaceEvenly"
+          ]
+        },
+        {
+          "name": "mainAxisSize",
+          "kind": "choice",
+          "default": "max",
+          "values": [
+            "min",
+            "max"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingDataTable": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "Config-driven table with selection, sorting and row tap. Has its own card chrome.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "rows",
+          "kind": "rows",
+          "required": true
+        },
+        {
+          "name": "idPath",
+          "kind": "path",
+          "doc": "Path inside a row to its id. Replaces idOf."
+        },
+        {
+          "name": "selectedIds",
+          "kind": "stringList"
+        },
+        {
+          "name": "sortKey",
+          "kind": "string"
+        },
+        {
+          "name": "sortAscending",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "minWidth",
+          "kind": "token",
+          "tokenType": "double"
+        }
+      ],
+      "slots": [
+        {
+          "name": "columns",
+          "accepts": [
+            "OnboardingTableColumn"
+          ],
+          "many": true,
+          "required": true
+        },
+        {
+          "name": "emptyState",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [
+        {
+          "name": "rowTap",
+          "payload": {
+            "row": "object"
+          }
+        },
+        {
+          "name": "sort",
+          "payload": {
+            "value": "string"
+          }
+        },
+        {
+          "name": "toggleSelected",
+          "payload": {
+            "value": "string"
+          }
+        },
+        {
+          "name": "toggleAll",
+          "payload": {}
+        },
+        {
+          "name": "reorder",
+          "payload": {
+            "oldIndex": "number",
+            "newIndex": "number"
+          }
+        }
+      ],
+      "rules": [
+        {
+          "rule": "notInside",
+          "types": [
+            "OnboardingCard"
+          ],
+          "code": "W-table-in-card"
+        }
+      ]
+    },
+    "OnboardingEmptyState": {
+      "kind": "widget",
+      "category": "feedback",
+      "summary": "What an empty collection shows: an icon, a title, a line of help and an optional action.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "default": "inbox"
+        },
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "style",
+          "kind": "style"
+        }
+      ],
+      "slots": [
+        {
+          "name": "action",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingGrid": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "A responsive grid of cards.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "minItemWidth",
+          "kind": "token",
+          "default": "gridMinItemWidth",
+          "tokenType": "double"
+        },
+        {
+          "name": "maxColumns",
+          "kind": "integer",
+          "default": 4
+        },
+        {
+          "name": "spacing",
+          "kind": "token",
+          "default": "padding",
+          "tokenType": "double"
+        },
+        {
+          "name": "matchRowHeight",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingIconButton": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A square icon-only button with an optional tooltip.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleIconButton"
+          ]
+        },
+        {
+          "name": "tooltip",
+          "kind": "string"
+        },
+        {
+          "name": "tooltipPosition",
+          "kind": "choice",
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "disabled",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "loading",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": [
+        {
+          "rule": "lastColumnProps",
+          "types": [
+            "OnboardingDataTable"
+          ],
+          "props": {
+            "tooltipPosition": "left"
+          },
+          "code": "W-tooltip-rightmost",
+          "message": "An icon button in the last column of a table opens its tooltip to the left (tooltipPosition: left)."
+        }
+      ]
+    },
+    "OnboardingKpiCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A card with a label, a large value and an optional trend.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "value",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style"
+        }
+      ],
+      "slots": [
+        {
+          "name": "trend",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingMetric": {
+      "kind": "value",
+      "category": "tables",
+      "summary": "One count of a metric strip.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "key",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "count",
+          "kind": "integer",
+          "required": true
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingMetricStrip": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "A row of clickable counts used as filters.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "selectedKey",
+          "kind": "string"
+        }
+      ],
+      "slots": [
+        {
+          "name": "metrics",
+          "accepts": [
+            "OnboardingMetric"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "selected",
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingPageHeader": {
+      "kind": "widget",
+      "category": "headers",
+      "summary": "The header of a detail or editor page, with a back button, a badge and actions.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "backLabel",
+          "kind": "string",
+          "default": "Back"
+        },
+        {
+          "name": "selectedTabIndex",
+          "kind": "integer",
+          "default": 0
+        }
+      ],
+      "slots": [
+        {
+          "name": "leading",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "badge",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "breadcrumbs",
+          "accepts": [
+            "OnboardingBreadcrumbs"
+          ],
+          "many": false
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "tabs",
+          "accepts": [
+            "OnboardingPageTab"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "back",
+          "payload": {}
+        },
+        {
+          "name": "tabSelected",
+          "payload": {
+            "value": "number"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingPageTitle": {
+      "kind": "widget",
+      "category": "headers",
+      "summary": "The title block at the top of a page, with breadcrumbs, actions and tabs.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "selectedTabIndex",
+          "kind": "integer",
+          "default": 0
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StylePageTitle"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "subtitleWidget",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "leading",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "badge",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "breadcrumbs",
+          "accepts": [
+            "OnboardingBreadcrumbs"
+          ],
+          "many": false
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "tabs",
+          "accepts": [
+            "OnboardingPageTab"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "tabSelected",
+          "payload": {
+            "value": "number"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingPaginationBar": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "Page controls under a table.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "page",
+          "kind": "integer",
+          "required": true
+        },
+        {
+          "name": "pageCount",
+          "kind": "integer",
+          "required": true
+        },
+        {
+          "name": "pageSize",
+          "kind": "integer",
+          "required": true
+        },
+        {
+          "name": "totalItems",
+          "kind": "integer",
+          "required": true
+        },
+        {
+          "name": "pageSizes",
+          "kind": "integerList",
+          "default": [
+            10,
+            25,
+            50
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "previous",
+          "payload": {}
+        },
+        {
+          "name": "next",
+          "payload": {}
+        },
+        {
+          "name": "pageSizeChanged",
+          "payload": {
+            "value": "number"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingPopupMenuItem": {
+      "kind": "value",
+      "category": "menus",
+      "summary": "One entry of a popup or card menu.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "isDestructive",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingSidebar": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "The navigation sidebar: a header, sections of buttons and a footer.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleSidebar"
+          ]
+        },
+        {
+          "name": "showFooterDivider",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "header",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        },
+        {
+          "name": "footer",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingSidebarButton": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "One destination in the sidebar.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "icon",
+          "kind": "icon",
+          "required": true
+        },
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "tooltip",
+          "kind": "string"
+        },
+        {
+          "name": "disabled",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "badge",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "trailing",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingSidebarHeader": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "The brand row at the top of the sidebar.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        }
+      ],
+      "slots": [
+        {
+          "name": "leading",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "trailing",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingSidebarSection": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "A titled group of sidebar buttons.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string"
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingSidebarShell": {
+      "kind": "widget",
+      "category": "shells",
+      "summary": "A shell with a sidebar beside the content.",
+      "constructors": [],
+      "props": [],
+      "slots": [
+        {
+          "name": "sidebar",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "header",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingStatusBadge": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A small coloured label for a status. Pick the tone with a named constructor.",
+      "constructors": [
+        "neutral",
+        "primary",
+        "success",
+        "warning",
+        "error",
+        "info"
+      ],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleStatusBadge"
+          ]
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "dot",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingSwitchInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "An on/off switch with a label and an optional subtitle.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "boolean",
+          "required": true
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "style",
+          "kind": "style"
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "bool"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingTableColumn": {
+      "kind": "value",
+      "category": "tables",
+      "summary": "One column of an OnboardingDataTable.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "flex",
+          "kind": "integer",
+          "default": 1
+        },
+        {
+          "name": "width",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "sortKey",
+          "kind": "string"
+        },
+        {
+          "name": "alignment",
+          "kind": "choice",
+          "default": "centerLeft",
+          "values": [
+            "topLeft",
+            "topCenter",
+            "topRight",
+            "centerLeft",
+            "center",
+            "centerRight",
+            "bottomLeft",
+            "bottomCenter",
+            "bottomRight"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "cell",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true,
+          "template": {
+            "as": "row"
+          }
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingTextInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A text field with a label, hint, help text and error.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style"
+        },
+        {
+          "name": "fieldKey",
+          "kind": "string"
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "hint",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "name": "description",
+          "kind": "string"
+        },
+        {
+          "name": "helperText",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "prefixIcon",
+          "kind": "icon"
+        },
+        {
+          "name": "showClearButton",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "initialValue",
+          "kind": "string"
+        },
+        {
+          "name": "textCapitalization",
+          "kind": "choice",
+          "default": "none",
+          "values": [
+            "words",
+            "sentences",
+            "characters",
+            "none"
+          ]
+        },
+        {
+          "name": "textInputAction",
+          "kind": "choice",
+          "values": [
+            "none",
+            "unspecified",
+            "done",
+            "go",
+            "search",
+            "send",
+            "next",
+            "previous",
+            "continueAction",
+            "join",
+            "route",
+            "emergencyCall",
+            "newline"
+          ]
+        },
+        {
+          "name": "minLines",
+          "kind": "integer",
+          "default": 1
+        },
+        {
+          "name": "maxLines",
+          "kind": "integer",
+          "default": 1
+        },
+        {
+          "name": "maxLength",
+          "kind": "integer"
+        },
+        {
+          "name": "autofocus",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "obscureText",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "readOnly",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "showApprovedBadge",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "isCompact",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "prefix",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "suffix",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "string"
+          }
+        },
+        {
+          "name": "submitted",
+          "payload": {
+            "value": "string"
+          }
+        },
+        {
+          "name": "editingComplete",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "StyledBox": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "A box drawn by a preset. Prefer a library component when one fits.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style"
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "StyledIcon": {
+      "kind": "widget",
+      "category": "text",
+      "summary": "An icon from the icon catalogue, coloured and sized by its style or its parent.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleIconToken"
+          ]
+        },
+        {
+          "name": "semanticLabel",
+          "kind": "string"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "StyledImage": {
+      "kind": "widget",
+      "category": "media",
+      "summary": "An image from the host app, resolved from a reference.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "image",
+          "kind": "image",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style"
+        },
+        {
+          "name": "semanticLabel",
+          "kind": "string"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "StyledListView": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "A page's one vertical scroll. A page's root is a StyledListView with StyleContentList.normal.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "required": true
+        },
+        {
+          "name": "shrinkWrap",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "StyledText": {
+      "kind": "widget",
+      "category": "text",
+      "summary": "A run of text. Pick its look with a text preset such as StyleText.body.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "text",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleText"
+          ]
+        },
+        {
+          "name": "semanticsLabel",
+          "kind": "string"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "ViewModeSwitcher": {
+      "kind": "widget",
+      "category": "crud",
+      "summary": "Switches a collection between card and table view.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "currentMode",
+          "kind": "choice",
+          "required": true,
+          "values": [
+            "card",
+            "table"
+          ]
+        },
+        {
+          "name": "desktopOnly",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "modeChanged",
+          "primary": true,
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    }
+  },
+  "rules": [
+    {
+      "rule": "pageRoot",
+      "types": [
+        "StyledListView"
+      ],
+      "props": {
+        "style": "StyleContentList.normal"
+      },
+      "code": "W-page-root",
+      "message": "A page's root is a StyledListView with StyleContentList.normal (README 3.2)."
+    },
+    {
+      "rule": "singleScroll",
+      "types": [
+        "StyledListView"
+      ],
+      "props": {
+        "style": "StyleContentList.flush"
+      },
+      "code": "W-nested-scroll",
+      "message": "A StyledListView inside a page must use StyleContentList.flush: the page root is the only scroll (README 3.2)."
+    },
+    {
+      "rule": "modalRoot",
+      "types": [
+        "ModalScaffold"
+      ],
+      "code": "E-modal-root",
+      "message": "A modal's root is a ModalScaffold (README 4.1)."
+    }
+  ]
+}

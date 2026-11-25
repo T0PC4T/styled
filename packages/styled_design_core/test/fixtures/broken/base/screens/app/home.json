@@ -1,0 +1,280 @@
+{
+  "format": 1,
+  "id": "app.home",
+  "kind": "page",
+  "title": "Home",
+  "route": "/app",
+  "frame": "frames.main",
+  "query": {
+    "tab": {
+      "values": [
+        "a",
+        "b"
+      ]
+    }
+  },
+  "state": {
+    "filter": "all"
+  },
+  "fixtures": {
+    "default": {
+      "items": [
+        {
+          "id": "a",
+          "name": "A"
+        },
+        {
+          "id": "b",
+          "name": "B"
+        }
+      ],
+      "metrics": [
+        {
+          "key": "all",
+          "count": 2
+        }
+      ],
+      "total": 2
+    },
+    "empty": {
+      "items": [],
+      "metrics": [],
+      "total": 0
+    }
+  },
+  "emits": {
+    "select": {
+      "description": "A metric was chosen.",
+      "payload": {
+        "key": "string"
+      }
+    }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "header",
+        "type": "OnboardingPageHeader",
+        "props": {
+          "title": "Home"
+        },
+        "slots": {
+          "actions": [
+            {
+              "id": "newItem",
+              "type": "OnboardingButton.primary",
+              "props": {
+                "label": "New",
+                "icon": "plus",
+                "style": "StyleButton.quiet"
+              },
+              "on": {
+                "tap": [
+                  {
+                    "do": "openModal",
+                    "screen": "app.create",
+                    "then": [
+                      {
+                        "do": "navigate",
+                        "to": "app.detail",
+                        "params": {
+                          "id": {
+                            "$bind": "event.result"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "metrics",
+        "type": "OnboardingMetricStrip",
+        "slots": {
+          "metrics": [
+            {
+              "id": "metric",
+              "type": "OnboardingMetric",
+              "repeat": {
+                "over": {
+                  "$bind": "data.metrics"
+                },
+                "as": "m",
+                "key": {
+                  "$bind": "m.key"
+                }
+              },
+              "props": {
+                "key": {
+                  "$bind": "m.key"
+                },
+                "count": {
+                  "$bind": "m.count"
+                }
+              }
+            }
+          ]
+        },
+        "on": {
+          "selected": [
+            {
+              "do": "emit",
+              "name": "select",
+              "payload": {
+                "key": {
+                  "$bind": "event.value"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "list",
+        "type": "CrudView",
+        "props": {
+          "items": {
+            "$bind": "data.items"
+          }
+        },
+        "slots": {
+          "empty": [
+            {
+              "id": "emptyText",
+              "type": "StyledText",
+              "props": {
+                "text": "Nothing yet"
+              }
+            }
+          ],
+          "table": [
+            {
+              "id": "table",
+              "type": "OnboardingDataTable",
+              "props": {
+                "rows": {
+                  "$bind": "items"
+                },
+                "idPath": "id"
+              },
+              "slots": {
+                "columns": [
+                  {
+                    "id": "colName",
+                    "type": "OnboardingTableColumn",
+                    "props": {
+                      "label": "Name"
+                    },
+                    "slots": {
+                      "cell": [
+                        {
+                          "id": "nameCell",
+                          "type": "StyledText",
+                          "props": {
+                            "text": {
+                              "$bind": "row.name"
+                            },
+                            "style": "StyleText.cellTitle"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "colActions",
+                    "type": "OnboardingTableColumn",
+                    "props": {
+                      "label": ""
+                    },
+                    "slots": {
+                      "cell": [
+                        {
+                          "id": "rowEdit",
+                          "type": "OnboardingIconButton",
+                          "props": {
+                            "icon": "pencil",
+                            "tooltipPosition": "left"
+                          },
+                          "on": {
+                            "tap": [
+                              {
+                                "do": "navigate",
+                                "to": "app.detail",
+                                "params": {
+                                  "id": {
+                                    "$bind": "row.id"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "on": {
+                "rowTap": [
+                  {
+                    "do": "navigate",
+                    "to": "app.detail",
+                    "params": {
+                      "id": {
+                        "$bind": "event.row.id"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "card",
+        "type": "OnboardingCard",
+        "props": {
+          "style": "StyleCard.highlight"
+        },
+        "children": [
+          {
+            "id": "total",
+            "type": "StyledText",
+            "props": {
+              "text": {
+                "$text": "{{data.total|number}} items"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "tabB",
+        "type": "OnboardingButton.ghost",
+        "props": {
+          "label": "Tab B"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "setQuery",
+              "set": {
+                "tab": "b"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

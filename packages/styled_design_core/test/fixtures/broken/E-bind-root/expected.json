@@ -1,0 +1,42 @@
+{
+  "description": "row, event and page where they do not exist, a misspelt repeat variable, and a repeat variable outside its node.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-bind-root",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/text/$bind",
+      "node": "case.main#a",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-root",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/props/text/$bind",
+      "node": "case.main#b",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-root",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/props/text/$bind",
+      "node": "case.main#c",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-root",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/3/slots/metrics/0/props/key/$bind",
+      "node": "case.main#metric",
+      "hint": "'item'",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-root",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/4/props/text/$bind",
+      "node": "case.main#d",
+      "allowed": true
+    }
+  ]
+}

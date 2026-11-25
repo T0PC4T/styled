@@ -1,0 +1,81 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "tbl",
+        "type": "OnboardingDataTable",
+        "props": {
+          "rows": []
+        },
+        "slots": {
+          "columns": [
+            {
+              "id": "colA",
+              "type": "OnboardingTableColumn",
+              "props": {
+                "label": "C"
+              },
+              "slots": {
+                "cell": [
+                  {
+                    "id": "first",
+                    "type": "OnboardingIconButton",
+                    "props": {
+                      "icon": "pencil",
+                      "tooltipPosition": "right"
+                    },
+                    "on": {
+                      "tap": [
+                        {
+                          "do": "toast",
+                          "message": "x"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "id": "colB",
+              "type": "OnboardingTableColumn",
+              "props": {
+                "label": "C"
+              },
+              "slots": {
+                "cell": [
+                  {
+                    "id": "last",
+                    "type": "OnboardingIconButton",
+                    "props": {
+                      "icon": "pencil",
+                      "tooltipPosition": "right"
+                    },
+                    "on": {
+                      "tap": [
+                        {
+                          "do": "toast",
+                          "message": "x"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

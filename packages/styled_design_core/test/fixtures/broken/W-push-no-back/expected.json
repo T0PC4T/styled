@@ -1,0 +1,12 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-push-no-back",
+      "file": "screens/case/target.json",
+      "pointer": "/root",
+      "hint": "back"
+    }
+  ]
+}

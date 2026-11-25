@@ -1,0 +1,31 @@
+{
+  "format": 1,
+  "id": "StyleCard.highlight",
+  "extends": "StyleCard.surface",
+  "style": {
+    "box": {
+      "color": "accentSubtle",
+      "border": {
+        "color": "primary",
+        "width": "paddingSm",
+        "radius": "cardRadius"
+      },
+      "padding": {
+        "all": "padding"
+      },
+      "boxShadow": [
+        {
+          "color": "primary",
+          "level": "shadowSm"
+        }
+      ],
+      "motion": {
+        "duration": "animationDuration"
+      }
+    },
+    "text": {
+      "fontFamily": "bodyFont",
+      "maxLines": 2
+    }
+  }
+}

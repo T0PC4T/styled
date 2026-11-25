@@ -1,0 +1,25 @@
+{
+  "description": "",
+  "tolerate": [
+    "W-preset-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-style-raw",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/color",
+      "hint": "'primary'"
+    },
+    {
+      "code": "E-style-raw",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/padding/all",
+      "hint": "'paddingSm'"
+    },
+    {
+      "code": "E-style-raw",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/width"
+    }
+  ]
+}

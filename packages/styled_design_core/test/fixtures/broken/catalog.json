@@ -1,0 +1,875 @@
+{
+  "format": 1,
+  "version": 3,
+  "modes": [
+    "light",
+    "dark"
+  ],
+  "tokens": {
+    "primary": {
+      "type": "color",
+      "light": "#59B0E3"
+    },
+    "onSurface": {
+      "type": "color",
+      "light": "#1A2433"
+    },
+    "paddingSm": {
+      "type": "double",
+      "light": 8
+    },
+    "padding": {
+      "type": "double",
+      "light": 16
+    },
+    "opacityFaint": {
+      "type": "double",
+      "light": 0.08
+    },
+    "cardRadius": {
+      "type": "double",
+      "light": 12
+    },
+    "fontWeightBold": {
+      "type": "fontWeight",
+      "light": "w700"
+    },
+    "bodyFont": {
+      "type": "string",
+      "light": "Inter"
+    },
+    "shadowSm": {
+      "type": "shadow",
+      "light": {
+        "opacity": 0.04,
+        "blurRadius": 10
+      }
+    },
+    "animationDuration": {
+      "type": "duration",
+      "light": 200
+    }
+  },
+  "presets": {
+    "StyleButton": {
+      "default": "primary",
+      "variants": [
+        "primary",
+        "ghost"
+      ]
+    },
+    "StyleCard": {
+      "default": "surface",
+      "variants": [
+        "surface",
+        "subtle"
+      ]
+    },
+    "StyleContentList": {
+      "default": "normal",
+      "variants": [
+        "normal",
+        "flush"
+      ]
+    },
+    "StyleText": {
+      "default": "body",
+      "variants": [
+        "body",
+        "cellTitle"
+      ]
+    },
+    "StyleIconToken": {
+      "default": "normal",
+      "variants": [
+        "normal",
+        "success"
+      ],
+      "args": {
+        "size": {
+          "kind": "token",
+          "tokenType": "double"
+        }
+      }
+    }
+  },
+  "states": [
+    "hovered",
+    "focused",
+    "pressed",
+    "error",
+    "disabled",
+    "selected",
+    "active",
+    "loading",
+    "approved",
+    "mobile",
+    "tablet",
+    "desktop"
+  ],
+  "icons": [
+    "plus",
+    "pencil",
+    "trash",
+    "bolt"
+  ],
+  "formatters": [
+    "date",
+    "dateTime",
+    "number",
+    "percent",
+    "currency",
+    "count",
+    "upper",
+    "lower",
+    "initials"
+  ],
+  "components": {
+    "StyledListView": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "The page scroll.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleContentList"
+          ],
+          "required": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "StyledText": {
+      "kind": "widget",
+      "category": "text",
+      "summary": "Text.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "text",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleText"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "StyledIcon": {
+      "kind": "widget",
+      "category": "text",
+      "summary": "An icon.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleIconToken"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingButton": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "The button.",
+      "constructors": [
+        "primary",
+        "ghost"
+      ],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleButton"
+          ]
+        },
+        {
+          "name": "disabled",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingIconButton": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "An icon button.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "required": true
+        },
+        {
+          "name": "tooltipPosition",
+          "kind": "choice",
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": [
+        {
+          "rule": "lastColumnProps",
+          "types": [
+            "OnboardingDataTable"
+          ],
+          "props": {
+            "tooltipPosition": "left"
+          },
+          "code": "W-tooltip-rightmost"
+        }
+      ]
+    },
+    "OnboardingCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A card.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingColumn": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "A column.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "spacing",
+          "kind": "token",
+          "tokenType": "double"
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "Expanded": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "Fills a column.",
+      "constructors": [],
+      "props": [],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": [
+        {
+          "rule": "onlyInside",
+          "types": [
+            "OnboardingColumn"
+          ],
+          "code": "E-expanded-outside-flex",
+          "message": "Expanded must be a direct child of a row or column."
+        }
+      ]
+    },
+    "OnboardingPageHeader": {
+      "kind": "widget",
+      "category": "headers",
+      "summary": "A page header.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "breadcrumbs",
+          "accepts": [
+            "OnboardingBreadcrumbs"
+          ],
+          "many": false
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "back",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingBreadcrumbs": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "Breadcrumbs.",
+      "constructors": [],
+      "props": [],
+      "slots": [
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingBreadcrumbItem"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingBreadcrumbItem": {
+      "kind": "value",
+      "category": "navigation",
+      "summary": "One crumb.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "CrudView": {
+      "kind": "widget",
+      "category": "crud",
+      "summary": "A collection.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "items",
+          "kind": "rows",
+          "required": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "empty",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "table",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "template": {
+            "as": "items"
+          }
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingDataTable": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "A table.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "rows",
+          "kind": "rows",
+          "required": true
+        },
+        {
+          "name": "idPath",
+          "kind": "path"
+        }
+      ],
+      "slots": [
+        {
+          "name": "columns",
+          "accepts": [
+            "OnboardingTableColumn"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "rowTap",
+          "payload": {
+            "row": "object"
+          }
+        }
+      ],
+      "rules": [
+        {
+          "rule": "notInside",
+          "types": [
+            "OnboardingCard"
+          ],
+          "code": "W-table-in-card"
+        }
+      ]
+    },
+    "OnboardingTableColumn": {
+      "kind": "value",
+      "category": "tables",
+      "summary": "A column.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "cell",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true,
+          "template": {
+            "as": "row"
+          }
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingMetricStrip": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "Metrics.",
+      "constructors": [],
+      "props": [],
+      "slots": [
+        {
+          "name": "metrics",
+          "accepts": [
+            "OnboardingMetric"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "selected",
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingMetric": {
+      "kind": "value",
+      "category": "tables",
+      "summary": "One metric.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "key",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "count",
+          "kind": "integer",
+          "required": true
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "ModalScaffold": {
+      "kind": "widget",
+      "category": "modals",
+      "summary": "A modal.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "submit",
+          "primary": true,
+          "payload": {}
+        },
+        {
+          "name": "cancel",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingSidebarShell": {
+      "kind": "widget",
+      "category": "shells",
+      "summary": "A shell.",
+      "constructors": [],
+      "props": [],
+      "slots": [
+        {
+          "name": "sidebar",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingSidebarButton": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "A sidebar button.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "DesignOutlet": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "Where a frame draws its page.",
+      "constructors": [],
+      "props": [],
+      "slots": [],
+      "events": [],
+      "rules": [
+        {
+          "rule": "rootOf",
+          "types": [
+            "frame"
+          ],
+          "code": "E-outlet-outside-frame"
+        }
+      ]
+    },
+    "Gauge": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A gauge with only named constructors.",
+      "constructors": [
+        "small",
+        "large"
+      ],
+      "props": [
+        {
+          "name": "value",
+          "kind": "number",
+          "required": true
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": [],
+      "hasDefaultConstructor": false
+    },
+    "Showcase": {
+      "kind": "widget",
+      "category": "test",
+      "summary": "One prop of every kind.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean"
+        },
+        {
+          "name": "count",
+          "kind": "integer"
+        },
+        {
+          "name": "ratio",
+          "kind": "number"
+        },
+        {
+          "name": "align",
+          "kind": "choice",
+          "values": [
+            "start",
+            "center",
+            "end"
+          ]
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        },
+        {
+          "name": "anyStyle",
+          "kind": "style"
+        },
+        {
+          "name": "iconStyle",
+          "kind": "style",
+          "families": [
+            "StyleIconToken"
+          ]
+        },
+        {
+          "name": "gap",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "tint",
+          "kind": "token",
+          "tokenType": "color"
+        },
+        {
+          "name": "picture",
+          "kind": "image"
+        },
+        {
+          "name": "due",
+          "kind": "date"
+        },
+        {
+          "name": "idPath",
+          "kind": "path"
+        },
+        {
+          "name": "rows",
+          "kind": "rows"
+        },
+        {
+          "name": "tags",
+          "kind": "stringList"
+        },
+        {
+          "name": "sizes",
+          "kind": "integerList"
+        },
+        {
+          "name": "extra",
+          "kind": "json"
+        },
+        {
+          "name": "variant",
+          "kind": "choice",
+          "values": [
+            "a",
+            "b"
+          ],
+          "bindable": false
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    }
+  },
+  "rules": [
+    {
+      "rule": "pageRoot",
+      "types": [
+        "StyledListView"
+      ],
+      "props": {
+        "style": "StyleContentList.normal"
+      },
+      "code": "W-page-root"
+    },
+    {
+      "rule": "singleScroll",
+      "types": [
+        "StyledListView"
+      ],
+      "props": {
+        "style": "StyleContentList.flush"
+      },
+      "code": "W-nested-scroll"
+    },
+    {
+      "rule": "modalRoot",
+      "types": [
+        "ModalScaffold"
+      ],
+      "code": "E-modal-root",
+      "message": "A modal's root is a ModalScaffold."
+    },
+    {
+      "rule": "frameRoot",
+      "types": [
+        "OnboardingSidebarShell"
+      ],
+      "code": "E-frame-root"
+    }
+  ]
+}

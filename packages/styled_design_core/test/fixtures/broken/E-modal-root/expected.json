@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-modal-root",
+      "file": "screens/case/modal.json",
+      "pointer": "/root/type",
+      "node": "case.modal#card",
+      "hint": "ModalScaffold"
+    }
+  ]
+}

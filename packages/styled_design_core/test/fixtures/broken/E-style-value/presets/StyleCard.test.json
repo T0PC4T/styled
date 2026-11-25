@@ -1,0 +1,24 @@
+{
+  "format": 1,
+  "id": "StyleCard.test",
+  "extends": "StyleCard.surface",
+  "style": {
+    "box": {
+      "alignment": "centre",
+      "padding": {
+        "all": "padding",
+        "left": "paddingSm"
+      },
+      "border": {
+        "none": true,
+        "color": "primary"
+      },
+      "width": {
+        "const": "infinte"
+      }
+    },
+    "text": {
+      "maxLines": 0
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-preset-unused",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/id"
+    }
+  ]
+}

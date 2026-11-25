@@ -1,0 +1,662 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onboarding360.design/schemas/screen.schema.json",
+  "title": "Screen document (screens/<path>.json)",
+  "description": "Structure only. Component types, props, slots, events, tokens, presets and icons are checked against catalog.json by the validator.",
+  "type": "object",
+  "required": [
+    "format",
+    "id",
+    "kind",
+    "title",
+    "root"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "format": {
+      "const": 1
+    },
+    "id": {
+      "$ref": "#/$defs/screenId"
+    },
+    "kind": {
+      "enum": [
+        "page",
+        "modal",
+        "frame"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "route": {
+      "type": "string",
+      "pattern": "^/([A-Za-z0-9_-]+|:[a-z][A-Za-z0-9]*)?(/([A-Za-z0-9_-]+|:[a-z][A-Za-z0-9]*))*$",
+      "description": "Pages only. The path the app serves this screen on; `:name` segments are params."
+    },
+    "frame": {
+      "$ref": "#/$defs/screenId",
+      "description": "Pages only. The frame screen the studio previews this page inside."
+    },
+    "params": {
+      "type": "object",
+      "description": "Route params (pages) or open arguments (modals). Always strings.",
+      "propertyNames": {
+        "$ref": "#/$defs/ident"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "sample"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "sample": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "query": {
+      "type": "object",
+      "description": "Query parameters the screen reads. Always strings.",
+      "propertyNames": {
+        "$ref": "#/$defs/ident"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sample": {
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "description": "Screen-local state. Each value is the initial value, evaluated once when the screen mounts; it may bind to data, params or query. Changed with the setState action.",
+      "propertyNames": {
+        "$ref": "#/$defs/ident"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/value"
+      }
+    },
+    "fixtures": {
+      "type": "object",
+      "description": "Sample data. `default` is the data contract the app must supply; every other fixture is a JSON merge patch over it.",
+      "required": [
+        "default"
+      ],
+      "propertyNames": {
+        "$ref": "#/$defs/ident"
+      },
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "emits": {
+      "type": "object",
+      "description": "Events this screen hands to the app. Every emit action must name one of these. A modal's events go to the handler of the page that opened it.",
+      "propertyNames": {
+        "$ref": "#/$defs/ident"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "description"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object",
+            "propertyNames": {
+              "$ref": "#/$defs/ident"
+            },
+            "additionalProperties": {
+              "enum": [
+                "string",
+                "number",
+                "bool",
+                "list",
+                "object",
+                "any"
+              ]
+            }
+          },
+          "returns": {
+            "enum": [
+              "none",
+              "bool",
+              "any"
+            ],
+            "default": "none"
+          },
+          "sample": {
+            "description": "What the studio returns in place of the app when this event is emitted. Defaults to true."
+          }
+        }
+      }
+    },
+    "root": {
+      "$ref": "#/$defs/node"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "page"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "route"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "modal",
+              "frame"
+            ]
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "route"
+              ]
+            },
+            {
+              "required": [
+                "frame"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "screenId": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*(\\.[a-z][A-Za-z0-9]*)*$"
+    },
+    "ident": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*(\\.([A-Za-z_][A-Za-z0-9_]*|[0-9]+))*$",
+      "description": "root.segment.segment. Roots: data, state, params, query, event, page (frames only), or a variable from repeat or a template slot."
+    },
+    "node": {
+      "type": "object",
+      "required": [
+        "id",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/ident",
+          "description": "Unique within the screen. Stable: links, patches and the inspector address nodes by it."
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9]*(\\.[a-z][A-Za-z0-9]*)?$",
+          "description": "Dart class, optionally with a named constructor: OnboardingButton.primary."
+        },
+        "props": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/ident"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/value"
+          }
+        },
+        "children": {
+          "$ref": "#/$defs/nodeList",
+          "description": "Shorthand for slots.children."
+        },
+        "slots": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/ident"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/nodeList"
+          }
+        },
+        "on": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/ident"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/actionList"
+          }
+        },
+        "when": {
+          "$ref": "#/$defs/value",
+          "description": "Rendered only when truthy."
+        },
+        "repeat": {
+          "type": "object",
+          "required": [
+            "over",
+            "as"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "over": {
+              "$ref": "#/$defs/value"
+            },
+            "as": {
+              "$ref": "#/$defs/ident"
+            },
+            "index": {
+              "$ref": "#/$defs/ident"
+            },
+            "key": {
+              "$ref": "#/$defs/value"
+            }
+          }
+        },
+        "note": {
+          "type": "string",
+          "description": "A note for people and agents. Never rendered."
+        }
+      }
+    },
+    "nodeList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "value": {
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          }
+        },
+        {
+          "$ref": "#/$defs/expr"
+        },
+        {
+          "$ref": "#/$defs/plainObject"
+        }
+      ]
+    },
+    "plainObject": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[^$]"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/value"
+      }
+    },
+    "pair": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/value"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "expr": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "$bind": {
+          "$ref": "#/$defs/path"
+        },
+        "$text": {
+          "type": "string",
+          "description": "Text with {{path}} or {{path|formatter}} holes."
+        },
+        "$not": {
+          "$ref": "#/$defs/value"
+        },
+        "$empty": {
+          "$ref": "#/$defs/value"
+        },
+        "$and": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          },
+          "minItems": 2
+        },
+        "$or": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          },
+          "minItems": 2
+        },
+        "$eq": {
+          "$ref": "#/$defs/pair"
+        },
+        "$ne": {
+          "$ref": "#/$defs/pair"
+        },
+        "$gt": {
+          "$ref": "#/$defs/pair"
+        },
+        "$gte": {
+          "$ref": "#/$defs/pair"
+        },
+        "$lt": {
+          "$ref": "#/$defs/pair"
+        },
+        "$lte": {
+          "$ref": "#/$defs/pair"
+        },
+        "$in": {
+          "$ref": "#/$defs/pair"
+        },
+        "$if": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "$match": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/value"
+            },
+            {
+              "$ref": "#/$defs/plainObject"
+            },
+            {
+              "$ref": "#/$defs/value"
+            }
+          ],
+          "description": "[value, { case: result }, default]"
+        }
+      }
+    },
+    "valueMap": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/ident"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/value"
+      }
+    },
+    "actionList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "do"
+      ],
+      "oneOf": [
+        {
+          "description": "Go to a page. push = drill down, replaceAll = change section, replace = same slot changes identity.",
+          "required": [
+            "to"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "navigate"
+            },
+            "to": {
+              "$ref": "#/$defs/screenId"
+            },
+            "mode": {
+              "enum": [
+                "push",
+                "replaceAll",
+                "replace"
+              ],
+              "default": "push"
+            },
+            "params": {
+              "$ref": "#/$defs/valueMap"
+            },
+            "query": {
+              "$ref": "#/$defs/valueMap"
+            }
+          }
+        },
+        {
+          "description": "Back button: pop, or go to the fallback when there is nothing to pop (UrlRouter.popOr).",
+          "required": [
+            "fallback"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "back"
+            },
+            "fallback": {
+              "$ref": "#/$defs/screenId"
+            },
+            "params": {
+              "$ref": "#/$defs/valueMap"
+            }
+          }
+        },
+        {
+          "description": "Breadcrumb to an ancestor (UrlRouter.popUntilRoute).",
+          "required": [
+            "to"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "backTo"
+            },
+            "to": {
+              "$ref": "#/$defs/screenId"
+            },
+            "params": {
+              "$ref": "#/$defs/valueMap"
+            }
+          }
+        },
+        {
+          "description": "In-page state kept in the URL (UrlRouter.updateQuery). A null value removes the key.",
+          "required": [
+            "set"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "setQuery"
+            },
+            "set": {
+              "$ref": "#/$defs/valueMap"
+            },
+            "history": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        {
+          "description": "Open a modal screen. `then` runs when it closes with a truthy result, readable as event.result.",
+          "required": [
+            "screen"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "openModal"
+            },
+            "screen": {
+              "$ref": "#/$defs/screenId"
+            },
+            "params": {
+              "$ref": "#/$defs/valueMap"
+            },
+            "then": {
+              "$ref": "#/$defs/actionList"
+            }
+          }
+        },
+        {
+          "description": "Close the modal this action runs in.",
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "closeModal"
+            },
+            "result": {
+              "$ref": "#/$defs/value"
+            }
+          }
+        },
+        {
+          "description": "OnboardingConfirmDialog. `then` runs when confirmed.",
+          "required": [
+            "title",
+            "then"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "confirm"
+            },
+            "title": {
+              "$ref": "#/$defs/value"
+            },
+            "message": {
+              "$ref": "#/$defs/value"
+            },
+            "confirmLabel": {
+              "$ref": "#/$defs/value"
+            },
+            "destructive": {
+              "type": "boolean",
+              "default": false
+            },
+            "then": {
+              "$ref": "#/$defs/actionList"
+            }
+          }
+        },
+        {
+          "description": "OnboardingToast.",
+          "required": [
+            "message"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "toast"
+            },
+            "message": {
+              "$ref": "#/$defs/value"
+            },
+            "tone": {
+              "enum": [
+                "success",
+                "error",
+                "warning",
+                "info"
+              ],
+              "default": "success"
+            }
+          }
+        },
+        {
+          "description": "Change screen-local state.",
+          "required": [
+            "set"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "setState"
+            },
+            "set": {
+              "$ref": "#/$defs/valueMap"
+            }
+          }
+        },
+        {
+          "description": "Hand an event to the app. If the handler returns false, the rest of the list is skipped; any other result is readable as event.result.",
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "do": {
+              "const": "emit"
+            },
+            "name": {
+              "$ref": "#/$defs/ident"
+            },
+            "payload": {
+              "$ref": "#/$defs/valueMap"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

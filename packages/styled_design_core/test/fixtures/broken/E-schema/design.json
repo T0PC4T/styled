@@ -1,0 +1,8 @@
+{
+  "format": 1,
+  "name": "base",
+  "start": "app.home",
+  "exprot": {
+    "bundle": "b.json"
+  }
+}

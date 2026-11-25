@@ -1,0 +1,76 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "emits": {
+    "save": {
+      "description": "Save.",
+      "payload": {
+        "id": "string"
+      }
+    }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "a",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "emit",
+              "name": "sav",
+              "payload": {
+                "id": "x"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "b",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "emit",
+              "name": "save",
+              "payload": {
+                "id": "x",
+                "extra": 1
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "c",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "emit",
+              "name": "save"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

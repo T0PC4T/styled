@@ -1,0 +1,15 @@
+{
+  "description": "",
+  "tolerate": [
+    "W-push-no-back"
+  ],
+  "diagnostics": [
+    {
+      "code": "W-frame-nav-mode",
+      "file": "screens/case/frame.json",
+      "pointer": "/root/slots/sidebar/0/on/tap/0",
+      "node": "case.frame#nav",
+      "hint": "replaceAll"
+    }
+  ]
+}

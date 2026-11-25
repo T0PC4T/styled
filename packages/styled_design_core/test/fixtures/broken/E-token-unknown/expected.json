@@ -1,0 +1,27 @@
+{
+  "description": "Unknown token keys in tokens.json, a preset style and a token prop.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-token-unknown",
+      "file": "tokens/tokens.json",
+      "pointer": "/tokens/paddingSn",
+      "hint": "'paddingSm'"
+    },
+    {
+      "code": "E-token-unknown",
+      "file": "presets/StyleButton.quiet.json",
+      "pointer": "/style/text/color",
+      "hint": "'onSurface'",
+      "allowed": true
+    },
+    {
+      "code": "E-token-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/gap",
+      "node": "case.main#s",
+      "hint": "'paddingSm'",
+      "allowed": true
+    }
+  ]
+}

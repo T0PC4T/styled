@@ -1,0 +1,123 @@
+{
+  "description": "A wrong literal for each prop kind, and expressions that can only give the wrong kind.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/title",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/enabled",
+      "node": "case.main#s",
+      "hint": "without quotes"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/count",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/ratio",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/align",
+      "node": "case.main#s",
+      "hint": "'center'",
+      "allowed": true
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/style",
+      "node": "case.main#s",
+      "hint": "'StyleCard.surface'",
+      "allowed": true
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/anyStyle",
+      "node": "case.main#s",
+      "hint": "'StyleButton.primary'"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/gap",
+      "node": "case.main#s",
+      "allowed": true
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/due",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/idPath",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/rows",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/tags",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/sizes",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/picture",
+      "node": "case.main#s"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/iconStyle/args/size",
+      "node": "case.main#s",
+      "allowed": true
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/props/enabled/$text",
+      "node": "case.main#s2"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/props/title/$eq",
+      "node": "case.main#s2"
+    },
+    {
+      "code": "E-prop-kind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/props/align/$match/2",
+      "node": "case.main#s2",
+      "allowed": true
+    }
+  ]
+}

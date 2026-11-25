@@ -1,0 +1,11 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-token-unused",
+      "file": "tokens/tokens.json",
+      "pointer": "/tokens/spare"
+    }
+  ]
+}

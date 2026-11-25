@@ -1,0 +1,44 @@
+{
+  "format": 1,
+  "id": "frames.main",
+  "kind": "frame",
+  "title": "Main",
+  "root": {
+    "id": "shell",
+    "type": "OnboardingSidebarShell",
+    "slots": {
+      "sidebar": [
+        {
+          "id": "navHome",
+          "type": "OnboardingSidebarButton",
+          "props": {
+            "label": "Home",
+            "selected": {
+              "$eq": [
+                {
+                  "$bind": "page.id"
+                },
+                "app.home"
+              ]
+            }
+          },
+          "on": {
+            "tap": [
+              {
+                "do": "navigate",
+                "to": "app.home",
+                "mode": "replaceAll"
+              }
+            ]
+          }
+        }
+      ],
+      "child": [
+        {
+          "id": "outlet",
+          "type": "DesignOutlet"
+        }
+      ]
+    }
+  }
+}

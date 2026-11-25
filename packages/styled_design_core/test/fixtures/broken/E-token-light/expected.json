@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [
+    "W-token-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-token-light",
+      "file": "tokens/tokens.json",
+      "pointer": "/tokens/brandNew/values",
+      "hint": "light"
+    }
+  ]
+}

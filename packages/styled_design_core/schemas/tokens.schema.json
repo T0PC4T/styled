@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onboarding360.design/schemas/tokens.schema.json",
+  "title": "Token document (tokens/tokens.json)",
+  "description": "A key that exists in the catalog is an override: omit `type`. A key that does not exist is a new token: `type` and a `light` value are required.",
+  "type": "object",
+  "required": ["format", "tokens"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "format": { "const": 1 },
+    "tokens": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][A-Za-z0-9]*$" },
+      "additionalProperties": { "$ref": "#/$defs/token" }
+    }
+  },
+  "$defs": {
+    "token": {
+      "type": "object",
+      "required": ["values"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "enum": ["color", "double", "duration", "fontWeight", "string", "shadow"] },
+        "description": { "type": "string" },
+        "values": {
+          "type": "object",
+          "description": "Value per mode. `light` is the default every other mode falls back to.",
+          "minProperties": 1,
+          "propertyNames": { "pattern": "^[a-z][A-Za-z0-9]*$" },
+          "additionalProperties": { "$ref": "#/$defs/tokenValue" }
+        }
+      }
+    },
+    "tokenValue": {
+      "description": "color: #RRGGBB or #AARRGGBB. double: number. duration: whole milliseconds. fontWeight: w100..w900. string: text. shadow: object.",
+      "anyOf": [
+        { "type": "string", "pattern": "^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$" },
+        { "type": "string", "pattern": "^w[1-9]00$" },
+        { "type": "number" },
+        { "type": "string" },
+        { "$ref": "#/$defs/shadow" }
+      ]
+    },
+    "shadow": {
+      "type": "object",
+      "required": ["opacity", "blurRadius"],
+      "additionalProperties": false,
+      "properties": {
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "blurRadius": { "type": "number", "minimum": 0 },
+        "spreadRadius": { "type": "number" },
+        "dx": { "type": "number" },
+        "dy": { "type": "number" }
+      }
+    }
+  }
+}

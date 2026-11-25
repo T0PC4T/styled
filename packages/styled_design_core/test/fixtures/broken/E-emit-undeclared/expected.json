@@ -1,0 +1,29 @@
+{
+  "description": "An undeclared emit, an extra payload key, a missing payload key.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-emit-undeclared",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/on/tap/0/name",
+      "node": "case.main#a",
+      "hint": "'save'",
+      "allowed": true
+    },
+    {
+      "code": "E-emit-undeclared",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/on/tap/0/payload/extra",
+      "node": "case.main#b",
+      "allowed": true
+    },
+    {
+      "code": "E-emit-undeclared",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/on/tap/0",
+      "node": "case.main#c",
+      "hint": "\"id\"",
+      "allowed": true
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-slot-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/slots/chld",
+      "node": "case.main#c",
+      "hint": "'child'",
+      "allowed": true
+    }
+  ]
+}

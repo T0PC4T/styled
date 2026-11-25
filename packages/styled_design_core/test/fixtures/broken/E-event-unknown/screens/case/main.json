@@ -1,0 +1,37 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "b",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "x"
+        },
+        "on": {
+          "tapp": [
+            {
+              "do": "toast",
+              "message": "x"
+            }
+          ],
+          "tap": [
+            {
+              "do": "toast",
+              "message": "x"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

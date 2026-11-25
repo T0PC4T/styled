@@ -1,0 +1,31 @@
+{
+  "description": "Extends an unknown variant, a variant of another family, and a cycle.",
+  "tolerate": [
+    "W-preset-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-preset-extends",
+      "file": "presets/StyleButton.a.json",
+      "pointer": "/extends",
+      "hint": "'StyleButton.ghost'",
+      "allowed": true
+    },
+    {
+      "code": "E-preset-extends",
+      "file": "presets/StyleButton.b.json",
+      "pointer": "/extends",
+      "allowed": true
+    },
+    {
+      "code": "E-preset-extends",
+      "file": "presets/StyleButton.c.json",
+      "pointer": "/extends"
+    },
+    {
+      "code": "E-preset-extends",
+      "file": "presets/StyleButton.d.json",
+      "pointer": "/extends"
+    }
+  ]
+}

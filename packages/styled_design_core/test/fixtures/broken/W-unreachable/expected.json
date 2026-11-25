@@ -1,0 +1,11 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-unreachable",
+      "file": "screens/case/main.json",
+      "pointer": ""
+    }
+  ]
+}

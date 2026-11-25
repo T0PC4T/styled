@@ -1,0 +1,13 @@
+{
+  "format": 1,
+  "id": "StyleCard.test",
+  "extends": "StyleCard.surface",
+  "style": {
+    "box": {
+      "color": "paddingSm"
+    },
+    "text": {
+      "fontWeight": "bodyFont"
+    }
+  }
+}

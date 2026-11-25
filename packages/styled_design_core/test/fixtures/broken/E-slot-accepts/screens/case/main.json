@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "tbl",
+        "type": "OnboardingDataTable",
+        "props": {
+          "rows": []
+        },
+        "slots": {
+          "columns": [
+            {
+              "id": "t",
+              "type": "StyledText",
+              "props": {
+                "text": "x"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "col",
+        "type": "OnboardingTableColumn",
+        "props": {
+          "label": "C"
+        },
+        "slots": {
+          "cell": [
+            {
+              "id": "c",
+              "type": "StyledText",
+              "props": {
+                "text": "x"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "h",
+        "type": "OnboardingPageHeader",
+        "props": {
+          "title": "T"
+        },
+        "slots": {
+          "breadcrumbs": [
+            {
+              "id": "b",
+              "type": "StyledText",
+              "props": {
+                "text": "x"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

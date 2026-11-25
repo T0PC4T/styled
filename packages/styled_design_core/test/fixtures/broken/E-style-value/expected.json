@@ -1,0 +1,37 @@
+{
+  "description": "An unknown enum value, insets mixing all with a side, border none with a colour, a bad size constant, maxLines 0.",
+  "tolerate": [
+    "W-preset-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-style-value",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/alignment",
+      "hint": "'center'",
+      "allowed": true
+    },
+    {
+      "code": "E-style-value",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/padding"
+    },
+    {
+      "code": "E-style-value",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/border"
+    },
+    {
+      "code": "E-style-value",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/width/const",
+      "hint": "'infinity'",
+      "allowed": true
+    },
+    {
+      "code": "E-style-value",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/text/maxLines"
+    }
+  ]
+}

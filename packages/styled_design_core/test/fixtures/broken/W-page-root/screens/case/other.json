@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "id": "case.other",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/other",
+  "root": {
+    "id": "col",
+    "type": "OnboardingColumn",
+    "children": [
+      {
+        "id": "t",
+        "type": "StyledText",
+        "props": {
+          "text": "x"
+        }
+      }
+    ]
+  }
+}

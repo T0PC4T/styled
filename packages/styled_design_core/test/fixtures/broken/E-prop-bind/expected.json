@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-prop-bind",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/variant",
+      "node": "case.main#s",
+      "hint": "a, b",
+      "allowed": true
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../schemas/preset.schema.json",
+  "format": 1,
+  "id": "StyleButton.quiet",
+  "extends": "StyleButton.ghost",
+  "description": "Lowest-emphasis action beside a primary button.",
+  "style": {
+    "text": { "color": "onSurfaceMuted" },
+    "icon": { "color": "onSurfaceMuted" },
+    "states": {
+      "hovered": {
+        "box": { "color": { "alpha": ["primary", "opacityFaint"] } },
+        "text": { "color": "primary" },
+        "icon": { "color": "primary" }
+      }
+    }
+  }
+}

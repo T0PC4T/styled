@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "id": "case.target",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/target",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "t",
+        "type": "StyledText",
+        "props": {
+          "text": "x"
+        }
+      }
+    ]
+  }
+}

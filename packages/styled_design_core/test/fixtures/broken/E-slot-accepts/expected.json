@@ -1,0 +1,29 @@
+{
+  "description": "A widget in a value slot, a value node in a widget slot, and a widget a named-type slot does not accept.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-slot-accepts",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/slots/columns/0/type",
+      "node": "case.main#t",
+      "hint": "OnboardingTableColumn",
+      "allowed": true
+    },
+    {
+      "code": "E-slot-accepts",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/type",
+      "node": "case.main#col",
+      "allowed": true
+    },
+    {
+      "code": "E-slot-accepts",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/slots/breadcrumbs/0/type",
+      "node": "case.main#b",
+      "hint": "OnboardingBreadcrumbs",
+      "allowed": true
+    }
+  ]
+}

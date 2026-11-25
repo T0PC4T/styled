@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "frame": "app.home",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "a",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "openModal",
+              "screen": "app.home"
+            }
+          ]
+        }
+      },
+      {
+        "id": "b",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "navigate",
+              "to": "app.create"
+            }
+          ]
+        }
+      },
+      {
+        "id": "c",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "closeModal"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

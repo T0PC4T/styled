@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onboarding360.design/schemas/workspace.schema.json",
+  "title": "Design workspace manifest (design.json)",
+  "type": "object",
+  "required": ["format", "name", "start"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "format": { "const": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "start": { "$ref": "#/$defs/screenId", "description": "Screen the prototype opens on." },
+    "catalog": {
+      "type": "object",
+      "description": "Catalog this workspace was last validated against. Written by the CLI.",
+      "required": ["version"],
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": "integer", "minimum": 1 },
+        "hash": { "type": "string" }
+      }
+    },
+    "export": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bundle": { "type": "string", "description": "Where `design export` writes the bundle, relative to this file." },
+        "fixtures": { "enum": ["none", "default", "all"], "default": "none" }
+      }
+    }
+  },
+  "$defs": {
+    "screenId": { "type": "string", "pattern": "^[a-z][A-Za-z0-9]*(\\.[a-z][A-Za-z0-9]*)*$" }
+  }
+}

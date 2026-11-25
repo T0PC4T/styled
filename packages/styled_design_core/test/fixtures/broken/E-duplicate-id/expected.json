@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-duplicate-id",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/id",
+      "node": "case.main#t",
+      "hint": "'t2'"
+    }
+  ]
+}

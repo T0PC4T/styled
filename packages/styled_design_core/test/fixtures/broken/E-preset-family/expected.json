@@ -1,0 +1,15 @@
+{
+  "description": "",
+  "tolerate": [
+    "W-preset-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-preset-family",
+      "file": "presets/StyleButon.loud.json",
+      "pointer": "/id",
+      "hint": "'StyleButton.loud'",
+      "allowed": true
+    }
+  ]
+}

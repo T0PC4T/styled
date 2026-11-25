@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-event-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/on/tapp",
+      "node": "case.main#b",
+      "hint": "'tap'",
+      "allowed": true
+    }
+  ]
+}

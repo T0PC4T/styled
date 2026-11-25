@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-table-in-card",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/children/0",
+      "node": "case.main#tbl",
+      "hint": "#card"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-page-root",
+      "file": "screens/case/main.json",
+      "pointer": "/root/props/style",
+      "node": "case.main#page",
+      "hint": "StyleContentList.normal"
+    },
+    {
+      "code": "W-page-root",
+      "file": "screens/case/other.json",
+      "pointer": "/root/type",
+      "node": "case.other#col",
+      "hint": "StyledListView",
+      "allowed": true
+    }
+  ]
+}

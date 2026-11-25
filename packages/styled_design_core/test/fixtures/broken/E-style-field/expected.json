@@ -1,0 +1,21 @@
+{
+  "description": "",
+  "tolerate": [
+    "W-preset-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-style-field",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/box/colour",
+      "hint": "'color'"
+    },
+    {
+      "code": "E-style-field",
+      "file": "presets/StyleCard.test.json",
+      "pointer": "/style/states/hover",
+      "hint": "'hovered'",
+      "allowed": true
+    }
+  ]
+}

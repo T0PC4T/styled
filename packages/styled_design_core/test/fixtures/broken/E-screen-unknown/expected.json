@@ -1,0 +1,25 @@
+{
+  "description": "Unknown start screen, frame and navigate target.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-screen-unknown",
+      "file": "design.json",
+      "pointer": "/start",
+      "hint": "'app.home'"
+    },
+    {
+      "code": "E-screen-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/frame",
+      "hint": "'frames.main'"
+    },
+    {
+      "code": "E-screen-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/on/tap/0/to",
+      "node": "case.main#b",
+      "hint": "'app.detail'"
+    }
+  ]
+}

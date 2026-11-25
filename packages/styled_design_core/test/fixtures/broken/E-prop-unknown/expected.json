@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-prop-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/styel",
+      "node": "case.main#t",
+      "hint": "'style'",
+      "allowed": true
+    }
+  ]
+}

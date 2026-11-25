@@ -1,0 +1,11 @@
+{
+  "description": "A screen file that is not JSON.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-json",
+      "file": "screens/case/main.json",
+      "pointer": ""
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "format": 1,
+  "id": "case.frame",
+  "kind": "frame",
+  "title": "F",
+  "root": {
+    "id": "col",
+    "type": "OnboardingColumn",
+    "children": [
+      {
+        "id": "outlet",
+        "type": "DesignOutlet"
+      }
+    ]
+  }
+}

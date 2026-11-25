@@ -1,0 +1,113 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "description": 5,
+  "query": {
+    "tab": {
+      "values": "a"
+    }
+  },
+  "fixtures": {
+    "default": {
+      "metrics": [
+        {
+          "key": "a",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "t",
+        "type": "StyledText",
+        "props": {
+          "text": "x"
+        },
+        "nte": "typo"
+      },
+      {
+        "id": "n",
+        "type": "StyledText",
+        "props": {
+          "text": "x"
+        },
+        "note": 5
+      },
+      {
+        "id": "b",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "toast",
+              "message": "x",
+              "tone": 5
+            },
+            {
+              "do": "confirm",
+              "title": "Sure?",
+              "destructive": "yes",
+              "then": [
+                {
+                  "do": "setQuery",
+                  "set": {
+                    "tab": "a"
+                  },
+                  "history": "no"
+                }
+              ]
+            },
+            {
+              "do": "navigate",
+              "to": "app.detail",
+              "mode": 1,
+              "params": {
+                "id": "a"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "strip",
+        "type": "OnboardingMetricStrip",
+        "slots": {
+          "metrics": [
+            {
+              "id": "metric",
+              "type": "OnboardingMetric",
+              "repeat": {
+                "over": {
+                  "$bind": "data.metrics"
+                },
+                "as": "m",
+                "index": 1
+              },
+              "props": {
+                "key": {
+                  "$bind": "m.key"
+                },
+                "count": {
+                  "$bind": "m.count"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

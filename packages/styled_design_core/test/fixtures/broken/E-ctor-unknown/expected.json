@@ -1,0 +1,22 @@
+{
+  "description": "A named constructor that does not exist, and the unnamed constructor of a component that has none.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-ctor-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/type",
+      "node": "case.main#b",
+      "hint": "'OnboardingButton.primary'",
+      "allowed": true
+    },
+    {
+      "code": "E-ctor-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/type",
+      "node": "case.main#g",
+      "hint": "Gauge.small",
+      "allowed": true
+    }
+  ]
+}

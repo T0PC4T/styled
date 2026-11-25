@@ -1,0 +1,17 @@
+{
+  "format": 1,
+  "id": "StyleCard.test",
+  "extends": "StyleCard.surface",
+  "style": {
+    "box": {
+      "colour": "primary"
+    },
+    "states": {
+      "hover": {
+        "text": {
+          "color": "primary"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../schemas/screen.schema.json",
+  "format": 1,
+  "id": "admin.automationCreate",
+  "kind": "modal",
+  "title": "New automation",
+  "state": { "name": "" },
+  "fixtures": { "default": { "isCreating": false, "errors": { "name": null } } },
+  "emits": {
+    "createAutomation": {
+      "description": "Create the automation. Return the new id, or false to keep the modal open.",
+      "payload": { "name": "string" },
+      "returns": "any",
+      "sample": "auto_welcome"
+    }
+  },
+  "root": {
+    "id": "modal",
+    "type": "ModalScaffold",
+    "props": {
+      "title": "New automation",
+      "subtitle": "Name it now. You set the rule on the next screen.",
+      "size": "sm",
+      "submitLabel": "Create",
+      "isSubmitting": { "$bind": "data.isCreating" }
+    },
+    "children": [
+      {
+        "id": "name",
+        "type": "OnboardingTextInput",
+        "props": {
+          "label": "Name",
+          "hint": "Welcome email",
+          "isRequired": true,
+          "autofocus": true,
+          "error": { "$bind": "data.errors.name" }
+        },
+        "on": { "changed": [{ "do": "setState", "set": { "name": { "$bind": "event.value" } } }] }
+      }
+    ],
+    "on": {
+      "submit": [
+        { "do": "emit", "name": "createAutomation", "payload": { "name": { "$bind": "state.name" } } },
+        { "do": "closeModal", "result": { "$bind": "event.result" } }
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "frame": "frames.mian",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "b",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "navigate",
+              "to": "app.detial",
+              "params": {
+                "id": "a"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

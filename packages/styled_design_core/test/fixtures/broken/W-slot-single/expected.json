@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-slot-single",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/slots/child",
+      "node": "case.main#c",
+      "hint": "when"
+    }
+  ]
+}

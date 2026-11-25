@@ -1,0 +1,74 @@
+{
+  "description": "data, state, params, query, repeat and template paths that do not resolve; setState of an undeclared key.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/text/$bind",
+      "node": "case.main#a",
+      "hint": "'data.items'",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/props/text/$bind",
+      "node": "case.main#b",
+      "hint": "'state.name'",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/props/text/$bind",
+      "node": "case.main#c"
+    },
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/3/props/text/$bind",
+      "node": "case.main#d",
+      "hint": "'query.tab'",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/4/slots/metrics/0/props/key/$bind",
+      "node": "case.main#metric",
+      "hint": "'m.key'",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/5/slots/table/0/slots/columns/0/slots/cell/0/props/text/$bind",
+      "node": "case.main#cellText",
+      "hint": "'row.name'",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/6/on/tap/0/set/nam",
+      "node": "case.main#set",
+      "hint": "'name'",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/7/props/text/$bind",
+      "node": "case.main#f",
+      "hint": "'data.items.0.name'",
+      "allowed": true
+    },
+    {
+      "code": "E-bind-path",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/8/props/text/$bind",
+      "node": "case.main#g"
+    }
+  ]
+}

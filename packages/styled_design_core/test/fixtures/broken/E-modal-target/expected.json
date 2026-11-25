@@ -1,0 +1,31 @@
+{
+  "description": "A page as a frame, openModal of a page, navigate to a modal, closeModal outside a modal.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-modal-target",
+      "file": "screens/case/main.json",
+      "pointer": "/frame"
+    },
+    {
+      "code": "E-modal-target",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/on/tap/0/screen",
+      "node": "case.main#a",
+      "hint": "navigate"
+    },
+    {
+      "code": "E-modal-target",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/on/tap/0/to",
+      "node": "case.main#b",
+      "hint": "openModal"
+    },
+    {
+      "code": "E-modal-target",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/on/tap/0",
+      "node": "case.main#c"
+    }
+  ]
+}

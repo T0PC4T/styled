@@ -1,0 +1,190 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "state": {
+    "name": ""
+  },
+  "query": {
+    "tab": {}
+  },
+  "fixtures": {
+    "default": {
+      "items": [
+        {
+          "id": "a",
+          "name": "A"
+        }
+      ],
+      "metrics": [
+        {
+          "key": "a",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "a",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "data.itms"
+          }
+        }
+      },
+      {
+        "id": "b",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "state.nme"
+          }
+        }
+      },
+      {
+        "id": "c",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "params.id"
+          }
+        }
+      },
+      {
+        "id": "d",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "query.tb"
+          }
+        }
+      },
+      {
+        "id": "strip",
+        "type": "OnboardingMetricStrip",
+        "slots": {
+          "metrics": [
+            {
+              "id": "metric",
+              "type": "OnboardingMetric",
+              "repeat": {
+                "over": {
+                  "$bind": "data.metrics"
+                },
+                "as": "m"
+              },
+              "props": {
+                "key": {
+                  "$bind": "m.kee"
+                },
+                "count": {
+                  "$bind": "m.count"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "list",
+        "type": "CrudView",
+        "props": {
+          "items": {
+            "$bind": "data.items"
+          }
+        },
+        "slots": {
+          "empty": [
+            {
+              "id": "e",
+              "type": "StyledText",
+              "props": {
+                "text": "x"
+              }
+            }
+          ],
+          "table": [
+            {
+              "id": "tbl",
+              "type": "OnboardingDataTable",
+              "props": {
+                "rows": {
+                  "$bind": "items"
+                }
+              },
+              "slots": {
+                "columns": [
+                  {
+                    "id": "col",
+                    "type": "OnboardingTableColumn",
+                    "props": {
+                      "label": "C"
+                    },
+                    "slots": {
+                      "cell": [
+                        {
+                          "id": "cellText",
+                          "type": "StyledText",
+                          "props": {
+                            "text": {
+                              "$bind": "row.nme"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "set",
+        "type": "OnboardingButton",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "setState",
+              "set": {
+                "nam": "x"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "f",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "data.items.0.nme"
+          }
+        }
+      },
+      {
+        "id": "g",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "data.items.name"
+          }
+        }
+      }
+    ]
+  }
+}

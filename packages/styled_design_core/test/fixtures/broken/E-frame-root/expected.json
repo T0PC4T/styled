@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-frame-root",
+      "file": "screens/case/frame.json",
+      "pointer": "/root/type",
+      "node": "case.frame#col",
+      "hint": "OnboardingSidebarShell"
+    }
+  ]
+}

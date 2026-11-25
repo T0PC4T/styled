@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "i",
+        "type": "StyledIcon",
+        "props": {
+          "icon": "pencl"
+        }
+      }
+    ]
+  }
+}

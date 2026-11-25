@@ -1,0 +1,38 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "b",
+        "type": "OnboardingButton.primry",
+        "props": {
+          "label": "Go"
+        },
+        "on": {
+          "tap": [
+            {
+              "do": "toast",
+              "message": "x"
+            }
+          ]
+        }
+      },
+      {
+        "id": "g",
+        "type": "Gauge",
+        "props": {
+          "value": 1
+        }
+      }
+    ]
+  }
+}

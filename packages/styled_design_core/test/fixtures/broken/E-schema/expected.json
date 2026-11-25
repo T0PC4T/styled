@@ -1,0 +1,72 @@
+{
+  "description": "Unknown fields in design.json and a node, an unknown mode in tokens.json, and optional fields of the wrong type.",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-schema",
+      "file": "design.json",
+      "pointer": "/exprot",
+      "hint": "'export'"
+    },
+    {
+      "code": "E-schema",
+      "file": "tokens/tokens.json",
+      "pointer": "/tokens/padding/values/darkk",
+      "hint": "'dark'",
+      "allowed": true
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/description"
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/query/tab/values"
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/nte",
+      "node": "case.main#t",
+      "hint": "'note'"
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/note",
+      "node": "case.main#n"
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/on/tap/0/tone",
+      "node": "case.main#b"
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/on/tap/1/destructive",
+      "node": "case.main#b"
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/on/tap/1/then/0/history",
+      "node": "case.main#b"
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/2/on/tap/2/mode",
+      "node": "case.main#b"
+    },
+    {
+      "code": "E-schema",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/3/slots/metrics/0/repeat/index",
+      "node": "case.main#metric"
+    }
+  ]
+}

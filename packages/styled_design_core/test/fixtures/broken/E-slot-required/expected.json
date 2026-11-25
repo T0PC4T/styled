@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-slot-required",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0",
+      "node": "case.main#tbl",
+      "hint": "columns"
+    }
+  ]
+}

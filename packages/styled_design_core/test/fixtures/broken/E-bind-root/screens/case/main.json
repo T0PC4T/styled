@@ -1,0 +1,88 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "fixtures": {
+    "default": {
+      "metrics": [
+        {
+          "key": "a",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "a",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "row.name"
+          }
+        }
+      },
+      {
+        "id": "b",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "event.value"
+          }
+        }
+      },
+      {
+        "id": "c",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "page.id"
+          }
+        }
+      },
+      {
+        "id": "strip",
+        "type": "OnboardingMetricStrip",
+        "slots": {
+          "metrics": [
+            {
+              "id": "metric",
+              "type": "OnboardingMetric",
+              "repeat": {
+                "over": {
+                  "$bind": "data.metrics"
+                },
+                "as": "item"
+              },
+              "props": {
+                "key": {
+                  "$bind": "itm.key"
+                },
+                "count": {
+                  "$bind": "item.count"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "d",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$bind": "item.key"
+          }
+        }
+      }
+    ]
+  }
+}

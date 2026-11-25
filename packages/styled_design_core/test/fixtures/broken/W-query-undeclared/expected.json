@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-query-undeclared",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/on/tap/0/set/tb",
+      "node": "case.main#b",
+      "hint": "'tab'",
+      "allowed": true
+    }
+  ]
+}

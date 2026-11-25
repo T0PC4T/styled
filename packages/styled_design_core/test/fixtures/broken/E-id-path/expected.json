@@ -1,0 +1,20 @@
+{
+  "description": "A screen and a preset whose file names do not match their ids.",
+  "tolerate": [
+    "W-preset-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-id-path",
+      "file": "screens/case/main.json",
+      "pointer": "/id",
+      "hint": "screens/case/other.json"
+    },
+    {
+      "code": "E-id-path",
+      "file": "presets/StyleButton.loud.json",
+      "pointer": "/id",
+      "hint": "presets/StyleButton.louder.json"
+    }
+  ]
+}

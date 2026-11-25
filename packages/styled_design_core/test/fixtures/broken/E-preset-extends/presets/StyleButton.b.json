@@ -1,0 +1,10 @@
+{
+  "format": 1,
+  "id": "StyleButton.b",
+  "extends": "StyleCard.surface",
+  "style": {
+    "text": {
+      "color": "primary"
+    }
+  }
+}

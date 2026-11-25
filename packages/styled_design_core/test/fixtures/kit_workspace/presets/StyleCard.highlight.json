@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../schemas/preset.schema.json",
+  "format": 1,
+  "id": "StyleCard.highlight",
+  "extends": "StyleCard.surface",
+  "description": "A card that draws the eye: gold tint, gold hairline, no shadow.",
+  "style": {
+    "box": {
+      "color": "accentSubtle",
+      "border": { "color": { "alpha": ["accent", "opacityMedium"] }, "width": "strokeWidth", "radius": "cardRadius" },
+      "boxShadow": []
+    },
+    "states": {
+      "mobile": { "box": { "padding": { "all": "padding" } } }
+    }
+  }
+}

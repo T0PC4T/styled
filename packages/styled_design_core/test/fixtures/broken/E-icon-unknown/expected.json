@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-icon-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/icon",
+      "node": "case.main#i",
+      "hint": "'pencil'",
+      "allowed": true
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "format": 1,
+  "id": "StyleButton.quiet",
+  "extends": "StyleButton.ghost",
+  "description": "Quiet.",
+  "style": {
+    "text": {
+      "color": "onSurface",
+      "fontWeight": "fontWeightBold"
+    },
+    "states": {
+      "hovered": {
+        "box": {
+          "color": {
+            "alpha": [
+              "primary",
+              "opacityFaint"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

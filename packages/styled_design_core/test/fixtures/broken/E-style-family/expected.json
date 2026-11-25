@@ -1,0 +1,21 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-style-family",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/style",
+      "node": "case.main#b",
+      "allowed": true
+    },
+    {
+      "code": "E-style-family",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/1/props/style",
+      "node": "case.main#s",
+      "hint": "'StyleCard.surface'",
+      "allowed": true
+    }
+  ]
+}

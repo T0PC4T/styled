@@ -1,0 +1,10 @@
+{
+  "format": 1,
+  "id": "StyleButton.primary",
+  "extends": "StyleButton.ghost",
+  "style": {
+    "text": {
+      "color": "primary"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "../../../../schemas/screen.schema.json",
+  "format": 1,
+  "id": "admin.automationEditor",
+  "kind": "page",
+  "title": "Edit automation",
+  "route": "/admin/automations/:id",
+  "frame": "frames.admin",
+  "params": { "id": { "sample": "auto_welcome", "description": "Automation id." } },
+  "state": {
+    "name": { "$bind": "data.automation.name" },
+    "enabled": { "$bind": "data.automation.enabled" }
+  },
+  "fixtures": {
+    "default": {
+      "automation": { "id": "auto_welcome", "name": "Welcome email", "enabled": true, "lastRun": "2026-11-24T09:00:00Z" },
+      "isSaving": false,
+      "errors": { "name": null }
+    },
+    "saving": { "isSaving": true },
+    "invalid": { "errors": { "name": "Give the automation a name." } }
+  },
+  "emits": {
+    "saveAutomation": {
+      "description": "Save name and enabled. Return false to stay on the page (validation failed).",
+      "payload": { "id": "string", "name": "string", "enabled": "bool" },
+      "returns": "bool"
+    },
+    "deleteAutomation": { "description": "Delete the automation. Return false if it could not be deleted.", "payload": { "id": "string" }, "returns": "bool" }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": { "style": "StyleContentList.normal" },
+    "children": [
+      {
+        "id": "header",
+        "type": "OnboardingPageHeader",
+        "props": {
+          "title": { "$bind": "state.name" },
+          "subtitle": { "$text": "Last run {{data.automation.lastRun|dateTime}}" },
+          "backLabel": "Automations"
+        },
+        "slots": {
+          "badge": [
+            { "id": "enabledBadge", "type": "OnboardingStatusBadge.success", "when": { "$bind": "state.enabled" }, "props": { "label": "Enabled", "dot": true } },
+            { "id": "pausedBadge", "type": "OnboardingStatusBadge.neutral", "props": { "label": "Paused" } }
+          ],
+          "actions": [
+            {
+              "id": "delete",
+              "type": "OnboardingButton",
+              "props": { "label": "Delete", "icon": "trash", "style": "StyleButton.quiet", "collapseTextOnMobile": true },
+              "on": {
+                "tap": [
+                  {
+                    "do": "confirm",
+                    "title": "Delete this automation?",
+                    "message": { "$text": "{{state.name}} stops sending and cannot be restored." },
+                    "confirmLabel": "Delete",
+                    "destructive": true,
+                    "then": [
+                      { "do": "emit", "name": "deleteAutomation", "payload": { "id": { "$bind": "params.id" } } },
+                      { "do": "toast", "message": "Automation deleted" },
+                      { "do": "back", "fallback": "admin.automations" }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "save",
+              "type": "OnboardingButton.primary",
+              "props": { "label": "Save", "icon": "circle_check", "loading": { "$bind": "data.isSaving" } },
+              "on": {
+                "tap": [
+                  {
+                    "do": "emit",
+                    "name": "saveAutomation",
+                    "payload": { "id": { "$bind": "params.id" }, "name": { "$bind": "state.name" }, "enabled": { "$bind": "state.enabled" } }
+                  },
+                  { "do": "toast", "message": "Automation saved" },
+                  { "do": "back", "fallback": "admin.automations" }
+                ]
+              }
+            }
+          ]
+        },
+        "on": { "back": [{ "do": "back", "fallback": "admin.automations" }] }
+      },
+      {
+        "id": "details",
+        "type": "OnboardingCard",
+        "children": [
+          {
+            "id": "nameInput",
+            "type": "OnboardingTextInput",
+            "props": {
+              "label": "Name",
+              "isRequired": true,
+              "initialValue": { "$bind": "data.automation.name" },
+              "error": { "$bind": "data.errors.name" }
+            },
+            "on": { "changed": [{ "do": "setState", "set": { "name": { "$bind": "event.value" } } }] }
+          },
+          {
+            "id": "enabledSwitch",
+            "type": "OnboardingSwitchInput",
+            "props": { "label": "Enabled", "subtitle": "Paused automations send nothing.", "value": { "$bind": "state.enabled" } },
+            "on": { "changed": [{ "do": "setState", "set": { "enabled": { "$bind": "event.value" } } }] }
+          }
+        ]
+      }
+    ]
+  }
+}

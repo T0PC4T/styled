@@ -1,0 +1,19 @@
+{
+  "format": 1,
+  "id": "case.modal",
+  "kind": "modal",
+  "title": "M",
+  "root": {
+    "id": "card",
+    "type": "OnboardingCard",
+    "children": [
+      {
+        "id": "t",
+        "type": "StyledText",
+        "props": {
+          "text": "x"
+        }
+      }
+    ]
+  }
+}

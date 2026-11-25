@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-tooltip-rightmost",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/slots/columns/1/slots/cell/0/props/tooltipPosition",
+      "node": "case.main#last",
+      "hint": "\"left\""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "name": "base",
+  "start": "app.home",
+  "catalog": {
+    "version": 3
+  },
+  "export": {
+    "bundle": "bundle.json",
+    "fixtures": "default"
+  }
+}

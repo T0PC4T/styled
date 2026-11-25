@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-nested-scroll",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props/style",
+      "node": "case.main#inner",
+      "hint": "StyleContentList.flush"
+    }
+  ]
+}

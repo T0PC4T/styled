@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "ex",
+        "type": "Expanded",
+        "slots": {
+          "child": [
+            {
+              "id": "t",
+              "type": "StyledText",
+              "props": {
+                "text": "x"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "col",
+        "type": "OnboardingColumn",
+        "children": [
+          {
+            "id": "ok",
+            "type": "Expanded",
+            "slots": {
+              "child": [
+                {
+                  "id": "u",
+                  "type": "StyledText",
+                  "props": {
+                    "text": "x"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

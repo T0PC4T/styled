@@ -1,0 +1,35 @@
+{
+  "format": 1,
+  "id": "case.frame",
+  "kind": "frame",
+  "title": "F",
+  "root": {
+    "id": "shell",
+    "type": "OnboardingSidebarShell",
+    "slots": {
+      "sidebar": [
+        {
+          "id": "nav",
+          "type": "OnboardingSidebarButton",
+          "props": {
+            "label": "H"
+          },
+          "on": {
+            "tap": [
+              {
+                "do": "navigate",
+                "to": "app.home"
+              }
+            ]
+          }
+        }
+      ],
+      "child": [
+        {
+          "id": "outlet",
+          "type": "DesignOutlet"
+        }
+      ]
+    }
+  }
+}

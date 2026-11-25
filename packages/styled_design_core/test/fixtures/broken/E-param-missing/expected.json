@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-param-missing",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/on/tap/0",
+      "node": "case.main#b",
+      "hint": "params",
+      "allowed": true
+    }
+  ]
+}

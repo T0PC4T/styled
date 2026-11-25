@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-expanded-outside-flex",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0",
+      "node": "case.main#ex",
+      "hint": "OnboardingColumn"
+    }
+  ]
+}

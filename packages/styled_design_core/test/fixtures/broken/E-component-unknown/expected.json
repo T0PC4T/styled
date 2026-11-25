@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-component-unknown",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/type",
+      "node": "case.main#t",
+      "hint": "'StyledText'"
+    }
+  ]
+}

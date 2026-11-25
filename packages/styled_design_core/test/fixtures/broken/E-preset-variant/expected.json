@@ -1,0 +1,14 @@
+{
+  "description": "",
+  "tolerate": [
+    "W-preset-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-preset-variant",
+      "file": "presets/StyleButton.primary.json",
+      "pointer": "/id",
+      "hint": "StyleButton.primaryCustom"
+    }
+  ]
+}

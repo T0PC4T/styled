@@ -1,0 +1,25 @@
+{
+  "description": "",
+  "tolerate": [
+    "W-token-unused"
+  ],
+  "diagnostics": [
+    {
+      "code": "E-token-type",
+      "file": "tokens/tokens.json",
+      "pointer": "/tokens/primary/values/light",
+      "hint": "#59B0E3"
+    },
+    {
+      "code": "E-token-type",
+      "file": "tokens/tokens.json",
+      "pointer": "/tokens/padding/type",
+      "hint": "Remove"
+    },
+    {
+      "code": "E-token-type",
+      "file": "tokens/tokens.json",
+      "pointer": "/tokens/slow/values/light"
+    }
+  ]
+}

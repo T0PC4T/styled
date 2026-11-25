@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "id": "app.create",
+  "kind": "modal",
+  "title": "New",
+  "state": {
+    "name": ""
+  },
+  "fixtures": {
+    "default": {}
+  },
+  "emits": {
+    "create": {
+      "description": "Create it.",
+      "payload": {
+        "name": "string"
+      },
+      "returns": "any",
+      "sample": "a"
+    }
+  },
+  "root": {
+    "id": "modal",
+    "type": "ModalScaffold",
+    "props": {
+      "title": "New"
+    },
+    "children": [
+      {
+        "id": "hint",
+        "type": "StyledText",
+        "props": {
+          "text": "Name it"
+        }
+      }
+    ],
+    "on": {
+      "submit": [
+        {
+          "do": "emit",
+          "name": "create",
+          "payload": {
+            "name": {
+              "$bind": "state.name"
+            }
+          }
+        },
+        {
+          "do": "closeModal",
+          "result": {
+            "$bind": "event.result"
+          }
+        }
+      ]
+    }
+  }
+}

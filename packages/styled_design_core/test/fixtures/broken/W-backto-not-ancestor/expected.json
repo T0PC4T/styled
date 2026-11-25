@@ -1,0 +1,12 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "W-backto-not-ancestor",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/on/tap/0/to",
+      "node": "case.main#b"
+    }
+  ]
+}

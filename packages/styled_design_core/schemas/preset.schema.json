@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onboarding360.design/schemas/preset.schema.json",
+  "title": "Designer preset (presets/<Family>.<variant>.json)",
+  "description": "A new variant of an existing preset family. Every design value is a token key; raw numbers and colours are rejected.",
+  "type": "object",
+  "required": ["format", "id", "extends", "style"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "format": { "const": 1 },
+    "id": { "$ref": "#/$defs/presetId" },
+    "extends": { "$ref": "#/$defs/presetId", "description": "A variant of the same family, built in or designer made." },
+    "description": { "type": "string" },
+    "style": { "$ref": "#/$defs/styleWithStates" }
+  },
+  "$defs": {
+    "presetId": { "type": "string", "pattern": "^Style[A-Z][A-Za-z0-9]*\\.[a-z][A-Za-z0-9]*$" },
+    "tokenKey": { "type": "string", "pattern": "^[a-z][A-Za-z0-9]*$" },
+    "color": {
+      "description": "A colour token, or AlphaOf(colour token, opacity token).",
+      "anyOf": [
+        { "$ref": "#/$defs/tokenKey" },
+        {
+          "type": "object", "required": ["alpha"], "additionalProperties": false,
+          "properties": { "alpha": { "type": "array", "prefixItems": [{ "$ref": "#/$defs/tokenKey" }, { "$ref": "#/$defs/tokenKey" }], "minItems": 2, "maxItems": 2 } }
+        }
+      ]
+    },
+    "size": {
+      "description": "A double token, or the layout constants StyleValue.infinity / StyleValue.zero.",
+      "anyOf": [
+        { "$ref": "#/$defs/tokenKey" },
+        { "type": "object", "required": ["const"], "additionalProperties": false, "properties": { "const": { "enum": ["infinity", "zero"] } } }
+      ]
+    },
+    "insets": {
+      "description": "all -> StyledEdgeInsets.all; horizontal/vertical -> .symmetric; left/top/right/bottom -> .only.",
+      "type": "object", "minProperties": 1, "additionalProperties": false,
+      "properties": {
+        "all": { "$ref": "#/$defs/size" },
+        "horizontal": { "$ref": "#/$defs/size" }, "vertical": { "$ref": "#/$defs/size" },
+        "left": { "$ref": "#/$defs/size" }, "top": { "$ref": "#/$defs/size" }, "right": { "$ref": "#/$defs/size" }, "bottom": { "$ref": "#/$defs/size" }
+      }
+    },
+    "borderSide": {
+      "type": "object", "additionalProperties": false,
+      "properties": { "color": { "$ref": "#/$defs/color" }, "width": { "$ref": "#/$defs/size" } }
+    },
+    "border": {
+      "description": "color+width+radius and no sides -> StyledBorder.all. none:true -> StyledBorder.none. Anything else -> StyledBorder(...), a partial override.",
+      "type": "object", "minProperties": 1, "additionalProperties": false,
+      "properties": {
+        "none": { "const": true },
+        "color": { "$ref": "#/$defs/color" }, "width": { "$ref": "#/$defs/size" }, "radius": { "$ref": "#/$defs/size" },
+        "top": { "$ref": "#/$defs/borderSide" }, "right": { "$ref": "#/$defs/borderSide" },
+        "bottom": { "$ref": "#/$defs/borderSide" }, "left": { "$ref": "#/$defs/borderSide" }
+      }
+    },
+    "box": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "color": { "$ref": "#/$defs/color" },
+        "border": { "$ref": "#/$defs/border" },
+        "padding": { "$ref": "#/$defs/insets" },
+        "margin": { "$ref": "#/$defs/insets" },
+        "boxShadow": {
+          "type": "array", "description": "Empty array removes the shadow.",
+          "items": { "type": "object", "required": ["color", "level"], "additionalProperties": false,
+            "properties": { "color": { "$ref": "#/$defs/color" }, "level": { "$ref": "#/$defs/tokenKey" } } }
+        },
+        "width": { "$ref": "#/$defs/size" }, "height": { "$ref": "#/$defs/size" },
+        "constraints": {
+          "type": "object", "minProperties": 1, "additionalProperties": false,
+          "properties": { "minWidth": { "$ref": "#/$defs/size" }, "maxWidth": { "$ref": "#/$defs/size" }, "minHeight": { "$ref": "#/$defs/size" }, "maxHeight": { "$ref": "#/$defs/size" } }
+        },
+        "alignment": { "enum": ["topLeft", "topCenter", "topRight", "centerLeft", "center", "centerRight", "bottomLeft", "bottomCenter", "bottomRight"] },
+        "clip": { "enum": ["none", "hardEdge", "antiAlias", "antiAliasWithSaveLayer"] },
+        "shape": { "enum": ["rectangle", "circle"] },
+        "transform": {
+          "type": "object", "required": ["translate"], "additionalProperties": false,
+          "properties": { "translate": { "type": "object", "minProperties": 1, "additionalProperties": false, "properties": { "x": { "$ref": "#/$defs/tokenKey" }, "y": { "$ref": "#/$defs/tokenKey" } } } }
+        },
+        "motion": {
+          "type": "object", "required": ["duration"], "additionalProperties": false,
+          "properties": { "duration": { "$ref": "#/$defs/tokenKey" }, "curve": { "enum": ["linear", "easeIn", "easeOut", "easeInOut", "easeOutCubic", "easeInOutCubic"], "default": "easeOutCubic" } }
+        }
+      }
+    },
+    "flex": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "direction": { "enum": ["horizontal", "vertical"] },
+        "spacing": { "$ref": "#/$defs/size" },
+        "mainAxisAlignment": { "enum": ["start", "end", "center", "spaceBetween", "spaceAround", "spaceEvenly"] },
+        "crossAxisAlignment": { "enum": ["start", "end", "center", "stretch", "baseline"] },
+        "mainAxisSize": { "enum": ["min", "max"] }
+      }
+    },
+    "text": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "color": { "$ref": "#/$defs/color" },
+        "fontFamily": { "$ref": "#/$defs/tokenKey" }, "fontSize": { "$ref": "#/$defs/tokenKey" }, "fontWeight": { "$ref": "#/$defs/tokenKey" },
+        "letterSpacing": { "$ref": "#/$defs/tokenKey" }, "height": { "$ref": "#/$defs/tokenKey" },
+        "textAlign": { "enum": ["left", "right", "center", "justify", "start", "end"] },
+        "maxLines": { "type": "integer", "minimum": 1 },
+        "overflow": { "enum": ["clip", "fade", "ellipsis", "visible"] },
+        "softWrap": { "type": "boolean" },
+        "fontStyle": { "enum": ["normal", "italic"] },
+        "decoration": { "enum": ["none", "underline", "overline", "lineThrough"] },
+        "decorationColor": { "$ref": "#/$defs/color" }
+      }
+    },
+    "icon": {
+      "type": "object", "additionalProperties": false,
+      "properties": { "color": { "$ref": "#/$defs/color" }, "size": { "$ref": "#/$defs/tokenKey" } }
+    },
+    "image": {
+      "type": "object", "additionalProperties": false,
+      "properties": { "fit": { "enum": ["fill", "contain", "cover", "fitWidth", "fitHeight", "none", "scaleDown"] }, "width": { "$ref": "#/$defs/size" }, "height": { "$ref": "#/$defs/size" } }
+    },
+    "style": {
+      "type": "object", "minProperties": 1, "additionalProperties": false,
+      "properties": {
+        "box": { "$ref": "#/$defs/box" }, "flex": { "$ref": "#/$defs/flex" }, "text": { "$ref": "#/$defs/text" },
+        "icon": { "$ref": "#/$defs/icon" }, "image": { "$ref": "#/$defs/image" }
+      }
+    },
+    "styleWithStates": {
+      "type": "object", "minProperties": 1, "additionalProperties": false,
+      "properties": {
+        "box": { "$ref": "#/$defs/box" }, "flex": { "$ref": "#/$defs/flex" }, "text": { "$ref": "#/$defs/text" },
+        "icon": { "$ref": "#/$defs/icon" }, "image": { "$ref": "#/$defs/image" },
+        "states": {
+          "type": "object", "additionalProperties": false,
+          "description": "Interaction states, application states, then screen tiers. One level deep.",
+          "properties": {
+            "hovered": { "$ref": "#/$defs/style" }, "focused": { "$ref": "#/$defs/style" }, "pressed": { "$ref": "#/$defs/style" },
+            "error": { "$ref": "#/$defs/style" }, "disabled": { "$ref": "#/$defs/style" },
+            "selected": { "$ref": "#/$defs/style" }, "active": { "$ref": "#/$defs/style" }, "loading": { "$ref": "#/$defs/style" }, "approved": { "$ref": "#/$defs/style" },
+            "mobile": { "$ref": "#/$defs/style" }, "tablet": { "$ref": "#/$defs/style" }, "desktop": { "$ref": "#/$defs/style" }
+          }
+        }
+      }
+    }
+  }
+}

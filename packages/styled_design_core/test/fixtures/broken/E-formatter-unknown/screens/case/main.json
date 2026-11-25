@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "fixtures": {
+    "default": {
+      "n": 1
+    }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "t",
+        "type": "StyledText",
+        "props": {
+          "text": {
+            "$text": "{{data.n|nubmer}} items"
+          }
+        }
+      }
+    ]
+  }
+}

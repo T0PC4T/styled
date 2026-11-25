@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "id": "case.main",
+  "kind": "page",
+  "title": "T",
+  "route": "/case/main",
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "c",
+        "type": "OnboardingCard",
+        "slots": {
+          "child": [
+            {
+              "id": "a",
+              "type": "StyledText",
+              "props": {
+                "text": "x"
+              }
+            },
+            {
+              "id": "b",
+              "type": "StyledText",
+              "props": {
+                "text": "y"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "ok",
+        "type": "OnboardingCard",
+        "slots": {
+          "child": [
+            {
+              "id": "e",
+              "type": "StyledText",
+              "props": {
+                "text": "x"
+              },
+              "when": true
+            },
+            {
+              "id": "f",
+              "type": "StyledText",
+              "props": {
+                "text": "y"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

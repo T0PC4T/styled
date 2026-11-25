@@ -1,0 +1,10 @@
+{
+  "format": 1,
+  "id": "StyleButton.d",
+  "extends": "StyleButton.c",
+  "style": {
+    "text": {
+      "color": "primary"
+    }
+  }
+}

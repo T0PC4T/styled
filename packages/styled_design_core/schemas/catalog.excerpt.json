@@ -1,0 +1,93 @@
+{
+  "format": 1,
+  "version": 1,
+  "hash": "sha256:<content hash, written by the dump task>",
+  "modes": ["light", "dark"],
+  "tokens": {
+    "primary": { "type": "color", "light": "#59B0E3", "dark": "#59B0E3", "doc": "360 Care Group Sky Blue (Logo Lighter Blue)" },
+    "paddingSm": { "type": "double", "light": 8 },
+    "animationDuration": { "type": "duration", "light": 200, "doc": "Standard transitions" },
+    "shadowSm": { "type": "shadow", "light": { "opacity": 0.04, "blurRadius": 10, "dy": 2 }, "doc": "Cards, app bar" }
+  },
+  "presets": {
+    "StyleButton": {
+      "doc": "Buttons.",
+      "default": "primary",
+      "variants": ["primary", "secondary", "secondarySm", "outline", "ghost", "success", "danger"]
+    },
+    "StyleIconToken": {
+      "doc": "Semantic icon colours.",
+      "default": "normal",
+      "variants": ["normal", "primary", "secondary", "disabled", "success", "warning", "danger", "info"],
+      "args": { "size": { "kind": "token", "tokenType": "double" } }
+    }
+  },
+  "states": ["hovered", "focused", "pressed", "error", "disabled", "selected", "active", "loading", "approved", "mobile", "tablet", "desktop"],
+  "icons": ["bolt", "circle_check", "layout_dashboard", "pencil", "plus", "trash"],
+  "formatters": ["date", "dateTime", "number", "percent", "currency", "count", "upper", "lower", "initials"],
+  "components": {
+    "OnboardingButton": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "The button. Pick the look with a named constructor or a StyleButton preset.",
+      "constructors": ["primary", "secondary", "secondarySm", "outline", "ghost", "success", "danger"],
+      "props": [
+        { "name": "label", "kind": "string" },
+        { "name": "icon", "kind": "icon" },
+        { "name": "trailingIcon", "kind": "icon" },
+        { "name": "style", "kind": "style", "families": ["StyleButton"] },
+        { "name": "loading", "kind": "boolean", "default": false },
+        { "name": "isExpanded", "kind": "boolean", "default": false },
+        { "name": "disabled", "kind": "boolean", "default": false },
+        { "name": "tooltip", "kind": "string" },
+        { "name": "collapseTextOnMobile", "kind": "boolean", "default": false }
+      ],
+      "slots": [],
+      "events": [{ "name": "tap", "primary": true, "payload": {} }],
+      "rules": [],
+      "example": { "id": "save", "type": "OnboardingButton.primary", "props": { "label": "Save", "icon": "circle_check" }, "on": { "tap": [{ "do": "emit", "name": "save" }] } }
+    },
+    "OnboardingDataTable": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "Config-driven table with selection, sorting and row tap. Has its own card chrome.",
+      "constructors": [],
+      "props": [
+        { "name": "rows", "kind": "rows", "required": true },
+        { "name": "idPath", "kind": "path", "doc": "Path inside a row to its id. Replaces idOf." },
+        { "name": "selectedIds", "kind": "stringList" },
+        { "name": "sortKey", "kind": "string" },
+        { "name": "sortAscending", "kind": "boolean", "default": true },
+        { "name": "minWidth", "kind": "token", "tokenType": "double" }
+      ],
+      "slots": [
+        { "name": "columns", "accepts": ["OnboardingTableColumn"], "many": true, "required": true },
+        { "name": "emptyState", "accepts": ["widget"], "many": false }
+      ],
+      "events": [
+        { "name": "rowTap", "payload": { "row": "object" } },
+        { "name": "sort", "payload": { "value": "string" } },
+        { "name": "toggleSelected", "payload": { "value": "string" } },
+        { "name": "toggleAll", "payload": {} },
+        { "name": "reorder", "payload": { "oldIndex": "number", "newIndex": "number" } }
+      ],
+      "rules": [{ "rule": "notInside", "types": ["OnboardingCard"], "code": "W-table-in-card" }]
+    },
+    "OnboardingTableColumn": {
+      "kind": "value",
+      "category": "tables",
+      "summary": "One column of an OnboardingDataTable.",
+      "constructors": [],
+      "props": [
+        { "name": "label", "kind": "string", "required": true },
+        { "name": "flex", "kind": "integer", "default": 1 },
+        { "name": "width", "kind": "token", "tokenType": "double" },
+        { "name": "sortKey", "kind": "string" },
+        { "name": "alignment", "kind": "choice", "values": ["topLeft", "topCenter", "topRight", "centerLeft", "center", "centerRight", "bottomLeft", "bottomCenter", "bottomRight"], "default": "centerLeft" }
+      ],
+      "slots": [{ "name": "cell", "accepts": ["widget"], "many": false, "required": true, "template": { "as": "row" } }],
+      "events": [],
+      "rules": []
+    }
+  }
+}

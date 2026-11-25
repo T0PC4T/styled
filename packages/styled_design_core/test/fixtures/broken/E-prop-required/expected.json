@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "tolerate": [],
+  "diagnostics": [
+    {
+      "code": "E-prop-required",
+      "file": "screens/case/main.json",
+      "pointer": "/root/children/0/props",
+      "node": "case.main#t",
+      "hint": "\"text\""
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "format": 1,
+  "id": "app.detail",
+  "kind": "page",
+  "title": "Detail",
+  "route": "/app/items/:id",
+  "frame": "frames.main",
+  "params": {
+    "id": {
+      "sample": "a"
+    }
+  },
+  "fixtures": {
+    "default": {
+      "item": {
+        "id": "a",
+        "name": "A"
+      }
+    }
+  },
+  "emits": {
+    "save": {
+      "description": "Save it.",
+      "payload": {
+        "id": "string"
+      },
+      "returns": "bool"
+    }
+  },
+  "root": {
+    "id": "page",
+    "type": "StyledListView",
+    "props": {
+      "style": "StyleContentList.normal"
+    },
+    "children": [
+      {
+        "id": "header",
+        "type": "OnboardingPageHeader",
+        "props": {
+          "title": {
+            "$bind": "data.item.name"
+          }
+        },
+        "slots": {
+          "actions": [
+            {
+              "id": "save",
+              "type": "OnboardingButton",
+              "props": {
+                "label": "Save"
+              },
+              "on": {
+                "tap": [
+                  {
+                    "do": "emit",
+                    "name": "save",
+                    "payload": {
+                      "id": {
+                        "$bind": "params.id"
+                      }
+                    }
+                  },
+                  {
+                    "do": "toast",
+                    "message": "Saved"
+                  },
+                  {
+                    "do": "backTo",
+                    "to": "app.home"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "on": {
+          "back": [
+            {
+              "do": "back",
+              "fallback": "app.home"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
