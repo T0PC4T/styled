@@ -1,7 +1,7 @@
 {
   "format": 1,
   "version": 1,
-  "hash": "sha256:28094bc851ffffd907e5c370d7ef6edfb8fa775f0c76fa80897c366d6e8ed782",
+  "hash": "sha256:a48e37e782ffaf4dc0ed479f13295a1e3ec3af071af0c2bb31543d750c489fb0",
   "modes": [
     "light",
     "dark"
@@ -10,476 +10,586 @@
     "primary": {
       "type": "color",
       "light": "#59B0E3",
-      "dark": "#59B0E3"
+      "dark": "#59B0E3",
+      "group": "Brand colours"
     },
     "primaryVariant": {
       "type": "color",
       "light": "#4298CC",
-      "dark": "#7BC2EC"
+      "dark": "#7BC2EC",
+      "group": "Brand colours"
     },
     "primarySubtle": {
       "type": "color",
       "light": "#EAF5FC",
-      "dark": "#3D59B0E3"
+      "dark": "#3D59B0E3",
+      "group": "Brand colours"
     },
     "onPrimary": {
       "type": "color",
-      "light": "#FFFFFF"
+      "light": "#FFFFFF",
+      "group": "Brand colours"
     },
     "accent": {
       "type": "color",
       "light": "#F4C101",
-      "dark": "#F7CE3E"
+      "dark": "#F7CE3E",
+      "group": "Brand colours"
     },
     "brandLogoSurface": {
       "type": "color",
       "light": "#00FFFFFF",
-      "dark": "#F5F9FC"
+      "dark": "#F5F9FC",
+      "group": "Brand colours"
     },
     "background": {
       "type": "color",
       "light": "#F5F9FC",
-      "dark": "#0B1528"
+      "dark": "#0B1528",
+      "group": "Surfaces and borders"
     },
     "surface": {
       "type": "color",
       "light": "#FFFFFF",
-      "dark": "#111F38"
+      "dark": "#111F38",
+      "group": "Surfaces and borders"
     },
     "surfaceSubtle": {
       "type": "color",
       "light": "#E4EEF7",
-      "dark": "#182B49"
+      "dark": "#182B49",
+      "group": "Surfaces and borders"
     },
     "surfaceHover": {
       "type": "color",
       "light": "#F2F7FC",
-      "dark": "#1C3254"
+      "dark": "#1C3254",
+      "group": "Surfaces and borders"
     },
     "surfaceActive": {
       "type": "color",
       "light": "#DCEAF7",
-      "dark": "#25406B"
+      "dark": "#25406B",
+      "group": "Surfaces and borders"
     },
     "onBackground": {
       "type": "color",
       "light": "#0E1E38",
-      "dark": "#F2F7FC"
+      "dark": "#F2F7FC",
+      "group": "Surfaces and borders"
     },
     "onSurface": {
       "type": "color",
       "light": "#172B4D",
-      "dark": "#E6F0FA"
+      "dark": "#E6F0FA",
+      "group": "Surfaces and borders"
     },
     "onSurfaceSubtle": {
       "type": "color",
       "light": "#4A5D75",
-      "dark": "#94AFC9"
+      "dark": "#94AFC9",
+      "group": "Surfaces and borders"
     },
     "onSurfaceMuted": {
       "type": "color",
       "light": "#657589",
-      "dark": "#5E7896"
+      "dark": "#5E7896",
+      "group": "Surfaces and borders"
     },
     "border": {
       "type": "color",
       "light": "#D8E5F2",
-      "dark": "#1E3456"
+      "dark": "#1E3456",
+      "group": "Surfaces and borders"
     },
     "borderSubtle": {
       "type": "color",
       "light": "#EDF3F9",
-      "dark": "#152642"
+      "dark": "#152642",
+      "group": "Surfaces and borders"
     },
     "borderFocus": {
       "type": "color",
       "light": "#59B0E3",
-      "dark": "#59B0E3"
+      "dark": "#59B0E3",
+      "group": "Surfaces and borders"
     },
     "divider": {
       "type": "color",
       "light": "#D8E5F2",
-      "dark": "#1E3456"
+      "dark": "#1E3456",
+      "group": "Surfaces and borders"
     },
     "shadow": {
       "type": "color",
       "light": "#120E1E38",
-      "dark": "#80000000"
+      "dark": "#80000000",
+      "group": "Surfaces and borders"
     },
     "barrier": {
       "type": "color",
       "light": "#A60E1E38",
-      "dark": "#B3050B14"
+      "dark": "#B3050B14",
+      "group": "Surfaces and borders"
     },
     "mediaBackground": {
       "type": "color",
       "light": "#0E1E38",
-      "dark": "#070E1B"
+      "dark": "#070E1B",
+      "group": "Surfaces and borders"
     },
     "onMedia": {
       "type": "color",
-      "light": "#FFFFFF"
+      "light": "#FFFFFF",
+      "group": "Surfaces and borders"
     },
     "success": {
       "type": "color",
-      "light": "#10B981"
+      "light": "#10B981",
+      "group": "Status colours"
     },
     "successVariant": {
       "type": "color",
-      "light": "#059669"
+      "light": "#059669",
+      "group": "Status colours"
     },
     "successSubtle": {
       "type": "color",
       "light": "#ECFDF5",
-      "dark": "#66064E3B"
+      "dark": "#66064E3B",
+      "group": "Status colours"
     },
     "onSuccess": {
       "type": "color",
-      "light": "#FFFFFF"
+      "light": "#FFFFFF",
+      "group": "Status colours"
     },
     "warning": {
       "type": "color",
-      "light": "#F4C101"
+      "light": "#F4C101",
+      "group": "Status colours"
     },
     "warningVariant": {
       "type": "color",
       "light": "#B88600",
-      "dark": "#F7CE3E"
+      "dark": "#F7CE3E",
+      "group": "Status colours"
     },
     "warningSubtle": {
       "type": "color",
       "light": "#FFFBEB",
-      "dark": "#4D6B5200"
+      "dark": "#4D6B5200",
+      "group": "Status colours"
     },
     "onWarning": {
       "type": "color",
-      "light": "#1F408A"
+      "light": "#1F408A",
+      "group": "Status colours"
     },
     "error": {
       "type": "color",
-      "light": "#DC2626"
+      "light": "#DC2626",
+      "group": "Status colours"
     },
     "errorSubtle": {
       "type": "color",
       "light": "#FEF2F2",
-      "dark": "#667F1D1D"
+      "dark": "#667F1D1D",
+      "group": "Status colours"
     },
     "onError": {
       "type": "color",
-      "light": "#FFFFFF"
+      "light": "#FFFFFF",
+      "group": "Status colours"
     },
     "info": {
       "type": "color",
-      "light": "#59B0E3"
+      "light": "#59B0E3",
+      "group": "Status colours"
     },
     "infoVariant": {
       "type": "color",
       "light": "#2B7CB3",
-      "dark": "#7BC2EC"
+      "dark": "#7BC2EC",
+      "group": "Status colours"
     },
     "infoSubtle": {
       "type": "color",
       "light": "#EAF5FC",
-      "dark": "#4D1A5276"
+      "dark": "#4D1A5276",
+      "group": "Status colours"
     },
     "onInfo": {
       "type": "color",
-      "light": "#FFFFFF"
+      "light": "#FFFFFF",
+      "group": "Status colours"
     },
     "chart1": {
       "type": "color",
-      "light": "#59B0E3"
+      "light": "#59B0E3",
+      "group": "Chart palette"
     },
     "chart2": {
       "type": "color",
-      "light": "#10B981"
+      "light": "#10B981",
+      "group": "Chart palette"
     },
     "chart3": {
       "type": "color",
-      "light": "#1F408A"
+      "light": "#1F408A",
+      "group": "Chart palette"
     },
     "chart4": {
       "type": "color",
-      "light": "#F4C101"
+      "light": "#F4C101",
+      "group": "Chart palette"
     },
     "chart5": {
       "type": "color",
-      "light": "#EC4899"
+      "light": "#EC4899",
+      "group": "Chart palette"
     },
     "chart6": {
       "type": "color",
-      "light": "#2C4996"
+      "light": "#2C4996",
+      "group": "Chart palette"
     },
     "chart7": {
       "type": "color",
-      "light": "#F97316"
+      "light": "#F97316",
+      "group": "Chart palette"
     },
     "chart8": {
       "type": "color",
-      "light": "#14B8A6"
+      "light": "#14B8A6",
+      "group": "Chart palette"
     },
     "chart9": {
       "type": "color",
-      "light": "#6366F1"
+      "light": "#6366F1",
+      "group": "Chart palette"
     },
     "chart10": {
       "type": "color",
-      "light": "#84CC16"
+      "light": "#84CC16",
+      "group": "Chart palette"
     },
     "chart11": {
       "type": "color",
-      "light": "#D946EF"
+      "light": "#D946EF",
+      "group": "Chart palette"
     },
     "chart12": {
       "type": "color",
-      "light": "#526884"
+      "light": "#526884",
+      "group": "Chart palette"
     },
     "chartGrid": {
       "type": "color",
       "light": "#D8E5F2",
-      "dark": "#1E3456"
+      "dark": "#1E3456",
+      "group": "Chart colours"
     },
     "chartAxis": {
       "type": "color",
       "light": "#BFD2E5",
-      "dark": "#2B4670"
+      "dark": "#2B4670",
+      "group": "Chart colours"
     },
     "chartAxisLabel": {
       "type": "color",
       "light": "#526884",
-      "dark": "#94AFC9"
+      "dark": "#94AFC9",
+      "group": "Chart colours"
     },
     "chartCrosshair": {
       "type": "color",
       "light": "#526884",
-      "dark": "#94AFC9"
+      "dark": "#94AFC9",
+      "group": "Chart colours"
     },
     "chartTooltipBackground": {
       "type": "color",
       "light": "#0E1E38",
-      "dark": "#070E1B"
+      "dark": "#070E1B",
+      "group": "Chart colours"
     },
     "chartTooltipText": {
       "type": "color",
       "light": "#F5F9FC",
-      "dark": "#F2F7FC"
+      "dark": "#F2F7FC",
+      "group": "Chart colours"
     },
     "chartPositive": {
       "type": "color",
-      "light": "#10B981"
+      "light": "#10B981",
+      "group": "Chart colours"
     },
     "chartNegative": {
       "type": "color",
-      "light": "#EF4444"
+      "light": "#EF4444",
+      "group": "Chart colours"
     },
     "sidebarWidth": {
       "type": "double",
-      "light": 260
+      "light": 260,
+      "group": "Layout and spacing"
     },
     "topBarHeight": {
       "type": "double",
-      "light": 60
+      "light": 60,
+      "group": "Layout and spacing"
     },
     "mediumWidth": {
       "type": "double",
-      "light": 1024
+      "light": 1024,
+      "group": "Layout and spacing"
     },
     "paddingXs": {
       "type": "double",
-      "light": 4
+      "light": 4,
+      "group": "Layout and spacing"
     },
     "paddingSm": {
       "type": "double",
-      "light": 8
+      "light": 8,
+      "group": "Layout and spacing"
     },
     "padding": {
       "type": "double",
-      "light": 16
+      "light": 16,
+      "group": "Layout and spacing"
     },
     "paddingLg": {
       "type": "double",
-      "light": 24
+      "light": 24,
+      "group": "Layout and spacing"
     },
     "margin": {
       "type": "double",
-      "light": 12
+      "light": 12,
+      "group": "Layout and spacing"
     },
     "radiusSm": {
       "type": "double",
-      "light": 4
+      "light": 4,
+      "group": "Layout and spacing"
     },
     "radius": {
       "type": "double",
-      "light": 8
+      "light": 8,
+      "group": "Layout and spacing"
     },
     "radiusLg": {
       "type": "double",
-      "light": 12
+      "light": 12,
+      "group": "Layout and spacing"
     },
     "cardRadius": {
       "type": "double",
-      "light": 12
+      "light": 12,
+      "group": "Layout and spacing"
     },
     "radiusFull": {
       "type": "double",
-      "light": 999
+      "light": 999,
+      "group": "Layout and spacing"
     },
     "strokeWidth": {
       "type": "double",
-      "light": 1
+      "light": 1,
+      "group": "Layout and spacing"
     },
     "strokeWidthThick": {
       "type": "double",
-      "light": 2
+      "light": 2,
+      "group": "Layout and spacing"
     },
     "strokeWidthAccent": {
       "type": "double",
-      "light": 4
+      "light": 4,
+      "group": "Layout and spacing"
     },
     "buttonHeightSm": {
       "type": "double",
-      "light": 32
+      "light": 32,
+      "group": "Layout and spacing"
     },
     "buttonHeight": {
       "type": "double",
-      "light": 40
+      "light": 40,
+      "group": "Layout and spacing"
     },
     "buttonHeightLg": {
       "type": "double",
-      "light": 48
+      "light": 48,
+      "group": "Layout and spacing"
     },
     "minButtonWidth": {
       "type": "double",
-      "light": 88
+      "light": 88,
+      "group": "Layout and spacing"
     },
     "maxButtonWidth": {
       "type": "double",
-      "light": 720
+      "light": 720,
+      "group": "Layout and spacing"
     },
     "tileButtonHeight": {
       "type": "double",
-      "light": 88
+      "light": 88,
+      "group": "Layout and spacing"
     },
     "buttonHoverLift": {
       "type": "double",
       "light": 0,
-      "dark": 0
+      "dark": 0,
+      "group": "Layout and spacing"
     },
     "iconSizeSm": {
       "type": "double",
-      "light": 16
+      "light": 16,
+      "group": "Layout and spacing"
     },
     "iconSize": {
       "type": "double",
-      "light": 20
+      "light": 20,
+      "group": "Layout and spacing"
     },
     "iconSizeLg": {
       "type": "double",
-      "light": 24
+      "light": 24,
+      "group": "Layout and spacing"
     },
     "fontSizeXs": {
       "type": "double",
-      "light": 11
+      "light": 11,
+      "group": "Typography"
     },
     "fontSizeSm": {
       "type": "double",
-      "light": 12
+      "light": 12,
+      "group": "Typography"
     },
     "fontSize": {
       "type": "double",
-      "light": 14
+      "light": 14,
+      "group": "Typography"
     },
     "fontSizeMd": {
       "type": "double",
-      "light": 16
+      "light": 16,
+      "group": "Typography"
     },
     "fontSizeLg": {
       "type": "double",
-      "light": 18
+      "light": 18,
+      "group": "Typography"
     },
     "fontSizeXl": {
       "type": "double",
-      "light": 20
+      "light": 20,
+      "group": "Typography"
     },
     "h3FontSize": {
       "type": "double",
-      "light": 24
+      "light": 24,
+      "group": "Typography"
     },
     "h2FontSize": {
       "type": "double",
-      "light": 30
+      "light": 30,
+      "group": "Typography"
     },
     "h1FontSize": {
       "type": "double",
-      "light": 36
+      "light": 36,
+      "group": "Typography"
     },
     "fontWeightRegular": {
       "type": "fontWeight",
-      "light": "w400"
+      "light": "w400",
+      "group": "Typography"
     },
     "fontWeightMedium": {
       "type": "fontWeight",
-      "light": "w500"
+      "light": "w500",
+      "group": "Typography"
     },
     "fontWeightSemiBold": {
       "type": "fontWeight",
-      "light": "w600"
+      "light": "w600",
+      "group": "Typography"
     },
     "fontWeightBold": {
       "type": "fontWeight",
-      "light": "w700"
+      "light": "w700",
+      "group": "Typography"
     },
     "headerFontFamily": {
       "type": "string",
-      "light": "Inter"
+      "light": "Inter",
+      "group": "Typography"
     },
     "generalFontFamily": {
       "type": "string",
-      "light": "Inter"
+      "light": "Inter",
+      "group": "Typography"
     },
     "monoFontFamily": {
       "type": "string",
-      "light": "JetBrains Mono"
+      "light": "JetBrains Mono",
+      "group": "Typography"
     },
     "animationDurationFast": {
       "type": "duration",
-      "light": 100
+      "light": 100,
+      "group": "Motion"
     },
     "animationDuration": {
       "type": "duration",
-      "light": 200
+      "light": 200,
+      "group": "Motion"
     },
     "animationDurationSlow": {
       "type": "duration",
-      "light": 350
+      "light": 350,
+      "group": "Motion"
     },
     "cardFlipPerspective": {
       "type": "double",
-      "light": 0.0012
+      "light": 0.0012,
+      "group": "Motion"
     },
     "opacityNone": {
       "type": "double",
-      "light": 0
+      "light": 0,
+      "group": "Opacity"
     },
     "opacityFaint": {
       "type": "double",
-      "light": 0.08
+      "light": 0.08,
+      "group": "Opacity"
     },
     "opacitySubtle": {
       "type": "double",
-      "light": 0.18
+      "light": 0.18,
+      "group": "Opacity"
     },
     "opacityMedium": {
       "type": "double",
-      "light": 0.3
+      "light": 0.3,
+      "group": "Opacity"
     },
     "opacityBold": {
       "type": "double",
-      "light": 0.4
+      "light": 0.4,
+      "group": "Opacity"
     },
     "opacityMuted": {
       "type": "double",
-      "light": 0.65
+      "light": 0.65,
+      "group": "Opacity"
     },
     "shadowSm": {
       "type": "shadow",
@@ -487,7 +597,8 @@
         "opacity": 0.04,
         "blurRadius": 10.0,
         "dy": 2.0
-      }
+      },
+      "group": "Shadows"
     },
     "shadowLg": {
       "type": "shadow",
@@ -495,7 +606,8 @@
         "opacity": 0.15,
         "blurRadius": 28.0,
         "dy": 10.0
-      }
+      },
+      "group": "Shadows"
     },
     "glowPressed": {
       "type": "shadow",
@@ -503,7 +615,8 @@
         "opacity": 0.15,
         "blurRadius": 4.0,
         "dy": 1.0
-      }
+      },
+      "group": "Shadows"
     },
     "glowSm": {
       "type": "shadow",
@@ -511,7 +624,8 @@
         "opacity": 0.12,
         "blurRadius": 8.0,
         "dy": 2.0
-      }
+      },
+      "group": "Shadows"
     },
     "glowMd": {
       "type": "shadow",
@@ -519,7 +633,8 @@
         "opacity": 0.25,
         "blurRadius": 12.0,
         "dy": 4.0
-      }
+      },
+      "group": "Shadows"
     },
     "glowLg": {
       "type": "shadow",
@@ -527,457 +642,570 @@
         "opacity": 0.35,
         "blurRadius": 14.0,
         "dy": 4.0
-      }
+      },
+      "group": "Shadows"
     },
     "radiusChip": {
       "type": "double",
-      "light": 6
+      "light": 6,
+      "group": "Component geometry"
     },
     "pressOffset": {
       "type": "double",
-      "light": 1
+      "light": 1,
+      "group": "Component geometry"
     },
     "avatarSize": {
       "type": "double",
-      "light": 36
+      "light": 36,
+      "group": "Component geometry"
     },
     "iconSizeHero": {
       "type": "double",
-      "light": 64
+      "light": 64,
+      "group": "Component geometry"
     },
     "letterSpacingTighter": {
       "type": "double",
-      "light": -0.5
+      "light": -0.5,
+      "group": "Component geometry"
     },
     "letterSpacingTight": {
       "type": "double",
-      "light": -0.3
+      "light": -0.3,
+      "group": "Component geometry"
     },
     "letterSpacingSnug": {
       "type": "double",
-      "light": -0.2
+      "light": -0.2,
+      "group": "Component geometry"
     },
     "letterSpacingWide": {
       "type": "double",
-      "light": 1.2
+      "light": 1.2,
+      "group": "Component geometry"
     },
     "lineHeight": {
       "type": "double",
-      "light": 1.5
+      "light": 1.5,
+      "group": "Component geometry"
     },
     "lineHeightCode": {
       "type": "double",
-      "light": 1.45
+      "light": 1.45,
+      "group": "Component geometry"
     },
     "letterSpacingSlight": {
       "type": "double",
-      "light": 0.5
+      "light": 0.5,
+      "group": "Component geometry"
     },
     "paddingXxs": {
       "type": "double",
-      "light": 2
+      "light": 2,
+      "group": "Component geometry"
     },
     "paddingHairline": {
       "type": "double",
-      "light": 1
+      "light": 1,
+      "group": "Component geometry"
     },
     "dividerThickness": {
       "type": "double",
-      "light": 1
+      "light": 1,
+      "group": "Component geometry"
     },
     "iconSizeXs": {
       "type": "double",
-      "light": 14
+      "light": 14,
+      "group": "Component geometry"
     },
     "iconSizeMd": {
       "type": "double",
-      "light": 18
+      "light": 18,
+      "group": "Component geometry"
     },
     "iconSizeXl": {
       "type": "double",
-      "light": 28
+      "light": 28,
+      "group": "Component geometry"
     },
     "iconBoxSize": {
       "type": "double",
-      "light": 44
+      "light": 44,
+      "group": "Component geometry"
     },
     "badgeSizeSm": {
       "type": "double",
-      "light": 28
+      "light": 28,
+      "group": "Component geometry"
     },
     "badgeSize": {
       "type": "double",
-      "light": 36
+      "light": 36,
+      "group": "Component geometry"
     },
     "badgeSizeLg": {
       "type": "double",
-      "light": 48
+      "light": 48,
+      "group": "Component geometry"
     },
     "checkboxSize": {
       "type": "double",
-      "light": 20
+      "light": 20,
+      "group": "Component geometry"
     },
     "radioDotSize": {
       "type": "double",
-      "light": 10
+      "light": 10,
+      "group": "Component geometry"
     },
     "switchWidth": {
       "type": "double",
-      "light": 44
+      "light": 44,
+      "group": "Component geometry"
     },
     "switchHeight": {
       "type": "double",
-      "light": 24
+      "light": 24,
+      "group": "Component geometry"
     },
     "tableRowHeight": {
       "type": "double",
-      "light": 52
+      "light": 52,
+      "group": "Component geometry"
     },
     "modalWidth": {
       "type": "double",
-      "light": 600
+      "light": 600,
+      "group": "Component geometry"
     },
     "modalWidthLg": {
       "type": "double",
-      "light": 800
+      "light": 800,
+      "group": "Component geometry"
     },
     "modalHeight": {
       "type": "double",
-      "light": 960
+      "light": 960,
+      "group": "Component geometry"
     },
     "modalHeightLg": {
       "type": "double",
-      "light": 850
+      "light": 850,
+      "group": "Component geometry"
     },
     "cardHoverLift": {
       "type": "double",
-      "light": -2
+      "light": -2,
+      "group": "Component geometry"
     },
     "modalWidthSm": {
       "type": "double",
-      "light": 440
+      "light": 440,
+      "group": "Onboarding360 components"
     },
     "modalWidthXl": {
       "type": "double",
-      "light": 1100
+      "light": 1100,
+      "group": "Onboarding360 components"
     },
     "portalContentWidth": {
       "type": "double",
-      "light": 720
+      "light": 720,
+      "group": "Onboarding360 components"
     },
     "contentMaxWidth": {
       "type": "double",
-      "light": 1200
+      "light": 1200,
+      "group": "Onboarding360 components"
     },
     "gridMinItemWidth": {
       "type": "double",
-      "light": 280
+      "light": 280,
+      "group": "Onboarding360 components"
     },
     "menuMinWidth": {
       "type": "double",
-      "light": 180
+      "light": 180,
+      "group": "Onboarding360 components"
     },
     "menuMaxHeight": {
       "type": "double",
-      "light": 320
+      "light": 320,
+      "group": "Onboarding360 components"
     },
     "switchThumbSize": {
       "type": "double",
-      "light": 18
+      "light": 18,
+      "group": "Onboarding360 components"
     },
     "sliderTrackHeight": {
       "type": "double",
-      "light": 4
+      "light": 4,
+      "group": "Onboarding360 components"
     },
     "sliderThumbSize": {
       "type": "double",
-      "light": 16
+      "light": 16,
+      "group": "Onboarding360 components"
     },
     "progressBarHeight": {
       "type": "double",
-      "light": 8
+      "light": 8,
+      "group": "Onboarding360 components"
     },
     "topBarProgressHeight": {
       "type": "double",
-      "light": 3
+      "light": 3,
+      "group": "Onboarding360 components"
     },
     "progressRingSize": {
       "type": "double",
-      "light": 56
+      "light": 56,
+      "group": "Onboarding360 components"
     },
     "progressRingStroke": {
       "type": "double",
-      "light": 6
+      "light": 6,
+      "group": "Onboarding360 components"
     },
     "progressRingSizeLg": {
       "type": "double",
-      "light": 120
+      "light": 120,
+      "group": "Onboarding360 components"
     },
     "progressRingStrokeLg": {
       "type": "double",
-      "light": 8
+      "light": 8,
+      "group": "Onboarding360 components"
     },
     "dropzoneMinHeight": {
       "type": "double",
-      "light": 120
+      "light": 120,
+      "group": "Onboarding360 components"
     },
     "signaturePadHeight": {
       "type": "double",
-      "light": 160
+      "light": 160,
+      "group": "Onboarding360 components"
     },
     "toastWidth": {
       "type": "double",
-      "light": 360
+      "light": 360,
+      "group": "Onboarding360 components"
     },
     "workspacePaneWidth": {
       "type": "double",
-      "light": 320
+      "light": 320,
+      "group": "Onboarding360 components"
     },
     "avatarSizeSm": {
       "type": "double",
-      "light": 32
+      "light": 32,
+      "group": "Onboarding360 components"
     },
     "avatarSizeRow": {
       "type": "double",
-      "light": 40
+      "light": 40,
+      "group": "Onboarding360 components"
     },
     "avatarSizeLg": {
       "type": "double",
-      "light": 56
+      "light": 56,
+      "group": "Onboarding360 components"
     },
     "tabIndicatorHeight": {
       "type": "double",
-      "light": 2
+      "light": 2,
+      "group": "Onboarding360 components"
     },
     "workspacePaneWidthSm": {
       "type": "double",
-      "light": 280
+      "light": 280,
+      "group": "Onboarding360 components"
     },
     "workspacePaneWidthLg": {
       "type": "double",
-      "light": 480
+      "light": 480,
+      "group": "Onboarding360 components"
     },
     "documentThumbnailHeight": {
       "type": "double",
-      "light": 120
+      "light": 120,
+      "group": "Onboarding360 components"
     },
     "documentFrameHeight": {
       "type": "double",
-      "light": 720
+      "light": 720,
+      "group": "Onboarding360 components"
     },
     "videoThumbnailWidth": {
       "type": "double",
-      "light": 200
+      "light": 200,
+      "group": "Onboarding360 components"
     },
     "audioMeterWidth": {
       "type": "double",
-      "light": 48
+      "light": 48,
+      "group": "Onboarding360 components"
     },
     "gridMinItemWidthSm": {
       "type": "double",
-      "light": 140
+      "light": 140,
+      "group": "Onboarding360 components"
     },
     "gridMinItemWidthLg": {
       "type": "double",
-      "light": 352
+      "light": 352,
+      "group": "Onboarding360 components"
     },
     "colorPickerWidth": {
       "type": "double",
-      "light": 220
+      "light": 220,
+      "group": "Onboarding360 components"
     },
     "colorPickerSquareHeight": {
       "type": "double",
-      "light": 148
+      "light": 148,
+      "group": "Onboarding360 components"
     },
     "filterDropdownWidth": {
       "type": "double",
-      "light": 220
+      "light": 220,
+      "group": "Onboarding360 components"
     },
     "tableMinWidth": {
       "type": "double",
-      "light": 880
+      "light": 880,
+      "group": "Onboarding360 components"
     },
     "tableSelectionColumnWidth": {
       "type": "double",
-      "light": 68
+      "light": 68,
+      "group": "Onboarding360 components"
     },
     "tableActionColumnWidth": {
       "type": "double",
-      "light": 80
+      "light": 80,
+      "group": "Onboarding360 components"
     },
     "compactWidth": {
       "type": "double",
-      "light": 512
+      "light": 512,
+      "group": "Onboarding360 components"
     },
     "toolbarCompactBreakpoint": {
       "type": "double",
-      "light": 820
+      "light": 820,
+      "group": "Onboarding360 components"
     },
     "legendSwatchSize": {
       "type": "double",
-      "light": 10
+      "light": 10,
+      "group": "Onboarding360 components"
     },
     "thumbnailSizeSm": {
       "type": "double",
-      "light": 36
+      "light": 36,
+      "group": "Onboarding360 components"
     },
     "thumbnailSize": {
       "type": "double",
-      "light": 44
+      "light": 44,
+      "group": "Onboarding360 components"
     },
     "thumbnailSizeLg": {
       "type": "double",
-      "light": 64
+      "light": 64,
+      "group": "Onboarding360 components"
     },
     "reviewLabelWidth": {
       "type": "double",
-      "light": 260
+      "light": 260,
+      "group": "Onboarding360 components"
     },
     "lessonWidthNarrow": {
       "type": "double",
-      "light": 640
+      "light": 640,
+      "group": "Lessons"
     },
     "lessonWidthStandard": {
       "type": "double",
-      "light": 800
+      "light": 800,
+      "group": "Lessons"
     },
     "lessonWidthWide": {
       "type": "double",
-      "light": 1040
+      "light": 1040,
+      "group": "Lessons"
     },
     "lessonSheetPadding": {
       "type": "double",
-      "light": 32
+      "light": 32,
+      "group": "Lessons"
     },
     "lessonMediaMinHeight": {
       "type": "double",
-      "light": 160
+      "light": 160,
+      "group": "Lessons"
     },
     "lessonSpacerSm": {
       "type": "double",
-      "light": 16
+      "light": 16,
+      "group": "Lessons"
     },
     "lessonSpacerMd": {
       "type": "double",
-      "light": 32
+      "light": 32,
+      "group": "Lessons"
     },
     "lessonSpacerLg": {
       "type": "double",
-      "light": 48
+      "light": 48,
+      "group": "Lessons"
     },
     "lessonQuoteIconSize": {
       "type": "double",
-      "light": 32
+      "light": 32,
+      "group": "Lessons"
     },
     "hotspotPinSize": {
       "type": "double",
-      "light": 28
+      "light": 28,
+      "group": "Lessons"
     },
     "lineHeightRelaxed": {
       "type": "double",
-      "light": 1.75
+      "light": 1.75,
+      "group": "Lessons"
     },
     "letterSpacingRelaxed": {
       "type": "double",
-      "light": 0.4
+      "light": 0.4,
+      "group": "Lessons"
     },
     "gutterWidth": {
       "type": "double",
-      "light": 24
+      "light": 24,
+      "group": "Lessons"
     },
     "dropLineThickness": {
       "type": "double",
-      "light": 2
+      "light": 2,
+      "group": "Lessons"
     },
     "insertHandleSize": {
       "type": "double",
-      "light": 20
+      "light": 20,
+      "group": "Lessons"
     },
     "dragAutoScrollEdge": {
       "type": "double",
-      "light": 48
+      "light": 48,
+      "group": "Lessons"
     },
     "outlineIndent": {
       "type": "double",
-      "light": 16
+      "light": 16,
+      "group": "Lessons"
     },
     "slotMinHeight": {
       "type": "double",
-      "light": 56
+      "light": 56,
+      "group": "Lessons"
     },
     "dragGhostWidth": {
       "type": "double",
-      "light": 280
+      "light": 280,
+      "group": "Lessons"
     },
     "dragGhostTilt": {
       "type": "double",
-      "light": 0.03
+      "light": 0.03,
+      "group": "Lessons"
     },
     "insertPaletteWidth": {
       "type": "double",
-      "light": 360
+      "light": 360,
+      "group": "Lessons"
     },
     "insertPaletteMaxHeight": {
       "type": "double",
-      "light": 420
+      "light": 420,
+      "group": "Lessons"
     },
     "previewWidthPhone": {
       "type": "double",
-      "light": 390
+      "light": 390,
+      "group": "Lessons"
     },
     "previewWidthTablet": {
       "type": "double",
-      "light": 820
+      "light": 820,
+      "group": "Lessons"
     },
     "dragAutoScrollSpeed": {
       "type": "double",
-      "light": 900
+      "light": 900,
+      "group": "Lessons"
     },
     "disabledFill": {
       "type": "color",
       "light": "#CBD9E8",
-      "dark": "#243857"
+      "dark": "#243857",
+      "group": "Disabled surfaces and brand assets"
     },
     "onDisabled": {
       "type": "color",
       "light": "#637994",
-      "dark": "#6D86A3"
+      "dark": "#6D86A3",
+      "group": "Disabled surfaces and brand assets"
     },
     "brandSymbolSizeSm": {
       "type": "double",
-      "light": 28
+      "light": 28,
+      "group": "Disabled surfaces and brand assets"
     },
     "brandSymbolSize": {
       "type": "double",
-      "light": 36
+      "light": 36,
+      "group": "Disabled surfaces and brand assets"
     },
     "brandSymbolSizeLg": {
       "type": "double",
-      "light": 48
+      "light": 48,
+      "group": "Disabled surfaces and brand assets"
     },
     "brandLogoHeightSm": {
       "type": "double",
-      "light": 40
+      "light": 40,
+      "group": "Disabled surfaces and brand assets"
     },
     "brandLogoWidthSm": {
       "type": "double",
-      "light": 88
+      "light": 88,
+      "group": "Disabled surfaces and brand assets"
     },
     "brandLogoHeight": {
       "type": "double",
-      "light": 64
+      "light": 64,
+      "group": "Disabled surfaces and brand assets"
     },
     "brandLogoWidth": {
       "type": "double",
-      "light": 142
+      "light": 142,
+      "group": "Disabled surfaces and brand assets"
     },
     "brandLogoHeightLg": {
       "type": "double",
-      "light": 80
+      "light": 80,
+      "group": "Disabled surfaces and brand assets"
     },
     "brandLogoWidthLg": {
       "type": "double",
-      "light": 177
+      "light": 177,
+      "group": "Disabled surfaces and brand assets"
     }
   },
   "presets": {
