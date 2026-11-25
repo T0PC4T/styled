@@ -16,6 +16,7 @@ export 'src/contract.dart';
 export 'src/describe.dart';
 export 'src/diagnostics.dart';
 export 'src/documents.dart';
+export 'src/edits.dart';
 export 'src/expressions.dart';
 export 'src/flow.dart';
 export 'src/fmt.dart';

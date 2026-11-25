@@ -6,6 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:styled_design_core/io.dart';
 import 'package:styled_design_core/styled_design_core.dart';
 
+import 'commands_tokens.dart' show writeDocumentEdit;
 import 'context.dart';
 
 /// The port `design serve`, `design screenshot` and `design focus` use by default.
@@ -315,14 +316,80 @@ final class DesignServer {
         );
       case 'write':
         client.send(_write(message['id'], message['path'], message['json']));
+      case 'patch' || 'tokenSet' || 'tokenUnset' || 'presetWrite' || 'presetRemove':
+        client.send(_edit(message));
       case 'hello':
         break;
       default:
         client.send({
           'type': 'error',
-          'message': "Unknown message type '${message['type']}'. The studio sends write, captured or captureFailed.",
+          'message':
+              "Unknown message type '${message['type']}'. The studio sends patch, tokenSet, tokenUnset, "
+              'presetWrite, presetRemove, write, captured or captureFailed.',
         });
     }
+  }
+
+  /// An inspector edit: the same core function as the matching `design`
+  /// command (`design patch`, `design token set|unset`, `design preset
+  /// write|remove`), written the same way, so the bytes on disk are the same.
+  Map<String, Object?> _edit(Map<String, Object?> message) {
+    final type = message['type']! as String;
+    Map<String, Object?> result(DocumentEdit edit) => {
+      'type': 'editResult',
+      'id': ?message['id'],
+      'edit': type,
+      'path': edit.path,
+      'ok': edit.ok,
+      'message': edit.message,
+      'diagnostics': [for (final d in edit.diagnostics) d.toJson()],
+    };
+    Map<String, Object?> refused(String message) => result(DocumentEdit.refused('', message));
+    final catalog = _catalogOf(_state.files);
+    if (catalog == null) {
+      return refused('Nothing written: the workspace has no readable catalog.json to check the edit against.');
+    }
+    final input = WorkspaceInput(_state.files, loadProblems: _state.loadProblems);
+    String? text(String key) => message[key] is String ? message[key]! as String : null;
+    final DocumentEdit edit;
+    switch (type) {
+      case 'patch':
+        final screen = text('screen');
+        if (screen == null || !isScreenId(screen)) {
+          return refused('A patch names its screen: "screen": "admin.automations".');
+        }
+        edit = editScreen(input, catalog, WorkspaceInput.pathForScreenId(screen), message['ops']);
+      case 'tokenSet':
+        final key = text('key');
+        if (key == null) return refused('A tokenSet names its token: "key": "primary".');
+        edit = setToken(
+          input,
+          catalog,
+          key: key,
+          value: message['value'],
+          mode: text('mode') ?? 'light',
+          type: text('tokenType'),
+          description: text('description'),
+        );
+      case 'tokenUnset':
+        final key = text('key');
+        if (key == null) return refused('A tokenUnset names its token: "key": "primary".');
+        edit = unsetToken(input, catalog, key: key, mode: text('mode'));
+      case 'presetWrite':
+        final preset = message['preset'];
+        if (preset is! Map<String, Object?>) return refused('A presetWrite carries the preset document as "preset".');
+        edit = writePreset(input, catalog, preset);
+      default:
+        final id = text('presetId');
+        if (id == null) return refused('A presetRemove names the preset: "presetId": "StyleCard.calm".');
+        edit = removePreset(input, catalog, id);
+    }
+    if (edit.ok) {
+      writeDocumentEdit(root.path, edit);
+      _debounceTimer?.cancel();
+      _reload();
+    }
+    return result(edit);
   }
 
   static final _documentPath = RegExp(

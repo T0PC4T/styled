@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:styled/styled.dart';
 import 'package:styled_design_core/styled_design_core.dart';
 
+import 'studio_keys.dart';
+
 /// What a [DesignBuildContext] needs from the screen that is building.
 abstract interface class DesignNodeHost {
   /// The Flutter context of the screen being built.
@@ -14,11 +16,12 @@ abstract interface class DesignNodeHost {
 
   /// The widgets for [nodes]: `when` applied, `repeat` expanded. With
   /// [keyed] false the nodes get no key of their own, for a template built
-  /// once per item whose instances may end up side by side.
-  List<Widget> buildWidgets(List<NodeDoc> nodes, MapScope scope, {bool keyed = true});
+  /// once per item whose instances may end up side by side; in the studio
+  /// they get a [DesignNodeKey] with [instance] instead.
+  List<Widget> buildWidgets(List<NodeDoc> nodes, MapScope scope, {bool keyed = true, int? instance});
 
   /// The first widget among [nodes] whose `when` passes, or null.
-  Widget? buildFirstWidget(List<NodeDoc> nodes, MapScope scope, {bool keyed = true});
+  Widget? buildFirstWidget(List<NodeDoc> nodes, MapScope scope, {bool keyed = true, int? instance});
 
   /// The value objects for value [nodes].
   List<Object> buildValues(List<NodeDoc> nodes, MapScope scope);
@@ -170,14 +173,18 @@ final class DesignBuildContext {
   Widget Function(Object? item) template(String slot, {String? as}) {
     final variable = as ?? spec.slot(slot)?.template ?? 'item';
     final nodes = _slot(slot);
-    return (item) => host.buildFirstWidget(nodes, scope.extend({variable: item}), keyed: false) ?? const SizedBox.shrink();
+    final instances = TemplateInstances();
+    return (item) =>
+        host.buildFirstWidget(nodes, scope.extend({variable: item}), keyed: false, instance: instances.of(item)) ??
+        const SizedBox.shrink();
   }
 
   /// A template slot that builds all its nodes per item.
   List<Widget> Function(Object? item) templateList(String slot, {String? as}) {
     final variable = as ?? spec.slot(slot)?.template ?? 'item';
     final nodes = _slot(slot);
-    return (item) => host.buildWidgets(nodes, scope.extend({variable: item}), keyed: false);
+    final instances = TemplateInstances();
+    return (item) => host.buildWidgets(nodes, scope.extend({variable: item}), keyed: false, instance: instances.of(item));
   }
 
   /// A no-payload event as a [VoidCallback], or null when unbound.

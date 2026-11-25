@@ -9,6 +9,7 @@ import 'build_context.dart';
 import 'engine_definitions.dart';
 import 'navigation.dart';
 import 'scope.dart';
+import 'studio_keys.dart';
 
 /// An event a screen hands to the app.
 @immutable
@@ -226,17 +227,17 @@ class _DesignScreenState extends State<DesignScreen> implements DesignNodeHost {
   }
 
   @override
-  List<Widget> buildWidgets(List<NodeDoc> nodes, MapScope scope, {bool keyed = true}) => [
+  List<Widget> buildWidgets(List<NodeDoc> nodes, MapScope scope, {bool keyed = true, int? instance}) => [
     for (final node in nodes)
       for (final (s, repeatKey) in _instances(node, scope))
-        ?_build(node, s, repeatKey, asValue: false, keyed: keyed || repeatKey != null) as Widget?,
+        ?_build(node, s, repeatKey, asValue: false, keyed: keyed || repeatKey != null, instance: instance) as Widget?,
   ];
 
   @override
-  Widget? buildFirstWidget(List<NodeDoc> nodes, MapScope scope, {bool keyed = true}) {
+  Widget? buildFirstWidget(List<NodeDoc> nodes, MapScope scope, {bool keyed = true, int? instance}) {
     for (final node in nodes) {
       for (final (s, repeatKey) in _instances(node, scope)) {
-        return _build(node, s, repeatKey, asValue: false, keyed: keyed) as Widget?;
+        return _build(node, s, repeatKey, asValue: false, keyed: keyed, instance: instance) as Widget?;
       }
     }
     return null;
@@ -248,12 +249,20 @@ class _DesignScreenState extends State<DesignScreen> implements DesignNodeHost {
       for (final (s, repeatKey) in _instances(node, scope)) ?_build(node, s, repeatKey, asValue: true),
   ];
 
-  Object? _build(NodeDoc node, MapScope scope, Object? repeatKey, {required bool asValue, bool keyed = true}) {
+  /// A widget node's key: its id (with the repeat key), or for a template
+  /// instance none, except in the studio, which finds every node by its key.
+  Key? _keyOf(NodeDoc node, Object? repeatKey, {required bool keyed, int? instance}) {
+    if (keyed) return ValueKey<String>(repeatKey == null ? node.id : '${node.id}#$repeatKey');
+    if (_scope.studio && instance != null) return DesignNodeKey(node.id, instance);
+    return null;
+  }
+
+  Object? _build(NodeDoc node, MapScope scope, Object? repeatKey, {required bool asValue, bool keyed = true, int? instance}) {
     final definition = _scope.registry[node.componentType];
     if (definition == null) {
       report(node, "Unknown component '${node.componentType}'.");
       if (asValue) return null;
-      return _scope.studio ? DesignPlaceholder(node.type) : null;
+      return _scope.studio ? DesignPlaceholder(node.type, key: _keyOf(node, repeatKey, keyed: keyed, instance: instance)) : null;
     }
     final spec = definition.spec;
     final isValue = spec.kind == DesignKind.value;
@@ -269,7 +278,7 @@ class _DesignScreenState extends State<DesignScreen> implements DesignNodeHost {
       node: node,
       spec: spec,
       scope: scope,
-      key: asValue || !keyed ? null : ValueKey<String>(repeatKey == null ? node.id : '${node.id}#$repeatKey'),
+      key: asValue ? null : _keyOf(node, repeatKey, keyed: keyed, instance: instance),
     );
     try {
       final built = definition.build(ctx);
@@ -281,7 +290,10 @@ class _DesignScreenState extends State<DesignScreen> implements DesignNodeHost {
     } catch (e, s) {
       report(node, '${spec.type} failed to build.', cause: e, stackTrace: s);
       if (asValue) return null;
-      return _scope.studio || kDebugMode ? DesignErrorBox(nodeId: node.id, message: '$e') : null;
+      if (_scope.studio) {
+        return DesignErrorBox(key: _keyOf(node, repeatKey, keyed: keyed, instance: instance), nodeId: node.id, message: '$e');
+      }
+      return kDebugMode ? DesignErrorBox(nodeId: node.id, message: '$e') : null;
     }
   }
 

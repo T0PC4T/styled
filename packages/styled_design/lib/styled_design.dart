@@ -12,4 +12,5 @@ export 'src/prototype_navigator.dart';
 export 'src/registry.dart';
 export 'src/scope.dart';
 export 'src/screen.dart';
+export 'src/studio_keys.dart';
 export 'src/token_registry.dart';

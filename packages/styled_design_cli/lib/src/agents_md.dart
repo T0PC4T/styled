@@ -199,6 +199,10 @@ problems were found or the command failed, 64 means the command was called wrong
 | `design fmt [--check]` | rewrite every document in canonical form |
 | `design request "<need>"` | note something the catalog lacks, in requests.md |
 | `design export [--out <path>]` | the bundle the app ships; strict: any error or warning refuses it |
+| `design token set <key> --value <v> [--mode light\|dark] [--type <type>]` | set a token value; `--type` adds a new token |
+| `design token unset <key> [--mode <mode>]` | remove a token's value in a mode, or the whole token |
+| `design preset write <Family.variant> --json '<preset>'` | write a designer preset; refused if it adds an error |
+| `design preset remove <Family.variant>` | delete a designer preset nothing uses |
 | `design serve [--port 4400] [--studio <dir>]` | serve the studio; every save shows in its open tabs |
 | `design screenshot <screen> [--fixture <name>] [--mode light\|dark] [--size 1440x900] [--out <file.png>]` | a PNG of the screen, drawn by the studio tab |
 | `design focus <screen>[#<node>]` | show the screen in the studio tab and point at the node |
@@ -210,6 +214,12 @@ The designer reviews your screens in the studio. `design serve` serves it on
 built web files) and pushes every file you save to the open tab within a second. A file
 that does not parse keeps its last good version on screen under a banner, so fix the
 diagnostic and save again. In Play mode every link, modal and emit works with fixture data.
+
+In Inspect mode the designer selects nodes and edits them, and edits tokens and presets.
+Each edit goes to `design serve` as the operations of the matching command (`design patch`,
+`design token set`, `design preset write`) and is refused when it would add an error, so a
+file the designer changed reads exactly as if you had run the command. Read the file again
+before you edit it after the designer has worked on it.
 
 With a studio tab open, check your work visually: `design screenshot admin.automations
 --fixture empty --mode dark --size 390x844` writes a PNG of what the designer will see, and
