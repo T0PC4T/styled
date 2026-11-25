@@ -24,7 +24,17 @@ String writeDefinitions(List<ComponentPlan> components) {
     final events = <String, String>{};
     for (final ctor in c.ctors) {
       for (final p in ctor.params) {
-        if (p.propCode != null) props.putIfAbsent(p.entryName!, () => p.propCode!);
+        if (p.propCode != null) {
+          // Constructors may default a prop differently (OnboardingCalloutBanner.error's
+          // icon is not .info's). Then the catalog records no default, so each
+          // constructor's own Dart default applies.
+          final previous = props[p.entryName!];
+          if (previous == null) {
+            props[p.entryName!] = p.propCode!;
+          } else if (previous != p.propCode) {
+            props[p.entryName!] = _withoutDefault(previous);
+          }
+        }
         if (p.slotCode != null) slots.putIfAbsent(p.entryName!, () => p.slotCode!);
         if (p.eventCode != null) events.putIfAbsent(p.entryName!, () => p.eventCode!);
       }
@@ -239,3 +249,7 @@ String encodeIndex(List<DefinitionRef> definitions, List<PresetFamilyPlan> prese
   'definitions': [for (final d in definitions) d.toJson()],
   'presets': [for (final p in presets) p.toJson()],
 });
+
+/// [propCode] without its `defaultValue:` argument.
+String _withoutDefault(String propCode) =>
+    propCode.replaceFirst(RegExp(r", defaultValue: (?:'(?:[^'\\]|\\.)*'|\[[^\]]*\]|[^,)]+)"), '');

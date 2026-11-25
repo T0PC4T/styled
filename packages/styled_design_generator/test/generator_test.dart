@@ -9,7 +9,7 @@ class Key { const Key(); }
 class Widget { final Key? key; const Widget({this.key}); }
 class BuildContext {}
 class IconData { final int code; const IconData(this.code); }
-class Icons { static const inbox = IconData(1); }
+class Icons { static const inbox = IconData(1); static const alert = IconData(2); }
 abstract class StyleResolver { const StyleResolver(); }
 enum ButtonVariant { primary, ghost }
 class StyleButton extends StyleResolver {
@@ -70,6 +70,14 @@ class MyButton extends Widget {
       labels = const [];
 }
 
+@Designable(category: 'feedback', summary: 'A banner.')
+class MyBanner extends Widget {
+  final IconData icon;
+  final bool dense;
+  const MyBanner.info({super.key, this.icon = Icons.inbox, this.dense = false});
+  const MyBanner.error({super.key, this.icon = Icons.alert, this.dense = false});
+}
+
 @Designable.value(category: 'menus', summary: 'An item.', primaryEvent: 'tap')
 class MyItem {
   final String key;
@@ -109,6 +117,7 @@ void main() {
             contains("DesignProp.string('label')"),
             contains("DesignProp.style('style', families: ['StyleButton'])"),
             contains("DesignProp.choice('size', values: ['sm', 'md'], defaultValue: 'md')"),
+            contains("DesignProp.style('style', families: ['StyleButton'])"),
             contains("DesignProp('labels', PropKind.stringList, defaultValue: ['a', 'b'])"),
             contains("DesignSlot('children', many: true, required: true)"),
             contains("DesignSlot('leading')"),
@@ -128,6 +137,10 @@ void main() {
             contains("DesignSlot('items', accepts: ['MyItem'], many: true, required: true)"),
             contains("DesignSlot('empty', required: true)"),
             contains("emptyBuilder: (_) => ctx.child('empty') ?? const SizedBox.shrink()"),
+            contains("DesignProp.icon('icon')"),
+            isNot(contains("DesignProp.icon('icon', defaultValue: 'inbox')")),
+            contains("DesignProp.boolean('dense', defaultValue: false)"),
+            contains("icon: ctx.icon('icon') ?? Icons.alert"),
           ]),
         ),
       },
