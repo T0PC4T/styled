@@ -199,6 +199,22 @@ problems were found or the command failed, 64 means the command was called wrong
 | `design fmt [--check]` | rewrite every document in canonical form |
 | `design request "<need>"` | note something the catalog lacks, in requests.md |
 | `design export [--out <path>]` | the bundle the app ships; strict: any error or warning refuses it |
+| `design serve [--port 4400] [--studio <dir>]` | serve the studio; every save shows in its open tabs |
+| `design screenshot <screen> [--fixture <name>] [--mode light\|dark] [--size 1440x900] [--out <file.png>]` | a PNG of the screen, drawn by the studio tab |
+| `design focus <screen>[#<node>]` | show the screen in the studio tab and point at the node |
+
+## The studio
+
+The designer reviews your screens in the studio. `design serve` serves it on
+`http://127.0.0.1:4400` (pass `--studio <dir>` or set `DESIGN_STUDIO_DIR` to the studio's
+built web files) and pushes every file you save to the open tab within a second. A file
+that does not parse keeps its last good version on screen under a banner, so fix the
+diagnostic and save again. In Play mode every link, modal and emit works with fixture data.
+
+With a studio tab open, check your work visually: `design screenshot admin.automations
+--fixture empty --mode dark --size 390x844` writes a PNG of what the designer will see, and
+`design focus admin.automations#saveButton` shows the designer the node you mean. Both
+fail with a message saying what to start when no server or no studio tab is there.
 
 Patch operations: `insert {parent, slot, index?, node}`, `remove {node}`,
 `move {node, parent, slot, index?}`, `setProp {node, prop, value}` (null removes),

@@ -6,6 +6,7 @@ import 'package:args/command_runner.dart';
 import 'commands_create.dart';
 import 'commands_edit.dart';
 import 'commands_read.dart';
+import 'commands_studio.dart';
 import 'context.dart';
 
 /// Exit codes: 0 ok; 1 problems found or the command failed; 64 usage error.
@@ -80,6 +81,9 @@ CommandRunner<int> designRunner(CliContext ctx) {
     FmtCommand(ctx),
     RequestCommand(ctx),
     ExportCommand(ctx),
+    ServeCommand(ctx),
+    ScreenshotCommand(ctx),
+    FocusCommand(ctx),
   ]) {
     runner.addCommand(command);
   }

@@ -8,6 +8,7 @@ export 'src/build_context.dart';
 export 'src/catalog_dump.dart';
 export 'src/engine_definitions.dart';
 export 'src/navigation.dart';
+export 'src/prototype_navigator.dart';
 export 'src/registry.dart';
 export 'src/scope.dart';
 export 'src/screen.dart';
