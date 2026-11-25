@@ -408,4 +408,15 @@ void main() {
     final unbound = validateWorkspace(input, catalog).where((d) => d.code == 'W-unbound-primary').map((d) => d.node);
     expect(unbound, ['a.b#loose']);
   });
+
+  test('the data contract tells dates from plain text', () {
+    final editor = DesignWorkspace.load(
+      Directory('test/fixtures/kit_workspace'),
+    ).toBundle().screen('admin.automationEditor');
+    final automation = (dataShape(editor)! as Map<String, Object?>)['automation']! as Map<String, Object?>;
+    expect(automation['lastRun'], 'date');
+    expect(automation['name'], 'string');
+    expect(jsonKindName('2026-11-24'), 'date');
+    expect(jsonKindName('24 Nov 2026'), 'string');
+  });
 }

@@ -4,8 +4,12 @@ import 'package:meta/meta.dart';
 
 import 'screen.dart';
 
-/// The JSON kind of a scalar fixture value: string, number, bool or any (null).
+/// ISO 8601 date or date-time text, as the date formatters read it.
+final _isoDate = RegExp(r'^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?)?$');
+
+/// The JSON kind of a scalar fixture value: string, date (ISO 8601 text), number, bool or any (null).
 String jsonKindName(Object? value) => switch (value) {
+  final String s when _isoDate.hasMatch(s) => 'date',
   String() => 'string',
   num() => 'number',
   bool() => 'bool',
@@ -16,7 +20,8 @@ String jsonKindName(Object? value) => switch (value) {
 
 /// The shape of a fixture value: keys and kinds, no values. An object maps
 /// its keys to shapes; a list is `[shape of its first item]` (or `[]` when
-/// no fixture has an item); a scalar is `string`, `number`, `bool` or `any`.
+/// no fixture has an item); a scalar is `string`, `date` (ISO 8601 text, so the
+/// developer knows the formatters need it), `number`, `bool` or `any`.
 /// [alternates] are the values at the same place in the other fixtures: they
 /// fill in what the default leaves open (an empty list, a null), and a null
 /// default with a scalar elsewhere reads as nullable: `string?`.
