@@ -1,0 +1,182 @@
+import 'package:build/build.dart';
+import 'package:build_test/build_test.dart';
+import 'package:styled_design_generator/builder.dart';
+import 'package:test/test.dart';
+
+// Stand-ins for the Flutter and styled types the reader recognises by name.
+const _fakes = r'''
+class Key { const Key(); }
+class Widget { final Key? key; const Widget({this.key}); }
+class BuildContext {}
+class IconData { final int code; const IconData(this.code); }
+class Icons { static const inbox = IconData(1); }
+abstract class StyleResolver { const StyleResolver(); }
+enum ButtonVariant { primary, ghost }
+class StyleButton extends StyleResolver {
+  final ButtonVariant variant;
+  const StyleButton() : variant = ButtonVariant.primary;
+  const StyleButton.primary() : variant = ButtonVariant.primary;
+  const StyleButton.ghost() : variant = ButtonVariant.ghost;
+  const StyleButton.fromVariant(this.variant);
+}
+class TextEditingController {}
+enum Size { sm, md }
+''';
+
+const _widgets = r'''
+import 'package:styled_design_core/styled_design_core.dart';
+
+import 'fakes.dart';
+
+@Designable(category: 'primitives', summary: 'A button.', primaryEvent: 'tap')
+class MyButton extends Widget {
+  final String? label;
+  final IconData icon;
+  final void Function()? onTap;
+  final void Function(String value)? onChanged;
+  final StyleResolver style;
+  final Size size;
+  final List<Widget> children;
+  final Widget? leading;
+  final TextEditingController? controller;
+  @DesignIgnore()
+  final Object? secret;
+  static const defaultLabels = ['a', 'b'];
+  final List<String> labels;
+
+  const MyButton(
+    this.icon, {
+    super.key,
+    this.label,
+    this.onTap,
+    this.onChanged,
+    this.style = const StyleButton(),
+    this.size = Size.md,
+    required this.children,
+    this.leading,
+    this.controller,
+    this.secret,
+    this.labels = defaultLabels,
+  });
+
+  const MyButton.ghost(this.icon, {super.key, this.label, this.onTap})
+    : onChanged = null,
+      style = const StyleButton.ghost(),
+      size = Size.md,
+      children = const [],
+      leading = null,
+      controller = null,
+      secret = null,
+      labels = const [];
+}
+
+@Designable.value(category: 'menus', summary: 'An item.', primaryEvent: 'tap')
+class MyItem {
+  final String key;
+  final void Function() onTap;
+  const MyItem({required this.key, required this.onTap});
+}
+
+@Designable(category: 'menus', summary: 'A menu.')
+class MyMenu extends Widget {
+  final List<MyItem> items;
+  final Widget Function(BuildContext) emptyBuilder;
+  const MyMenu({super.key, required this.items, required this.emptyBuilder});
+}
+''';
+
+/// A reader that also sees the real packages, so annotations resolve.
+Future<TestReaderWriter> _reader() async {
+  final rw = TestReaderWriter(rootPackage: 'pkg');
+  await rw.testing.loadIsolateSources();
+  return rw;
+}
+
+void main() {
+  test('a definition per class: props, slots, events, constructors and the real calls', () async {
+    await testBuilder(
+      designDefinitionsBuilder(BuilderOptions.empty),
+      {'pkg|lib/fakes.dart': _fakes, 'pkg|lib/widgets.dart': _widgets},
+      rootPackage: 'pkg',
+      readerWriter: await _reader(),
+      outputs: {
+        'pkg|lib/widgets.design.g.dart': decodedMatches(
+          allOf([
+            contains("import 'widgets.dart';"),
+            contains("type: 'MyButton'"),
+            contains("constructors: ['ghost']"),
+            contains("DesignProp.icon('icon', required: true)"),
+            contains("DesignProp.string('label')"),
+            contains("DesignProp.style('style', families: ['StyleButton'])"),
+            contains("DesignProp.choice('size', values: ['sm', 'md'], defaultValue: 'md')"),
+            contains("DesignProp('labels', PropKind.stringList, defaultValue: ['a', 'b'])"),
+            contains("DesignSlot('children', many: true, required: true)"),
+            contains("DesignSlot('leading')"),
+            contains("DesignEvent('tap', primary: true)"),
+            contains("DesignEvent('changed', payload: {'value': 'string'})"),
+            contains("ctx.icon('icon') ?? const IconData(0)"),
+            contains('key: ctx.key'),
+            contains("style: ctx.style('style') ?? const StyleButton()"),
+            contains("labels: ctx.stringList('labels') ?? MyButton.defaultLabels"),
+            contains("onChanged: ctx.valueCallback<String>('changed')"),
+            contains("'ghost' => MyButton.ghost("),
+            isNot(contains('controller:')),
+            isNot(contains('secret:')),
+            contains('kind: DesignKind.value'),
+            contains("onTap: ctx.callback('tap') ?? () {}"),
+            isNot(contains('MyItem(key: ctx.key')),
+            contains("DesignSlot('items', accepts: ['MyItem'], many: true, required: true)"),
+            contains("DesignSlot('empty', required: true)"),
+            contains("emptyBuilder: (_) => ctx.child('empty') ?? const SizedBox.shrink()"),
+          ]),
+        ),
+      },
+    );
+  });
+
+  test('a parameter with no rule fails the build and names it', () async {
+    const bad = r'''
+import 'package:styled_design_core/styled_design_core.dart';
+import 'fakes.dart';
+
+@Designable()
+class Odd extends Widget {
+  final Uri where;
+  const Odd({required this.where});
+}
+''';
+    final result = await testBuilder(
+      designDefinitionsBuilder(BuilderOptions.empty),
+      {'pkg|lib/fakes.dart': _fakes, 'pkg|lib/odd.dart': bad},
+      rootPackage: 'pkg',
+      readerWriter: await _reader(),
+    );
+    expect(result.succeeded, isFalse);
+    expect(result.errors.join('\n'), allOf(contains('Odd'), contains('where'), contains('@DesignIgnore')));
+  });
+
+  test('the registry lists every definition and preset family', () async {
+    await testBuilders(
+      [designIndexBuilder(BuilderOptions.empty), designRegistryBuilder(BuilderOptions.empty)],
+      {'pkg|lib/fakes.dart': _fakes, 'pkg|lib/widgets.dart': _widgets},
+      rootPackage: 'pkg',
+      readerWriter: await _reader(),
+      outputs: {
+        'pkg|lib/fakes.design_index.json': anything,
+        'pkg|lib/widgets.design_index.json': anything,
+        'pkg|lib/design.g.dart': decodedMatches(
+          allOf([
+            contains('MyButtonDefinition()'),
+            contains('MyItemDefinition()'),
+            contains('MyMenuDefinition()'),
+            contains("'StyleButton': (v, a) =>"),
+            contains('.StyleButton.fromVariant('),
+            contains('.ButtonVariant.values.byName(v)'),
+            contains("variants: ['primary', 'ghost']"),
+            contains("defaultVariant: 'primary'"),
+          ]),
+        ),
+      },
+    );
+  });
+}

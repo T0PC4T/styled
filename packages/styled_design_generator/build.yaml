@@ -1,0 +1,25 @@
+builders:
+  design_definitions:
+    import: "package:styled_design_generator/builder.dart"
+    builder_factories: ["designDefinitionsBuilder"]
+    build_extensions: {".dart": [".design.g.dart"]}
+    auto_apply: dependents
+    build_to: source
+    applies_builders: ["styled_design_generator:design_index", "styled_design_generator:design_registry"]
+    defaults:
+      generate_for: ["lib/**"]
+  design_index:
+    import: "package:styled_design_generator/builder.dart"
+    builder_factories: ["designIndexBuilder"]
+    build_extensions: {".dart": [".design_index.json"]}
+    auto_apply: dependents
+    build_to: cache
+    defaults:
+      generate_for: ["lib/**"]
+  design_registry:
+    import: "package:styled_design_generator/builder.dart"
+    builder_factories: ["designRegistryBuilder"]
+    build_extensions: {"$lib$": ["design.g.dart"]}
+    required_inputs: [".design_index.json"]
+    auto_apply: dependents
+    build_to: source
