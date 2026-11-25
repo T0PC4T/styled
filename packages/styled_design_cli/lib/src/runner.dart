@@ -4,10 +4,13 @@ import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 
 import 'commands_create.dart';
+import 'commands_docs.dart';
 import 'commands_edit.dart';
 import 'commands_read.dart';
 import 'commands_studio.dart';
+import 'commands_tokens.dart';
 import 'context.dart';
+import 'mcp.dart';
 
 /// Exit codes: 0 ok; 1 problems found or the command failed; 64 usage error.
 abstract final class ExitCodes {
@@ -84,6 +87,12 @@ CommandRunner<int> designRunner(CliContext ctx) {
     ServeCommand(ctx),
     ScreenshotCommand(ctx),
     FocusCommand(ctx),
+    TokenCommand(ctx),
+    PresetCommand(ctx),
+    ScreensCommand(ctx),
+    ShowCommand(ctx),
+    WriteCommand(ctx),
+    McpCommand(ctx, runDesign),
   ]) {
     runner.addCommand(command);
   }
