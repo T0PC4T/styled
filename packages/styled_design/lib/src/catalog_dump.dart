@@ -39,6 +39,7 @@ Catalog catalogOf(
         for (final MapEntry(key: mode, value: theme) in themes.entries)
           if (theme.has(token)) mode: tokenValueToJson(theme.get(token)),
       },
+      group: registry.tokenGroups[token.key],
     );
   }
   final unhashed = Catalog(

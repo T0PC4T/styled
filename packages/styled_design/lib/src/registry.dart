@@ -52,6 +52,9 @@ final class DesignRegistry {
   /// Every built-in token, such as `OnboardingTokens.all`.
   final List<ThemeToken<Object?>> tokens;
 
+  /// The group of each token key, for the catalog and a token editor.
+  final Map<String, String> tokenGroups;
+
   /// The library's base theme for a mode, such as `OnboardingTokens.themeFor`.
   final StyledTheme Function(String mode) themeFor;
 
@@ -72,6 +75,7 @@ final class DesignRegistry {
     this.presets = const {},
     this.presetFamilies = const {},
     this.tokens = const [],
+    this.tokenGroups = const {},
     StyledTheme Function(String mode)? themeFor,
     this.icons = const {},
     this.formatters = DesignFormatters.standard,
@@ -86,6 +90,7 @@ final class DesignRegistry {
     presets: presets,
     presetFamilies: presetFamilies,
     tokens: tokens,
+    tokenGroups: tokenGroups,
     themeFor: themeFor,
     icons: icons,
     formatters: formatters,
