@@ -131,6 +131,22 @@ A prop holds a literal or one expression. An expression is an object with one `$
 | `{ "$eq": [a, b] }`, `$ne`, `$gt`, `$gte`, `$lt`, `$lte`, `$in`, `$empty` | tests |
 | `{ "$if": [cond, then, else] }`, `{ "$match": [x, { "case": v }, default] }` | choices |
 
+Formatters after the bar in a `$text` hole:
+
+| Formatter | Takes | Gives |
+| --- | --- | --- |
+| `date` | ISO 8601 text (`2026-11-24T09:05:00Z`) | `24 Nov 2026` |
+| `dateTime` | ISO 8601 text | `24 Nov 2026, 09:05` |
+| `number` | a number | `1,234.5` |
+| `percent` | a fraction | `0.25` → `25%` |
+| `currency` | a number of pounds | `£1,234.50` |
+| `count` | a list, an object or a number | how many: `3` |
+| `upper`, `lower` | text | the same text in upper or lower case |
+| `initials` | a name | `Ada Lovelace` → `AL` |
+
+A date in a fixture is ISO 8601 text; say so in the field's name or a `note`, since the
+data contract only records it as text.
+
 Paths start at `data` (from the app), `state` (this screen), `params` and `query` (the
 URL), `event` (inside an action), `page` (in a frame), or a variable a `repeat` or template
 slot introduces, such as `row` inside a table column's `cell`.
@@ -138,7 +154,10 @@ slot introduces, such as `row` inside a table column's `cell`.
 ## Linking screens
 
 A link is an action under a node's event. `design link <screen>#<node>.<event> --to <screen>`
-writes one for you.
+writes one for you on a node that exists. To add a new way in, such as a sidebar button in
+the frame or a tile on a dashboard, insert the node with `design patch` and give it the
+`navigate` action (`replaceAll` from a sidebar). A new page joins the workspace's frame when
+there is one (`design new screen` sets `"frame"`; pass `--frame` when there are several).
 
 ```json
 "on": { "rowTap": [{ "do": "navigate", "to": "admin.automationEditor", "params": { "id": { "$bind": "event.row.id" } } }] }

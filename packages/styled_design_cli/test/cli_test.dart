@@ -147,6 +147,38 @@ void main() {
       expect(unknown.err, contains("Did you mean 'list'?"));
     }, skip: skip);
 
+    test('a new page joins the only frame, or the one --frame names', () async {
+      final dir = await initWorkspace();
+      expect((await design(['-w', dir, 'new', 'screen', 'frames.main', '--from', 'frame'])).code, 0);
+      final run = await design(['-w', dir, 'new', 'screen', 'admin.users', '--from', 'list']);
+      expect(run.code, 0, reason: '$run');
+      expect(run.out, contains('previewed in frames.main'));
+      Map<String, Object?> read(String id) =>
+          jsonDecode(File(p.join(dir, WorkspaceInput.pathForScreenId(id))).readAsStringSync()) as Map<String, Object?>;
+      expect(read('admin.users')['frame'], 'frames.main');
+
+      expect((await design(['-w', dir, 'new', 'screen', 'frames.other', '--from', 'frame'])).code, 0);
+      final two = await design(['-w', dir, 'new', 'screen', 'admin.teams', '--from', 'list']);
+      expect(two.out, contains('--frame'));
+      expect(read('admin.teams').containsKey('frame'), isFalse, reason: 'two frames: the agent picks');
+      final picked = await design([
+        '-w',
+        dir,
+        'new',
+        'screen',
+        'admin.roles',
+        '--from',
+        'list',
+        '--frame',
+        'frames.other',
+      ]);
+      expect(picked.code, 0, reason: '$picked');
+      expect(read('admin.roles')['frame'], 'frames.other');
+      final wrong = await design(['-w', dir, 'new', 'screen', 'admin.x', '--from', 'list', '--frame', 'frames.nope']);
+      expect(wrong.code, 1);
+      expect(wrong.err, contains("no frame 'frames.nope'"));
+    }, skip: skip);
+
     test('a preset and a token', () async {
       final dir = await initWorkspace();
       final token = await design(['-w', dir, 'new', 'token', 'accentSoft', '--type', 'color', '--light', '#FFF7D6']);

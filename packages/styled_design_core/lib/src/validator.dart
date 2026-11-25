@@ -302,7 +302,9 @@ final class _Validator {
           pointer: '',
           hint: s.doc.kind == ScreenKind.modal
               ? 'Open it with an openModal action on a reachable screen.'
-              : 'Link to it: design link <screen>#<node>.<event> --to ${s.doc.id}',
+              : 'Link to it from a reachable screen: design link <screen>#<node>.<event> --to ${s.doc.id} '
+                    'for a node that exists, or add a node (a sidebar button, a tile) with design patch --ops '
+                    '[{"op": "insert", ...}] whose on.tap navigates to it.',
         );
       }
     }

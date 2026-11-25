@@ -157,7 +157,12 @@ class NewScreenCommand extends DesignCommand {
   NewScreenCommand(super.ctx) {
     argParser
       ..addOption('from', help: 'The template.', valueHelp: screenTemplates.keys.join('|'))
-      ..addOption('title', help: 'The screen title (default: from the id).');
+      ..addOption('title', help: 'The screen title (default: from the id).')
+      ..addOption(
+        'frame',
+        help: 'For a page: the frame it is previewed in (default: the only frame, when there is one).',
+        valueHelp: 'frames.admin',
+      );
   }
 
   @override
@@ -183,6 +188,30 @@ class NewScreenCommand extends DesignCommand {
       json = fillTemplate(text, id: id, title: argResults!['title'] as String? ?? titleFromId(id));
     } on FormatException catch (e) {
       throw CliFailure('templates/$from.json is not valid JSON (${e.message}). Fix the template.');
+    }
+    if (json['kind'] == 'page' && !json.containsKey('frame')) {
+      final frames = [
+        for (final MapEntry(key: framePath, value: doc) in ws.toInput().screenFiles.entries)
+          if (doc['kind'] == 'frame') (doc['id'] as String?) ?? WorkspaceInput.screenIdForPath(framePath),
+      ];
+      final asked = argResults!['frame'] as String?;
+      if (asked != null) {
+        if (!frames.contains(asked)) {
+          throw CliFailure(
+            "There is no frame '$asked'. Frames in this workspace: ${frames.isEmpty ? 'none' : frames.join(', ')}.",
+          );
+        }
+        json['frame'] = asked;
+      } else if (frames.length == 1) {
+        json['frame'] = frames.single;
+      }
+      if (json.containsKey('frame')) {
+        out.writeln('It is previewed in ${json['frame']}. Add a link to it there, such as a sidebar button.');
+      } else if (frames.length > 1) {
+        out.writeln(
+          'Pick the frame it is previewed in with --frame (${frames.join(', ')}), or set "frame" in the file.',
+        );
+      }
     }
     writeDocument(path, json);
     out.writeln('Created $path from the $from template.');
