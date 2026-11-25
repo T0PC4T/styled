@@ -1,0 +1,20 @@
+name: styled_design_cli
+description: The `design` command line tool for design workspaces.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+executables:
+  design: design
+
+dependencies:
+  args: ^2.6.0
+  path: ^1.9.0
+  styled_design_core:
+    path: ../styled_design_core
+
+dev_dependencies:
+  test: ^1.25.0
