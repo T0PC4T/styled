@@ -274,6 +274,33 @@ final List<McpTool> designTools = [
   ),
 ];
 
+/// What the guide says first over MCP: the guide is written for the command
+/// line, and each command it names is one of these tools.
+const mcpGuidePreamble = """
+# Working through the design tools
+
+The guide below is written for the `design` command line. Over MCP, each command it
+names is a tool with the same rules, checks and messages:
+
+| The guide says | Call |
+|---|---|
+| `design catalog <words> [--kind k]` | `catalog_search {query, kind?}` |
+| `design catalog <Component>` | `catalog_get {name}` |
+| `design new screen <id> --from <t> [--frame f]` | `screen_new {screen, template, frame?}` |
+| reading or editing a screen's file | `screen_read {screen}`, `screen_write {screen, document}` |
+| `design patch <screen> --ops '[...]'` | `screen_patch {screen, ops}` |
+| `design link <screen>#<node>.<event> --to <s>` | `link {from, to, mode?, params?}` |
+| `design validate [--strict]` | `validate {strict?}` |
+| `design describe <screen> [--fixture f]` | `describe {screen, fixture?}` |
+| `design screenshot <screen>` | `screenshot {screen, ...}` (needs a studio open on design serve) |
+| `design flow`, `design contract <screen>` | `flow {}`, `contract {screen}` |
+| `design token set <key> --value v` | `token_set {key, value, mode?, type?}` |
+| `design preset write <id> --json '{...}'` | `preset_write {id, document}` |
+| `design request "<need>"` | `request {need}` |
+
+Where a message says to run a command, call its tool. The screens: `screen_list {}`.
+""";
+
 /// The design tools over the Model Context Protocol: JSON-RPC 2.0, one
 /// message per line, on stdin and stdout.
 final class DesignMcpServer {
@@ -394,11 +421,11 @@ final class DesignMcpServer {
     }
   }
 
+  /// The guide as this version of the tools writes it, for this workspace's
+  /// catalog: never a copy on disk, which can be older than the tools.
   String _guide() {
-    final file = File(p.join(workspace, 'AGENTS.md'));
-    if (file.existsSync()) return file.readAsStringSync();
     final ws = DesignWorkspace.load(Directory(workspace));
-    return agentsMd(name: ws.manifest?.name ?? p.basename(workspace), catalog: ws.catalog);
+    return '$mcpGuidePreamble\n${agentsMd(name: ws.manifest?.name ?? p.basename(workspace), catalog: ws.catalog)}';
   }
 
   static Map<String, Object?> _text(String text) => {

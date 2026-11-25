@@ -115,6 +115,7 @@ void main() {
   test('the phase 2 task through MCP alone: a new list page, linked from the sidebar, strict-clean', () async {
     final (_, guide) = await client.call('guide');
     expect(guide, contains('design validate'));
+    expect(guide, contains('`screen_patch {screen, ops}`'), reason: 'the guide maps each command to its tool');
 
     final (searchFailed, search) = await client.call('catalog_search', {'query': 'sidebar button'});
     expect(searchFailed, isFalse, reason: search);
@@ -195,5 +196,14 @@ void main() {
     });
     expect(failed, isFalse, reason: written);
     expect(File(p.join(workspace, 'screens/admin/dashboard.json')).readAsStringSync(), contains('Admin home'));
+  });
+
+  test('request records a need for the developer', () async {
+    final (failed, text) = await client.call('request', {'need': 'A rich text editor for template bodies.'});
+    expect(failed, isFalse, reason: text);
+    expect(
+      File(p.join(workspace, 'requests.md')).readAsStringSync(),
+      contains('A rich text editor for template bodies.'),
+    );
   });
 }

@@ -442,7 +442,7 @@ final class DesignServer {
     _debounceTimer?.cancel();
     _reload();
     final left = after.where((d) => d.file == path).toList();
-    return result(true, 'Wrote $path.${left.isEmpty ? '' : ' It still has ${summaryLine(left).toLowerCase()}'}', left);
+    return result(true, 'Wrote $path.${left.isEmpty ? '' : ' It now has ${summaryLine(left).toLowerCase()}'}', left);
   }
 
   Future<void> _api(HttpRequest request, String endpoint) async {

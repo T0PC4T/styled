@@ -148,7 +148,7 @@ A date in a fixture is ISO 8601 text; say so in the field's name or a `note`, si
 data contract only records it as text.
 
 Paths start at `data` (from the app), `state` (this screen), `params` and `query` (the
-URL), `event` (inside an action), `page` (in a frame), or a variable a `repeat` or template
+URL), `event` (inside an action), `page` (in a frame: `page.id` is the screen showing in it), or a variable a `repeat` or template
 slot introduces, such as `row` inside a table column's `cell`.
 
 ## Linking screens
@@ -229,7 +229,13 @@ fail with a message saying what to start when no server or no studio tab is ther
 Patch operations: `insert {parent, slot, index?, node}`, `remove {node}`,
 `move {node, parent, slot, index?}`, `setProp {node, prop, value}` (null removes),
 `setEvent {node, event, actions}` (null removes), `setWhen {node, when}`,
-`wrap {node, with: {id, type, props?}, slot}`. Each is an object with `"op"`.
+`wrap {node, with: {id, type, props?}, slot}`. Each is an object with `"op"`. A slot is
+named as `catalog <Component>` lists it; a list of children is the slot `children`:
+
+```json
+[{ "op": "insert", "parent": "manage", "slot": "children", "index": 1,
+   "node": { "id": "navUsers", "type": "OnboardingSidebarButton", "props": { "label": "Users" } } }]
+```
 
 ## Diagnostic codes
 

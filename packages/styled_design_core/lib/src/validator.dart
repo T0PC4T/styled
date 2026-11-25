@@ -297,7 +297,7 @@ final class _Validator {
         if (s.doc.kind == ScreenKind.frame || reached.contains(s.doc.id)) continue;
         report(
           'W-unreachable',
-          'Nothing leads to ${s.doc.id} from the start screen $start.',
+          'Nothing leads to ${s.doc.id} from the start screen $start (design.json "start").',
           file: s.path,
           pointer: '',
           hint: s.doc.kind == ScreenKind.modal

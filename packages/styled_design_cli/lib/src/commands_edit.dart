@@ -39,7 +39,7 @@ int applyScreenEdit(DesignCommand cmd, DesignWorkspace ws, Catalog catalog, Stri
   cmd.writeDocument(path, edited);
   final left = after.where((d) => d.file == path).toList();
   out.writeln(
-    'Wrote $path.${left.isEmpty ? '' : ' It still has ${summaryLine(left).toLowerCase()} Run design validate $path.'}',
+    'Wrote $path.${left.isEmpty ? '' : ' It now has ${summaryLine(left).toLowerCase()} Run design validate $path.'}',
   );
   return 0;
 }

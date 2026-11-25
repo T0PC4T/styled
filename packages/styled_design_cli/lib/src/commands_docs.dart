@@ -124,7 +124,7 @@ class WriteCommand extends DesignCommand {
     final left = after.where((d) => d.file == path).toList();
     out.writeln(
       '${existed ? 'Wrote' : 'Created'} $path.'
-      '${left.isEmpty ? '' : ' It still has ${summaryLine(left).toLowerCase()} Run design validate $path.'}',
+      '${left.isEmpty ? '' : ' It now has ${summaryLine(left).toLowerCase()} Run design validate $path.'}',
     );
     return 0;
   }
