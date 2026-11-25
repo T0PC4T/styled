@@ -10,6 +10,8 @@ export 'models.dart';
 export 'style_resolver.dart';
 export 'tokens.dart';
 
+part 'style_json.dart';
+
 /// A complete, immutable description of how a styled widget looks and lays out.
 ///
 /// Combine styles with [merge] or `+`, and attach state-dependent overrides
@@ -39,6 +41,22 @@ class Style extends StyleResolver {
     this.image = const ImageStyle(),
     this.states = const {},
   });
+
+  /// Decodes a style from its JSON form, looking up every design value in
+  /// [tokens].
+  ///
+  /// The shape is the `styleWithStates` definition of the design engine's
+  /// preset schema: every design value is a token key, never a raw number or
+  /// colour. Throws [StyleJsonError] for an unknown field or token, a token of
+  /// the wrong type, or a value of the wrong JSON type.
+  factory Style.fromJson(Map<String, Object?> json, StyleTokenLookup tokens) =>
+      _StyleJsonDecoder(tokens).style(json, '');
+
+  /// The JSON form of this style, the inverse of [Style.fromJson].
+  ///
+  /// Throws [StyleJsonError] for a value that has no JSON form, such as a
+  /// [DataValue] or a field the schema does not cover.
+  Map<String, Object?> toJson() => const _StyleJsonEncoder().style(this, '');
 
   @override
   Style resolve(BuildContext context) => this;
