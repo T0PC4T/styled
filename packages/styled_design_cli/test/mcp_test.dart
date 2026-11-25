@@ -206,4 +206,38 @@ void main() {
       contains('A rich text editor for template bodies.'),
     );
   });
+
+  test('token_set takes a colour as text and a number as a number', () async {
+    final (colourFailed, colour) = await client.call('token_set', {'key': 'primary', 'value': '#7A3FD1'});
+    expect(colourFailed, isFalse, reason: colour);
+    final (numberFailed, number) = await client.call('token_set', {'key': 'paddingSm', 'value': 10, 'mode': 'dark'});
+    expect(numberFailed, isFalse, reason: number);
+    final tokens = jsonDecode(File(p.join(workspace, 'tokens/tokens.json')).readAsStringSync()) as Map<String, Object?>;
+    final entries = tokens['tokens']! as Map<String, Object?>;
+    expect((entries['primary']! as Map)['values'], {'light': '#7A3FD1'});
+    expect((entries['paddingSm']! as Map)['values'], {'dark': 10});
+    final (wrongFailed, wrong) = await client.call('token_set', {'key': 'paddingSm', 'value': 'wide'});
+    expect(wrongFailed, isTrue, reason: 'a word is not a number');
+    expect(wrong, isNotEmpty);
+  });
+
+  test('preset_write writes a designer preset whose id is the argument', () async {
+    final (failed, text) = await client.call('preset_write', {
+      'id': 'StyleCard.calm',
+      'document': {
+        'format': 1,
+        'extends': 'StyleCard.surface',
+        'style': {
+          'box': {'color': 'surfaceSubtle'},
+        },
+      },
+    });
+    expect(failed, isFalse, reason: text);
+    final written = jsonDecode(File(p.join(workspace, 'presets/StyleCard.calm.json')).readAsStringSync()) as Map;
+    expect(written['id'], 'StyleCard.calm');
+    expect(written['extends'], 'StyleCard.surface');
+    final (_, report) = await client.call('validate', {'strict': true});
+    expect(report, contains('W-preset-unused'), reason: 'written, and nothing uses it yet');
+    expect((jsonDecode(report) as Map)['errors'], 0);
+  });
 }
