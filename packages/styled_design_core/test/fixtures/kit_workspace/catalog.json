@@ -1,7 +1,7 @@
 {
   "format": 1,
   "version": 1,
-  "hash": "sha256:a48e37e782ffaf4dc0ed479f13295a1e3ec3af071af0c2bb31543d750c489fb0",
+  "hash": "sha256:f0837ab830fe914e199f7182d8d7c97da6eed04ca950c54281c63e42bb9f58dc",
   "modes": [
     "light",
     "dark"
@@ -2095,6 +2095,36 @@
     "initials"
   ],
   "components": {
+    "CrudBatchBar": {
+      "kind": "widget",
+      "category": "crud",
+      "summary": "The bar shown while rows are selected: the count and the batch actions.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "selectedCount",
+          "kind": "integer",
+          "required": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "clear",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
     "CrudFilterChip": {
       "kind": "widget",
       "category": "crud",
@@ -2331,6 +2361,58 @@
       "events": [],
       "rules": []
     },
+    "KpiCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "An analytics KPI card: title, a large figure and a trend delta.",
+      "constructors": [
+        "embedded"
+      ],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string"
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "value",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "delta",
+          "kind": "string"
+        },
+        {
+          "name": "trendDirection",
+          "kind": "choice",
+          "values": [
+            "positive",
+            "negative",
+            "neutral"
+          ]
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
     "ModalScaffold": {
       "kind": "widget",
       "category": "modals",
@@ -2383,6 +2465,13 @@
           "name": "isSubmitting",
           "kind": "boolean",
           "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleModal"
+          ]
         }
       ],
       "slots": [
@@ -2416,6 +2505,218 @@
         },
         {
           "name": "cancel",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingAccordionCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A collapsible card: a header with title and subtitle over a body that opens and closes.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "initiallyExpanded",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "flush",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard",
+            "StyleCardSection"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "headerActions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingAutocompleteInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A text field that suggests matching options as the user types.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "initialText",
+          "kind": "string"
+        },
+        {
+          "name": "strict",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "hint",
+          "kind": "string",
+          "default": ""
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "options",
+          "accepts": [
+            "OnboardingSelectItem"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "selected",
+          "primary": true,
+          "payload": {
+            "value": "any"
+          }
+        },
+        {
+          "name": "textChanged",
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingAvatar": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A round avatar: an image, else initials, else an icon.",
+      "constructors": [
+        "sm",
+        "row",
+        "lg"
+      ],
+      "props": [
+        {
+          "name": "name",
+          "kind": "string"
+        },
+        {
+          "name": "image",
+          "kind": "image"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleAvatar"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingBrandLogo": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "The 360 Care Group mark: the round symbol or the full lockup.",
+      "constructors": [
+        "symbol",
+        "full"
+      ],
+      "props": [
+        {
+          "name": "variant",
+          "kind": "choice",
+          "default": "symbol",
+          "values": [
+            "symbol",
+            "full"
+          ]
+        },
+        {
+          "name": "size",
+          "kind": "choice",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "name": "semanticsLabel",
+          "kind": "string",
+          "default": "360 Care Group"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleBrandLogo"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
           "payload": {}
         }
       ],
@@ -2472,10 +2773,6 @@
           "name": "separatorIcon",
           "kind": "icon",
           "default": "chevron_right"
-        },
-        {
-          "name": "style",
-          "kind": "style"
         }
       ],
       "slots": [
@@ -2714,6 +3011,366 @@
       "events": [],
       "rules": []
     },
+    "OnboardingCheckboxGroupInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A labelled group of checkboxes that picks several options.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "options",
+          "kind": "stringList",
+          "required": true
+        },
+        {
+          "name": "values",
+          "kind": "stringList",
+          "default": []
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "list"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingCheckboxInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A checkbox with an optional label and subtitle.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "boolean",
+          "required": true
+        },
+        {
+          "name": "indeterminate",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "showApprovedBadge",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "bool"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingChipsInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A field that collects free-form tags as removable chips.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "values",
+          "kind": "stringList",
+          "default": []
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "hint",
+          "kind": "string",
+          "default": "Add and press Enter"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "list"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingCodeInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A monospace code or JSON editor with line numbers and a validity badge.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "initialValue",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "minLines",
+          "kind": "integer",
+          "default": 8
+        },
+        {
+          "name": "readOnly",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "isJson",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingCollapsibleChipWrap": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "A run of chips kept to one line, with a \"+N more\" link that shows the rest.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "spacing",
+          "kind": "token",
+          "default": "paddingXxs",
+          "tokenType": "double"
+        },
+        {
+          "name": "runSpacing",
+          "kind": "token",
+          "default": "paddingXxs",
+          "tokenType": "double"
+        },
+        {
+          "name": "lessLabel",
+          "kind": "string",
+          "default": "Show less"
+        },
+        {
+          "name": "initiallyExpanded",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingColorPickerInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A colour swatch and hex field with a picker popover.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "string"
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleSwatch"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingColrow": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "A row on wide screens that becomes a column below a breakpoint.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "spacing",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "breakpoint",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "crossAxisAlignment",
+          "kind": "choice",
+          "default": "start",
+          "values": [
+            "start",
+            "end",
+            "center",
+            "stretch",
+            "baseline"
+          ]
+        },
+        {
+          "name": "mainAxisAlignment",
+          "kind": "choice",
+          "default": "start",
+          "values": [
+            "start",
+            "end",
+            "center",
+            "spaceBetween",
+            "spaceAround",
+            "spaceEvenly"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
     "OnboardingColumn": {
       "kind": "widget",
       "category": "layout",
@@ -2868,6 +3525,157 @@
         }
       ]
     },
+    "OnboardingDateInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A masked date field: DD/MM/YYYY, MM/YYYY, or a date and time.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "date"
+        },
+        {
+          "name": "mode",
+          "kind": "choice",
+          "default": "date",
+          "values": [
+            "date",
+            "monthYear",
+            "dateTime"
+          ]
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "hint",
+          "kind": "string"
+        },
+        {
+          "name": "helperText",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "showApprovedBadge",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "any"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingDivider": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A hairline divider, horizontal or vertical.",
+      "constructors": [
+        "vertical"
+      ],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleDivider"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingDocumentPreview": {
+      "kind": "widget",
+      "category": "media",
+      "summary": "A stored file: an image thumbnail or a file bar, with a full-size preview and Open in new tab.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "source",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "name",
+          "kind": "string"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleDocumentPreview"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingDocumentViewer": {
+      "kind": "widget",
+      "category": "media",
+      "summary": "A stored document shown in full on the page, with Open in new tab.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "source",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleDocumentPreview"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
     "OnboardingEmptyState": {
       "kind": "widget",
       "category": "feedback",
@@ -2890,7 +3698,10 @@
         },
         {
           "name": "style",
-          "kind": "style"
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
         }
       ],
       "slots": [
@@ -2903,6 +3714,188 @@
         }
       ],
       "events": [],
+      "rules": []
+    },
+    "OnboardingErrorWithRetry": {
+      "kind": "widget",
+      "category": "feedback",
+      "summary": "Content that failed to load, in its place: an error badge, title, message and a Retry button.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "default": "alert_circle"
+        },
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "message",
+          "kind": "string"
+        },
+        {
+          "name": "retryLabel",
+          "kind": "string",
+          "default": "Try again"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "retry",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingFileUploadInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A dropzone that picks and uploads files, with progress and a preview of the stored ones.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "helperText",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "allowedExtensions",
+          "kind": "stringList",
+          "default": []
+        },
+        {
+          "name": "maxFiles",
+          "kind": "integer",
+          "default": 1
+        },
+        {
+          "name": "maxFileSize",
+          "kind": "integer",
+          "default": 52428800
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "any"
+          }
+        },
+        {
+          "name": "busyChanged",
+          "payload": {
+            "value": "bool"
+          }
+        },
+        {
+          "name": "picked",
+          "payload": {
+            "value": "list"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingFolderCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A clickable folder card with its item count and a menu.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "itemCount",
+          "kind": "integer",
+          "default": 0
+        },
+        {
+          "name": "itemLabel",
+          "kind": "string",
+          "default": "item"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "menuItems",
+          "accepts": [
+            "OnboardingPopupMenuItem"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        },
+        {
+          "name": "drop",
+          "payload": {
+            "value": "any"
+          }
+        }
+      ],
       "rules": []
     },
     "OnboardingGrid": {
@@ -2945,6 +3938,89 @@
         }
       ],
       "events": [],
+      "rules": []
+    },
+    "OnboardingHtmlText": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "Safe HTML text: paragraphs, bold, italic, links, lists and headings.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "html",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleText"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "openLink",
+          "payload": {
+            "value": "any"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingIconBadge": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A tinted square badge around an icon.",
+      "constructors": [
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "info"
+      ],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleIconBadge"
+          ]
+        },
+        {
+          "name": "size",
+          "kind": "choice",
+          "default": "md",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "name": "tooltip",
+          "kind": "string"
+        },
+        {
+          "name": "semanticsLabel",
+          "kind": "string"
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "payload": {}
+        }
+      ],
       "rules": []
     },
     "OnboardingIconButton": {
@@ -3017,6 +4093,80 @@
         }
       ]
     },
+    "OnboardingInteractiveCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A clickable row card: icon, title, subtitle, optional progress and a trailing badge.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "default": "file_text"
+        },
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "progress",
+          "kind": "number"
+        },
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "locked",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "iconBadge",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "badge",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "trailing",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
     "OnboardingKpiCard": {
       "kind": "widget",
       "category": "cards",
@@ -3044,7 +4194,11 @@
         },
         {
           "name": "style",
-          "kind": "style"
+          "kind": "style",
+          "families": [
+            "StyleKpiCard",
+            "StyleCard"
+          ]
         }
       ],
       "slots": [
@@ -3062,6 +4216,131 @@
           "payload": {}
         }
       ],
+      "rules": []
+    },
+    "OnboardingLoadingWidget": {
+      "kind": "widget",
+      "category": "feedback",
+      "summary": "A spinner, optionally with a message under it.",
+      "constructors": [
+        "centered",
+        "small"
+      ],
+      "props": [
+        {
+          "name": "message",
+          "kind": "string"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleIconToken"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingMediaCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A course or certificate card: an icon header, title, tags, progress and a menu. The cover image is set in code.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "default": "school"
+        },
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "progress",
+          "kind": "number"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "tags",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "badge",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "menuItems",
+          "accepts": [
+            "OnboardingPopupMenuItem"
+          ],
+          "many": true
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingMenuButton": {
+      "kind": "widget",
+      "category": "menus",
+      "summary": "An icon button that opens a menu of items, by default the portal's profile button.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "default": "user"
+        },
+        {
+          "name": "tooltip",
+          "kind": "string"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleIconButton"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingPopupMenuItem"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
       "rules": []
     },
     "OnboardingMetric": {
@@ -3123,6 +4402,257 @@
           }
         }
       ],
+      "rules": []
+    },
+    "OnboardingMultiSelectDropdownInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A dropdown that picks several options, shown as chips.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "values",
+          "kind": "rows",
+          "default": []
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "hint",
+          "kind": "string",
+          "default": "Select..."
+        },
+        {
+          "name": "helperText",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "showApprovedBadge",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingSelectItem"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "list"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingNumberInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A number field: integer, decimal, currency, percentage or phone.",
+      "constructors": [
+        "integer",
+        "decimal",
+        "currency",
+        "percentage",
+        "phone"
+      ],
+      "props": [
+        {
+          "name": "mode",
+          "kind": "choice",
+          "default": "integer",
+          "values": [
+            "integer",
+            "decimal",
+            "currency",
+            "percentage",
+            "phone"
+          ]
+        },
+        {
+          "name": "fieldKey",
+          "kind": "string"
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "hint",
+          "kind": "string"
+        },
+        {
+          "name": "helperText",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "initialValue",
+          "kind": "string"
+        },
+        {
+          "name": "value",
+          "kind": "number"
+        },
+        {
+          "name": "min",
+          "kind": "number"
+        },
+        {
+          "name": "max",
+          "kind": "number"
+        },
+        {
+          "name": "step",
+          "kind": "number"
+        },
+        {
+          "name": "showStepButtons",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "decimalDigits",
+          "kind": "integer"
+        },
+        {
+          "name": "allowNegative",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "useGrouping",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "currencySymbol",
+          "kind": "string"
+        },
+        {
+          "name": "currencyMode",
+          "kind": "choice",
+          "default": "standard",
+          "values": [
+            "standard",
+            "cents"
+          ]
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "string"
+          }
+        },
+        {
+          "name": "valueChanged",
+          "payload": {
+            "value": "number"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingPageCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A page's one content card, its children stretched across it.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleCard"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
       "rules": []
     },
     "OnboardingPageHeader": {
@@ -3195,6 +4725,78 @@
         },
         {
           "name": "tabSelected",
+          "payload": {
+            "value": "number"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingPageTab": {
+      "kind": "value",
+      "category": "navigation",
+      "summary": "A tab of an OnboardingPageTabs.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "count",
+          "kind": "integer"
+        },
+        {
+          "name": "badgeText",
+          "kind": "string"
+        },
+        {
+          "name": "disabled",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingPageTabs": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "An underline tab bar with optional counts.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "selectedIndex",
+          "kind": "integer",
+          "default": 0
+        }
+      ],
+      "slots": [
+        {
+          "name": "tabs",
+          "accepts": [
+            "OnboardingPageTab"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "tabSelected",
+          "primary": true,
           "payload": {
             "value": "number"
           }
@@ -3339,6 +4941,98 @@
       ],
       "rules": []
     },
+    "OnboardingPasswordInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A password field with a show and hide toggle.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "fieldKey",
+          "kind": "string"
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "hint",
+          "kind": "string",
+          "default": "••••••••"
+        },
+        {
+          "name": "helperText",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "textInputAction",
+          "kind": "choice",
+          "values": [
+            "none",
+            "unspecified",
+            "done",
+            "go",
+            "search",
+            "send",
+            "next",
+            "previous",
+            "continueAction",
+            "join",
+            "route",
+            "emergencyCall",
+            "newline"
+          ]
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "string"
+          }
+        },
+        {
+          "name": "submitted",
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
     "OnboardingPopupMenu": {
       "kind": "widget",
       "category": "menus",
@@ -3424,6 +5118,707 @@
           "payload": {}
         }
       ],
+      "rules": []
+    },
+    "OnboardingPortalShell": {
+      "kind": "widget",
+      "category": "shells",
+      "summary": "The candidate and LMS portal: a top bar with brand, search and actions over the page.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "backTooltip",
+          "kind": "string",
+          "default": "Back"
+        },
+        {
+          "name": "brand",
+          "kind": "string"
+        },
+        {
+          "name": "brandImage",
+          "kind": "image"
+        },
+        {
+          "name": "profileIcon",
+          "kind": "icon",
+          "default": "user"
+        },
+        {
+          "name": "profileTooltip",
+          "kind": "string",
+          "default": "Your account"
+        },
+        {
+          "name": "maxContentWidth",
+          "kind": "token",
+          "default": "portalContentWidth",
+          "tokenType": "double"
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "brandLeading",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "search",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "profileMenuItems",
+          "accepts": [
+            "OnboardingPopupMenuItem"
+          ],
+          "many": true
+        },
+        {
+          "name": "banner",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [
+        {
+          "name": "back",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingProfileCard": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "The sidebar profile card: avatar, name, subtitle and a menu.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "name",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "kind": "string"
+        },
+        {
+          "name": "userType",
+          "kind": "string"
+        }
+      ],
+      "slots": [
+        {
+          "name": "userTypeWidget",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "menuItems",
+          "accepts": [
+            "OnboardingPopupMenuItem"
+          ],
+          "many": true
+        },
+        {
+          "name": "trailing",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingProgressBar": {
+      "kind": "widget",
+      "category": "feedback",
+      "summary": "A linear progress bar, or stacked approved, rejected and submitted segments.",
+      "constructors": [
+        "stacked"
+      ],
+      "props": [
+        {
+          "name": "value",
+          "kind": "number",
+          "required": true
+        },
+        {
+          "name": "success",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleProgressBar"
+          ]
+        },
+        {
+          "name": "approved",
+          "kind": "number",
+          "required": true
+        },
+        {
+          "name": "rejected",
+          "kind": "number",
+          "required": true
+        },
+        {
+          "name": "complete",
+          "kind": "number",
+          "required": true
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingProgressRing": {
+      "kind": "widget",
+      "category": "feedback",
+      "summary": "A circular percentage ring; value in 0..1, coloured by a token.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "number",
+          "required": true
+        },
+        {
+          "name": "showLabel",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "fill",
+          "kind": "token",
+          "tokenType": "color"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingRadioGroupInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "One choice from a list of radios or selectable cards.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "json"
+        },
+        {
+          "name": "variant",
+          "kind": "choice",
+          "default": "list",
+          "values": [
+            "list",
+            "cards"
+          ]
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleRadio"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingRadioItem"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "any"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingRadioItem": {
+      "kind": "value",
+      "category": "inputs",
+      "summary": "An option of an OnboardingRadioGroupInput.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "json"
+        },
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "kind": "string"
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "leading",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingResponsiveContainer": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "Centres its child at the content width with responsive padding.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "maxWidth",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "scrollable",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingRichTextInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "An HTML editor with formatting buttons, merge tags and a preview.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "value",
+          "kind": "string"
+        },
+        {
+          "name": "mergeTags",
+          "kind": "stringList",
+          "default": []
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingRow": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "A horizontal flex with token spacing.",
+      "constructors": [
+        "spaceBetween",
+        "center",
+        "end"
+      ],
+      "props": [
+        {
+          "name": "spacing",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "crossAxisAlignment",
+          "kind": "choice",
+          "default": "center",
+          "values": [
+            "start",
+            "end",
+            "center",
+            "stretch",
+            "baseline"
+          ]
+        },
+        {
+          "name": "mainAxisAlignment",
+          "kind": "choice",
+          "default": "start",
+          "values": [
+            "start",
+            "end",
+            "center",
+            "spaceBetween",
+            "spaceAround",
+            "spaceEvenly"
+          ]
+        },
+        {
+          "name": "mainAxisSize",
+          "kind": "choice",
+          "values": [
+            "min",
+            "max"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingSearchInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A compact search field with debounce and a clear button.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "hint",
+          "kind": "string",
+          "default": "Search..."
+        },
+        {
+          "name": "value",
+          "kind": "string"
+        },
+        {
+          "name": "autofocus",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "string"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingSegmentItem": {
+      "kind": "value",
+      "category": "inputs",
+      "summary": "An option of an OnboardingSegmentedControl: a label, an icon, or both.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "json"
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "tooltip",
+          "kind": "string"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingSegmentedControl": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A segmented pill switcher between a few options.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "json"
+        },
+        {
+          "name": "stretch",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingSegmentItem"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "any"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingSelectInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A dropdown that picks one option.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "json"
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "isRequired",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "hint",
+          "kind": "string",
+          "default": "Select..."
+        },
+        {
+          "name": "helperText",
+          "kind": "string"
+        },
+        {
+          "name": "error",
+          "kind": "string"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "approved",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "inReview",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "isCompact",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingSelectItem"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "any"
+          }
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingSelectItem": {
+      "kind": "value",
+      "category": "inputs",
+      "summary": "An option of a select, multi-select or autocomplete input.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "json"
+        },
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "kind": "string"
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "enabled",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [],
+      "events": [],
       "rules": []
     },
     "OnboardingSidebar": {
@@ -3528,6 +5923,38 @@
       ],
       "rules": []
     },
+    "OnboardingSidebarFooter": {
+      "kind": "widget",
+      "category": "navigation",
+      "summary": "The sidebar footer: a user widget and a row of actions.",
+      "constructors": [],
+      "props": [],
+      "slots": [
+        {
+          "name": "user",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
     "OnboardingSidebarHeader": {
       "kind": "widget",
       "category": "navigation",
@@ -3630,6 +6057,56 @@
       "events": [],
       "rules": []
     },
+    "OnboardingSliderInput": {
+      "kind": "widget",
+      "category": "inputs",
+      "summary": "A slider between min and max, with its value shown.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "value",
+          "kind": "number",
+          "required": true
+        },
+        {
+          "name": "min",
+          "kind": "number",
+          "default": 0.0
+        },
+        {
+          "name": "max",
+          "kind": "number",
+          "default": 1.0
+        },
+        {
+          "name": "label",
+          "kind": "string"
+        },
+        {
+          "name": "showValue",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleSlider"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "changed",
+          "primary": true,
+          "payload": {
+            "value": "number"
+          }
+        }
+      ],
+      "rules": []
+    },
     "OnboardingStatusBadge": {
       "kind": "widget",
       "category": "primitives",
@@ -3669,6 +6146,122 @@
       "events": [],
       "rules": []
     },
+    "OnboardingStatusCard": {
+      "kind": "widget",
+      "category": "cards",
+      "summary": "A page's single status message: a badge, title, paragraphs and actions, centred.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "greeting",
+          "kind": "string"
+        },
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "paragraphs",
+          "kind": "stringList",
+          "default": []
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleStatusCard"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "badge",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingStickySplit": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "Content with a side rail pinned below the top of the page scroll; stacked on narrow screens.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "asideWidth",
+          "kind": "token",
+          "default": "workspacePaneWidth",
+          "tokenType": "double"
+        },
+        {
+          "name": "spacing",
+          "kind": "token",
+          "default": "paddingLg",
+          "tokenType": "double"
+        },
+        {
+          "name": "stickyInset",
+          "kind": "token",
+          "default": "paddingLg",
+          "tokenType": "double"
+        },
+        {
+          "name": "collapseBelow",
+          "kind": "number",
+          "default": 900.0
+        },
+        {
+          "name": "compactAsideFirst",
+          "kind": "boolean",
+          "default": true
+        },
+        {
+          "name": "pinned",
+          "kind": "boolean",
+          "default": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "aside",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "compactAside",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
     "OnboardingSwitchInput": {
       "kind": "widget",
       "category": "inputs",
@@ -3692,10 +6285,6 @@
           "name": "enabled",
           "kind": "boolean",
           "default": true
-        },
-        {
-          "name": "style",
-          "kind": "style"
         }
       ],
       "slots": [],
@@ -3708,6 +6297,85 @@
           }
         }
       ],
+      "rules": []
+    },
+    "OnboardingTable": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "A composable table frame: a header row and rows, scrolling sideways below its minimum width.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "minWidth",
+          "kind": "token",
+          "tokenType": "double"
+        }
+      ],
+      "slots": [
+        {
+          "name": "header",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        },
+        {
+          "name": "rows",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingTableCell": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "A cell of an OnboardingTable row: a flex share of the row, or a fixed width.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "flex",
+          "kind": "integer",
+          "default": 1
+        },
+        {
+          "name": "width",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "alignment",
+          "kind": "choice",
+          "default": "centerLeft",
+          "values": [
+            "topLeft",
+            "topCenter",
+            "topRight",
+            "centerLeft",
+            "center",
+            "centerRight",
+            "bottomLeft",
+            "bottomCenter",
+            "bottomRight"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
       "rules": []
     },
     "OnboardingTableColumn": {
@@ -3768,6 +6436,165 @@
       "events": [],
       "rules": []
     },
+    "OnboardingTableHeader": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "The header row of an OnboardingTable.",
+      "constructors": [],
+      "props": [],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingTableHeaderCell": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "A header cell of an OnboardingTable, optionally sortable.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "flex",
+          "kind": "integer",
+          "default": 1
+        },
+        {
+          "name": "width",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "sortable",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "sortDirection",
+          "kind": "choice",
+          "default": "none",
+          "values": [
+            "none",
+            "ascending",
+            "descending"
+          ]
+        },
+        {
+          "name": "alignment",
+          "kind": "choice",
+          "default": "centerLeft",
+          "values": [
+            "topLeft",
+            "topCenter",
+            "topRight",
+            "centerLeft",
+            "center",
+            "centerRight",
+            "bottomLeft",
+            "bottomCenter",
+            "bottomRight"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "sort",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingTableRow": {
+      "kind": "widget",
+      "category": "tables",
+      "summary": "A row of an OnboardingTable; tapping it navigates, selected highlights it.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
+    "OnboardingTagChip": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A tag chip with an optional count, selection and remove button.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "count",
+          "kind": "integer"
+        },
+        {
+          "name": "icon",
+          "kind": "icon"
+        },
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleTagChip"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        },
+        {
+          "name": "deleted",
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
     "OnboardingTextInput": {
       "kind": "widget",
       "category": "inputs",
@@ -3776,7 +6603,10 @@
       "props": [
         {
           "name": "style",
-          "kind": "style"
+          "kind": "style",
+          "families": [
+            "StyleInput"
+          ]
         },
         {
           "name": "fieldKey",
@@ -3943,6 +6773,98 @@
       ],
       "rules": []
     },
+    "OnboardingThumbnail": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A rounded-square image with an icon fallback.",
+      "constructors": [
+        "sm",
+        "lg"
+      ],
+      "props": [
+        {
+          "name": "image",
+          "kind": "image"
+        },
+        {
+          "name": "icon",
+          "kind": "icon",
+          "default": "photo"
+        },
+        {
+          "name": "semanticLabel",
+          "kind": "string"
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleThumbnail"
+          ]
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingTileButton": {
+      "kind": "widget",
+      "category": "primitives",
+      "summary": "A near-square tile with a large icon over a short label, for pickers laid out in a grid.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "icon",
+          "kind": "icon",
+          "required": true
+        },
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "style",
+          "kind": "style",
+          "families": [
+            "StyleTileButton"
+          ]
+        },
+        {
+          "name": "tooltip",
+          "kind": "string"
+        },
+        {
+          "name": "tooltipPosition",
+          "kind": "choice",
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "name": "selected",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "disabled",
+          "kind": "boolean",
+          "default": false
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
     "OnboardingTooltip": {
       "kind": "widget",
       "category": "feedback",
@@ -3977,6 +6899,90 @@
         }
       ],
       "events": [],
+      "rules": []
+    },
+    "OnboardingWorkspaceShell": {
+      "kind": "widget",
+      "category": "shells",
+      "summary": "The editors' split-pane shell: a toolbar over a left pane, the centre and a right pane.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "title",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "isDirty",
+          "kind": "boolean",
+          "default": false
+        },
+        {
+          "name": "leftPaneStyle",
+          "kind": "style",
+          "families": [
+            "StyleWorkspacePane"
+          ]
+        },
+        {
+          "name": "rightPaneStyle",
+          "kind": "style",
+          "families": [
+            "StyleWorkspacePane"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "titleTrailing",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "center",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "actions",
+          "accepts": [
+            "widget"
+          ],
+          "many": true
+        },
+        {
+          "name": "leftPane",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "rightPane",
+          "accepts": [
+            "widget"
+          ],
+          "many": false
+        },
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [
+        {
+          "name": "back",
+          "payload": {}
+        }
+      ],
       "rules": []
     },
     "OnboardingWrap": {
@@ -4131,7 +7137,10 @@
         {
           "name": "style",
           "kind": "style",
-          "required": true
+          "required": true,
+          "families": [
+            "StyleContentList"
+          ]
         },
         {
           "name": "shrinkWrap",
