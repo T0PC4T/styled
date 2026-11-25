@@ -1,5 +1,4 @@
 {
-  "$schema": "../../../../schemas/screen.schema.json",
   "format": 1,
   "id": "admin.dashboard",
   "kind": "page",
@@ -7,33 +6,89 @@
   "route": "/admin",
   "frame": "frames.admin",
   "fixtures": {
-    "default": { "counts": { "automations": 3, "paused": 1 } }
+    "default": {
+      "counts": {
+        "automations": 3,
+        "paused": 1
+      }
+    }
   },
   "root": {
     "id": "page",
     "type": "StyledListView",
-    "props": { "style": "StyleContentList.normal" },
+    "props": {
+      "style": "StyleContentList.normal"
+    },
     "children": [
-      { "id": "title", "type": "OnboardingPageTitle", "props": { "title": "Administration", "subtitle": "Everything that runs your onboarding" } },
+      {
+        "id": "title",
+        "type": "OnboardingPageTitle",
+        "props": {
+          "title": "Administration",
+          "subtitle": "Everything that runs your onboarding"
+        }
+      },
       {
         "id": "tiles",
         "type": "OnboardingGrid",
-        "props": { "minItemWidth": "gridMinItemWidth", "spacing": "padding" },
+        "props": {
+          "minItemWidth": "gridMinItemWidth",
+          "spacing": "padding"
+        },
         "children": [
           {
             "id": "automationsTile",
             "type": "OnboardingKpiCard",
-            "props": { "label": "Automations", "value": { "$text": "{{data.counts.automations}}" }, "icon": "bolt" },
-            "on": { "tap": [{ "do": "navigate", "to": "admin.automations", "mode": "replaceAll" }] }
+            "props": {
+              "label": "Automations",
+              "value": {
+                "$text": "{{data.counts.automations}}"
+              },
+              "icon": "bolt"
+            },
+            "on": {
+              "tap": [
+                {
+                  "do": "navigate",
+                  "to": "admin.automations",
+                  "mode": "replaceAll"
+                }
+              ]
+            }
           },
           {
             "id": "pausedNotice",
             "type": "OnboardingCard",
-            "when": { "$gt": [{ "$bind": "data.counts.paused" }, 0] },
-            "props": { "style": "StyleCard.highlight" },
+            "when": {
+              "$gt": [
+                {
+                  "$bind": "data.counts.paused"
+                },
+                0
+              ]
+            },
+            "props": {
+              "style": "StyleCard.highlight"
+            },
             "children": [
-              { "id": "pausedTitle", "type": "StyledText", "props": { "text": { "$text": "{{data.counts.paused}} paused" }, "style": "StyleText.h4" } },
-              { "id": "pausedBody", "type": "StyledText", "props": { "text": "Paused automations send nothing until you enable them.", "style": "StyleText.bodySubtle" } }
+              {
+                "id": "pausedTitle",
+                "type": "StyledText",
+                "props": {
+                  "text": {
+                    "$text": "{{data.counts.paused}} paused"
+                  },
+                  "style": "StyleText.h4"
+                }
+              },
+              {
+                "id": "pausedBody",
+                "type": "StyledText",
+                "props": {
+                  "text": "Paused automations send nothing until you enable them.",
+                  "style": "StyleText.bodySubtle"
+                }
+              }
             ]
           }
         ]

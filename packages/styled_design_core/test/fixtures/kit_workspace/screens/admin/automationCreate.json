@@ -1,15 +1,25 @@
 {
-  "$schema": "../../../../schemas/screen.schema.json",
   "format": 1,
   "id": "admin.automationCreate",
   "kind": "modal",
   "title": "New automation",
-  "state": { "name": "" },
-  "fixtures": { "default": { "isCreating": false, "errors": { "name": null } } },
+  "state": {
+    "name": ""
+  },
+  "fixtures": {
+    "default": {
+      "isCreating": false,
+      "errors": {
+        "name": null
+      }
+    }
+  },
   "emits": {
     "createAutomation": {
       "description": "Create the automation. Return the new id, or false to keep the modal open.",
-      "payload": { "name": "string" },
+      "payload": {
+        "name": "string"
+      },
       "returns": "any",
       "sample": "auto_welcome"
     }
@@ -22,7 +32,9 @@
       "subtitle": "Name it now. You set the rule on the next screen.",
       "size": "sm",
       "submitLabel": "Create",
-      "isSubmitting": { "$bind": "data.isCreating" }
+      "isSubmitting": {
+        "$bind": "data.isCreating"
+      }
     },
     "children": [
       {
@@ -33,15 +45,41 @@
           "hint": "Welcome email",
           "isRequired": true,
           "autofocus": true,
-          "error": { "$bind": "data.errors.name" }
+          "error": {
+            "$bind": "data.errors.name"
+          }
         },
-        "on": { "changed": [{ "do": "setState", "set": { "name": { "$bind": "event.value" } } }] }
+        "on": {
+          "changed": [
+            {
+              "do": "setState",
+              "set": {
+                "name": {
+                  "$bind": "event.value"
+                }
+              }
+            }
+          ]
+        }
       }
     ],
     "on": {
       "submit": [
-        { "do": "emit", "name": "createAutomation", "payload": { "name": { "$bind": "state.name" } } },
-        { "do": "closeModal", "result": { "$bind": "event.result" } }
+        {
+          "do": "emit",
+          "name": "createAutomation",
+          "payload": {
+            "name": {
+              "$bind": "state.name"
+            }
+          }
+        },
+        {
+          "do": "closeModal",
+          "result": {
+            "$bind": "event.result"
+          }
+        }
       ]
     }
   }

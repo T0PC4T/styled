@@ -1,7 +1,7 @@
 {
   "format": 1,
   "version": 1,
-  "hash": "sha256:b3ea63fc3019da6c7d0b96dfb1b7906d4cd7cb9dfc89ee76494c226308c20b66",
+  "hash": "sha256:28094bc851ffffd907e5c370d7ef6edfb8fa775f0c76fa80897c366d6e8ed782",
   "modes": [
     "light",
     "dark"
@@ -1867,6 +1867,33 @@
     "initials"
   ],
   "components": {
+    "CrudFilterChip": {
+      "kind": "widget",
+      "category": "crud",
+      "summary": "A selectable filter chip for a CrudToolbar, such as \"Enabled (3)\".",
+      "constructors": [],
+      "props": [
+        {
+          "name": "label",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "isSelected",
+          "kind": "boolean",
+          "required": true
+        }
+      ],
+      "slots": [],
+      "events": [
+        {
+          "name": "tap",
+          "primary": true,
+          "payload": {}
+        }
+      ],
+      "rules": []
+    },
     "CrudToolbar": {
       "kind": "widget",
       "category": "crud",
@@ -3084,6 +3111,57 @@
       ],
       "rules": []
     },
+    "OnboardingPopupMenu": {
+      "kind": "widget",
+      "category": "menus",
+      "summary": "A menu of actions that opens from its child, such as a \"more\" icon button in a table row.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "tooltip",
+          "kind": "string"
+        },
+        {
+          "name": "side",
+          "kind": "choice",
+          "default": "below",
+          "values": [
+            "below",
+            "above"
+          ]
+        },
+        {
+          "name": "align",
+          "kind": "choice",
+          "default": "end",
+          "values": [
+            "start",
+            "center",
+            "end"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "items",
+          "accepts": [
+            "OnboardingPopupMenuItem"
+          ],
+          "many": true,
+          "required": true
+        },
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "anchor": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
     "OnboardingPopupMenuItem": {
       "kind": "value",
       "category": "menus",
@@ -3635,6 +3713,104 @@
           "payload": {}
         }
       ],
+      "rules": []
+    },
+    "OnboardingTooltip": {
+      "kind": "widget",
+      "category": "feedback",
+      "summary": "Shows a message when the pointer rests on its child.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "message",
+          "kind": "string",
+          "required": true
+        },
+        {
+          "name": "position",
+          "kind": "choice",
+          "default": "top",
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "child",
+          "accepts": [
+            "widget"
+          ],
+          "many": false,
+          "required": true
+        }
+      ],
+      "events": [],
+      "rules": []
+    },
+    "OnboardingWrap": {
+      "kind": "widget",
+      "category": "layout",
+      "summary": "Lays its children out in runs, wrapping to the next line, with token spacing.",
+      "constructors": [],
+      "props": [
+        {
+          "name": "spacing",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "runSpacing",
+          "kind": "token",
+          "tokenType": "double"
+        },
+        {
+          "name": "alignment",
+          "kind": "choice",
+          "default": "start",
+          "values": [
+            "start",
+            "end",
+            "center",
+            "spaceBetween",
+            "spaceAround",
+            "spaceEvenly"
+          ]
+        },
+        {
+          "name": "crossAxisAlignment",
+          "kind": "choice",
+          "default": "center",
+          "values": [
+            "start",
+            "end",
+            "center"
+          ]
+        },
+        {
+          "name": "direction",
+          "kind": "choice",
+          "default": "horizontal",
+          "values": [
+            "horizontal",
+            "vertical"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "widget"
+          ],
+          "many": true,
+          "required": true
+        }
+      ],
+      "events": [],
       "rules": []
     },
     "StyledBox": {

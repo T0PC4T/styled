@@ -44,7 +44,8 @@ void main() {
       final screen = _kit().toBundle().screen('admin.automations');
       final failed = screen.fixture('failed');
       expect(failed['error'], 'Automations could not be loaded. Try again.');
-      expect((failed['automations']! as List).length, 3, reason: 'the rest comes from default');
+      expect(failed['automations'], isEmpty, reason: 'a failed load shows no rows');
+      expect((failed['metrics']! as List).length, 3, reason: 'the rest comes from default');
       final empty = screen.fixture('empty');
       expect(empty['automations'], isEmpty);
       expect((empty['paging']! as Map)['pageSize'], 25, reason: 'nested objects merge key by key');

@@ -357,7 +357,11 @@ void main() {
   group('fmt', () {
     test('--check lists files that would change and writes nothing; fmt makes them canonical', () async {
       final dir = kitCopy();
-      final before = File(p.join(dir, 'screens/admin/automations.json')).readAsStringSync();
+      // The kit is canonical; write one document compactly, keys out of order, so fmt has work to do.
+      final file = File(p.join(dir, 'screens/admin/automations.json'));
+      final json = jsonDecode(file.readAsStringSync()) as Map<String, Object?>;
+      file.writeAsStringSync(jsonEncode({'root': json['root'], ...json}));
+      final before = file.readAsStringSync();
       final check = await design(['-w', dir, 'fmt', '--check']);
       expect(check.code, 1);
       expect(check.out, contains('would change: screens/admin/automations.json'));

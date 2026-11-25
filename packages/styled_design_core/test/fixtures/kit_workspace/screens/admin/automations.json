@@ -1,5 +1,4 @@
 {
-  "$schema": "../../../../schemas/screen.schema.json",
   "format": 1,
   "id": "admin.automations",
   "kind": "page",
@@ -10,52 +9,218 @@
   "fixtures": {
     "default": {
       "automations": [
-        { "id": "auto_welcome", "name": "Welcome email", "enabled": true },
-        { "id": "auto_dbs_chase", "name": "DBS reminder", "enabled": true },
-        { "id": "auto_ref_nudge", "name": "Referee nudge", "enabled": false }
+        {
+          "id": "auto_welcome",
+          "name": "Welcome email",
+          "enabled": true
+        },
+        {
+          "id": "auto_dbs_chase",
+          "name": "DBS reminder",
+          "enabled": true
+        },
+        {
+          "id": "auto_ref_nudge",
+          "name": "Referee nudge",
+          "enabled": false
+        }
       ],
       "isLoading": false,
       "error": null,
       "metrics": [
-        { "key": "all", "label": "All", "count": 3 },
-        { "key": "enabled", "label": "Enabled", "count": 2 },
-        { "key": "paused", "label": "Paused", "count": 1 }
+        {
+          "key": "all",
+          "label": "All",
+          "count": 3
+        },
+        {
+          "key": "enabled",
+          "label": "Enabled",
+          "count": 2
+        },
+        {
+          "key": "paused",
+          "label": "Paused",
+          "count": 1
+        }
       ],
       "activeMetric": "all",
       "viewMode": "table",
-      "sort": { "key": "name", "ascending": true },
-      "paging": { "page": 1, "pageCount": 1, "pageSize": 25, "total": 3 }
+      "sort": {
+        "key": "name",
+        "ascending": true
+      },
+      "paging": {
+        "page": 1,
+        "pageCount": 1,
+        "pageSize": 25,
+        "total": 3
+      }
     },
     "empty": {
       "automations": [],
       "metrics": [
-        { "key": "all", "label": "All", "count": 0 },
-        { "key": "enabled", "label": "Enabled", "count": 0 },
-        { "key": "paused", "label": "Paused", "count": 0 }
+        {
+          "key": "all",
+          "label": "All",
+          "count": 0
+        },
+        {
+          "key": "enabled",
+          "label": "Enabled",
+          "count": 0
+        },
+        {
+          "key": "paused",
+          "label": "Paused",
+          "count": 0
+        }
       ],
-      "paging": { "total": 0 }
+      "paging": {
+        "total": 0
+      }
     },
-    "loading": { "automations": [], "isLoading": true },
-    "failed": { "error": "Automations could not be loaded. Try again." }
+    "loading": {
+      "automations": [],
+      "isLoading": true
+    },
+    "failed": {
+      "automations": [],
+      "error": "Automations could not be loaded. Try again.",
+      "paging": {
+        "total": 0
+      }
+    },
+    "many": {
+      "automations": [
+        {
+          "id": "auto_01",
+          "name": "Automation 01",
+          "enabled": true
+        },
+        {
+          "id": "auto_02",
+          "name": "Automation 02",
+          "enabled": true
+        },
+        {
+          "id": "auto_03",
+          "name": "Automation 03",
+          "enabled": false
+        },
+        {
+          "id": "auto_04",
+          "name": "Automation 04",
+          "enabled": true
+        },
+        {
+          "id": "auto_05",
+          "name": "Automation 05",
+          "enabled": true
+        },
+        {
+          "id": "auto_06",
+          "name": "Automation 06",
+          "enabled": false
+        },
+        {
+          "id": "auto_07",
+          "name": "Automation 07",
+          "enabled": true
+        },
+        {
+          "id": "auto_08",
+          "name": "Automation 08",
+          "enabled": true
+        },
+        {
+          "id": "auto_09",
+          "name": "Automation 09",
+          "enabled": false
+        },
+        {
+          "id": "auto_10",
+          "name": "Automation 10",
+          "enabled": true
+        }
+      ],
+      "metrics": [
+        {
+          "key": "all",
+          "label": "All",
+          "count": 30
+        },
+        {
+          "key": "enabled",
+          "label": "Enabled",
+          "count": 20
+        },
+        {
+          "key": "paused",
+          "label": "Paused",
+          "count": 10
+        }
+      ],
+      "paging": {
+        "page": 0,
+        "pageCount": 3,
+        "pageSize": 10,
+        "total": 30
+      }
+    }
   },
   "emits": {
-    "search": { "description": "Search text changed (already debounced by the input).", "payload": { "value": "string" } },
-    "selectMetric": { "description": "A metric card was chosen as the filter.", "payload": { "key": "string" } },
-    "setViewMode": { "description": "Card or table view was chosen.", "payload": { "mode": "string" } },
-    "toggleSort": { "description": "A sortable column header was pressed.", "payload": { "key": "string" } },
-    "previousPage": { "description": "Go to the previous page of results." },
-    "nextPage": { "description": "Go to the next page of results." },
-    "setPageSize": { "description": "Rows per page changed.", "payload": { "size": "number" } }
+    "search": {
+      "description": "Search text changed (already debounced by the input).",
+      "payload": {
+        "value": "string"
+      }
+    },
+    "selectMetric": {
+      "description": "A metric card was chosen as the filter.",
+      "payload": {
+        "key": "string"
+      }
+    },
+    "setViewMode": {
+      "description": "Card or table view was chosen.",
+      "payload": {
+        "mode": "string"
+      }
+    },
+    "toggleSort": {
+      "description": "A sortable column header was pressed.",
+      "payload": {
+        "key": "string"
+      }
+    },
+    "previousPage": {
+      "description": "Go to the previous page of results."
+    },
+    "nextPage": {
+      "description": "Go to the next page of results."
+    },
+    "setPageSize": {
+      "description": "Rows per page changed.",
+      "payload": {
+        "size": "number"
+      }
+    }
   },
   "root": {
     "id": "page",
     "type": "StyledListView",
-    "props": { "style": "StyleContentList.normal" },
+    "props": {
+      "style": "StyleContentList.normal"
+    },
     "children": [
       {
         "id": "title",
         "type": "OnboardingPageTitle",
-        "props": { "title": "Automations", "subtitle": "Hourly rules that email candidates or staff" },
+        "props": {
+          "title": "Automations",
+          "subtitle": "Hourly rules that email candidates or staff"
+        },
         "slots": {
           "breadcrumbs": [
             {
@@ -66,10 +231,26 @@
                   {
                     "id": "crumbAdmin",
                     "type": "OnboardingBreadcrumbItem",
-                    "props": { "label": "Administration" },
-                    "on": { "tap": [{ "do": "backTo", "to": "admin.dashboard" }] }
+                    "props": {
+                      "label": "Administration"
+                    },
+                    "on": {
+                      "tap": [
+                        {
+                          "do": "backTo",
+                          "to": "admin.dashboard"
+                        }
+                      ]
+                    }
                   },
-                  { "id": "crumbHere", "type": "OnboardingBreadcrumbItem", "props": { "label": "Automations", "isCurrent": true } }
+                  {
+                    "id": "crumbHere",
+                    "type": "OnboardingBreadcrumbItem",
+                    "props": {
+                      "label": "Automations",
+                      "isCurrent": true
+                    }
+                  }
                 ]
               }
             }
@@ -78,13 +259,27 @@
             {
               "id": "newAutomation",
               "type": "OnboardingButton.primary",
-              "props": { "label": "New automation", "icon": "plus", "collapseTextOnMobile": true },
+              "props": {
+                "label": "New automation",
+                "icon": "plus",
+                "collapseTextOnMobile": true
+              },
               "on": {
                 "tap": [
                   {
                     "do": "openModal",
                     "screen": "admin.automationCreate",
-                    "then": [{ "do": "navigate", "to": "admin.automationEditor", "params": { "id": { "$bind": "event.result" } } }]
+                    "then": [
+                      {
+                        "do": "navigate",
+                        "to": "admin.automationEditor",
+                        "params": {
+                          "id": {
+                            "$bind": "event.result"
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -95,48 +290,128 @@
       {
         "id": "metrics",
         "type": "OnboardingMetricStrip",
-        "props": { "selectedKey": { "$bind": "data.activeMetric" } },
+        "props": {
+          "selectedKey": {
+            "$bind": "data.activeMetric"
+          }
+        },
         "slots": {
           "metrics": [
             {
               "id": "metric",
               "type": "OnboardingMetric",
-              "repeat": { "over": { "$bind": "data.metrics" }, "as": "m", "key": { "$bind": "m.key" } },
-              "props": { "key": { "$bind": "m.key" }, "label": { "$bind": "m.label" }, "count": { "$bind": "m.count" } }
+              "repeat": {
+                "over": {
+                  "$bind": "data.metrics"
+                },
+                "as": "m",
+                "key": {
+                  "$bind": "m.key"
+                }
+              },
+              "props": {
+                "key": {
+                  "$bind": "m.key"
+                },
+                "label": {
+                  "$bind": "m.label"
+                },
+                "count": {
+                  "$bind": "m.count"
+                }
+              }
             }
           ]
         },
-        "on": { "selected": [{ "do": "emit", "name": "selectMetric", "payload": { "key": { "$bind": "event.value" } } }] }
+        "on": {
+          "selected": [
+            {
+              "do": "emit",
+              "name": "selectMetric",
+              "payload": {
+                "key": {
+                  "$bind": "event.value"
+                }
+              }
+            }
+          ]
+        }
       },
       {
         "id": "toolbar",
         "type": "CrudToolbar",
-        "props": { "searchHint": "Search automations by name or rule..." },
+        "props": {
+          "searchHint": "Search automations by name or rule..."
+        },
         "slots": {
           "actions": [
             {
               "id": "viewMode",
               "type": "ViewModeSwitcher",
-              "props": { "currentMode": { "$bind": "data.viewMode" } },
-              "on": { "modeChanged": [{ "do": "emit", "name": "setViewMode", "payload": { "mode": { "$bind": "event.value" } } }] }
+              "props": {
+                "currentMode": {
+                  "$bind": "data.viewMode"
+                }
+              },
+              "on": {
+                "modeChanged": [
+                  {
+                    "do": "emit",
+                    "name": "setViewMode",
+                    "payload": {
+                      "mode": {
+                        "$bind": "event.value"
+                      }
+                    }
+                  }
+                ]
+              }
             }
           ]
         },
-        "on": { "searchChanged": [{ "do": "emit", "name": "search", "payload": { "value": { "$bind": "event.value" } } }] }
+        "on": {
+          "searchChanged": [
+            {
+              "do": "emit",
+              "name": "search",
+              "payload": {
+                "value": {
+                  "$bind": "event.value"
+                }
+              }
+            }
+          ]
+        }
       },
       {
         "id": "errorBanner",
         "type": "OnboardingCalloutBanner.error",
-        "when": { "$not": { "$empty": { "$bind": "data.error" } } },
-        "props": { "message": { "$bind": "data.error" } }
+        "when": {
+          "$not": {
+            "$empty": {
+              "$bind": "data.error"
+            }
+          }
+        },
+        "props": {
+          "message": {
+            "$bind": "data.error"
+          }
+        }
       },
       {
         "id": "list",
         "type": "CrudView",
         "props": {
-          "items": { "$bind": "data.automations" },
-          "isLoading": { "$bind": "data.isLoading" },
-          "viewMode": { "$bind": "data.viewMode" }
+          "items": {
+            "$bind": "data.automations"
+          },
+          "isLoading": {
+            "$bind": "data.isLoading"
+          },
+          "viewMode": {
+            "$bind": "data.viewMode"
+          }
         },
         "slots": {
           "empty": [
@@ -156,27 +431,58 @@
               "type": "OnboardingDataTable",
               "note": "Placed directly in the table slot. Never wrap a table in OnboardingCard.",
               "props": {
-                "rows": { "$bind": "items" },
+                "rows": {
+                  "$bind": "items"
+                },
                 "idPath": "id",
                 "minWidth": "tableMinWidth",
-                "sortKey": { "$bind": "data.sort.key" },
-                "sortAscending": { "$bind": "data.sort.ascending" }
+                "sortKey": {
+                  "$bind": "data.sort.key"
+                },
+                "sortAscending": {
+                  "$bind": "data.sort.ascending"
+                }
               },
               "slots": {
                 "columns": [
                   {
                     "id": "colName",
                     "type": "OnboardingTableColumn",
-                    "props": { "label": "Automation", "flex": 5, "sortKey": "name" },
+                    "props": {
+                      "label": "Automation",
+                      "flex": 5,
+                      "sortKey": "name"
+                    },
                     "slots": {
                       "cell": [
                         {
                           "id": "nameCell",
                           "type": "OnboardingColumn",
-                          "props": { "crossAxisAlignment": "start", "spacing": "paddingXxs" },
+                          "props": {
+                            "crossAxisAlignment": "start",
+                            "spacing": "paddingXxs"
+                          },
                           "children": [
-                            { "id": "nameCellTitle", "type": "StyledText", "props": { "text": { "$bind": "row.name" }, "style": "StyleText.cellTitle" } },
-                            { "id": "nameCellId", "type": "StyledText", "props": { "text": { "$bind": "row.id" }, "style": "StyleText.cellSubtitle" } }
+                            {
+                              "id": "nameCellTitle",
+                              "type": "StyledText",
+                              "props": {
+                                "text": {
+                                  "$bind": "row.name"
+                                },
+                                "style": "StyleText.cellTitle"
+                              }
+                            },
+                            {
+                              "id": "nameCellId",
+                              "type": "StyledText",
+                              "props": {
+                                "text": {
+                                  "$bind": "row.id"
+                                },
+                                "style": "StyleText.cellSubtitle"
+                              }
+                            }
                           ]
                         }
                       ]
@@ -185,25 +491,64 @@
                   {
                     "id": "colStatus",
                     "type": "OnboardingTableColumn",
-                    "props": { "label": "Status", "flex": 2 },
+                    "props": {
+                      "label": "Status",
+                      "flex": 2
+                    },
                     "slots": {
                       "cell": [
-                        { "id": "rowEnabled", "type": "OnboardingStatusBadge.success", "when": { "$bind": "row.enabled" }, "props": { "label": "Enabled", "dot": true } },
-                        { "id": "rowPaused", "type": "OnboardingStatusBadge.neutral", "props": { "label": "Paused" } }
+                        {
+                          "id": "rowEnabled",
+                          "type": "OnboardingStatusBadge.success",
+                          "when": {
+                            "$bind": "row.enabled"
+                          },
+                          "props": {
+                            "label": "Enabled",
+                            "dot": true
+                          }
+                        },
+                        {
+                          "id": "rowPaused",
+                          "type": "OnboardingStatusBadge.neutral",
+                          "props": {
+                            "label": "Paused"
+                          }
+                        }
                       ]
                     }
                   },
                   {
                     "id": "colActions",
                     "type": "OnboardingTableColumn",
-                    "props": { "label": "", "width": "tableActionColumnWidth", "alignment": "centerRight" },
+                    "props": {
+                      "label": "",
+                      "width": "tableActionColumnWidth",
+                      "alignment": "centerRight"
+                    },
                     "slots": {
                       "cell": [
                         {
                           "id": "rowEdit",
                           "type": "OnboardingIconButton",
-                          "props": { "icon": "pencil", "tooltip": "Edit automation", "tooltipPosition": "left" },
-                          "on": { "tap": [{ "do": "navigate", "to": "admin.automationEditor", "params": { "id": { "$bind": "row.id" } } }] }
+                          "props": {
+                            "icon": "pencil",
+                            "tooltip": "Edit automation",
+                            "tooltipPosition": "left"
+                          },
+                          "on": {
+                            "tap": [
+                              {
+                                "do": "navigate",
+                                "to": "admin.automationEditor",
+                                "params": {
+                                  "id": {
+                                    "$bind": "row.id"
+                                  }
+                                }
+                              }
+                            ]
+                          }
                         }
                       ]
                     }
@@ -211,8 +556,28 @@
                 ]
               },
               "on": {
-                "rowTap": [{ "do": "navigate", "to": "admin.automationEditor", "params": { "id": { "$bind": "event.row.id" } } }],
-                "sort": [{ "do": "emit", "name": "toggleSort", "payload": { "key": { "$bind": "event.value" } } }]
+                "rowTap": [
+                  {
+                    "do": "navigate",
+                    "to": "admin.automationEditor",
+                    "params": {
+                      "id": {
+                        "$bind": "event.row.id"
+                      }
+                    }
+                  }
+                ],
+                "sort": [
+                  {
+                    "do": "emit",
+                    "name": "toggleSort",
+                    "payload": {
+                      "key": {
+                        "$bind": "event.value"
+                      }
+                    }
+                  }
+                ]
               }
             }
           ],
@@ -224,30 +589,94 @@
                 {
                   "id": "card",
                   "type": "OnboardingCard",
-                  "repeat": { "over": { "$bind": "items" }, "as": "item", "key": { "$bind": "item.id" } },
-                  "on": { "tap": [{ "do": "navigate", "to": "admin.automationEditor", "params": { "id": { "$bind": "item.id" } } }] },
+                  "repeat": {
+                    "over": {
+                      "$bind": "items"
+                    },
+                    "as": "item",
+                    "key": {
+                      "$bind": "item.id"
+                    }
+                  },
                   "children": [
                     {
                       "id": "cardMenu",
                       "type": "OnboardingCardMenu",
-                      "props": { "title": { "$bind": "item.name" } },
+                      "props": {
+                        "title": {
+                          "$bind": "item.name"
+                        }
+                      },
                       "slots": {
                         "titleBadge": [
-                          { "id": "cardEnabled", "type": "OnboardingStatusBadge.success", "when": { "$bind": "item.enabled" }, "props": { "label": "Enabled", "dot": true } },
-                          { "id": "cardPaused", "type": "OnboardingStatusBadge.neutral", "props": { "label": "Paused" } }
+                          {
+                            "id": "cardEnabled",
+                            "type": "OnboardingStatusBadge.success",
+                            "when": {
+                              "$bind": "item.enabled"
+                            },
+                            "props": {
+                              "label": "Enabled",
+                              "dot": true
+                            }
+                          },
+                          {
+                            "id": "cardPaused",
+                            "type": "OnboardingStatusBadge.neutral",
+                            "props": {
+                              "label": "Paused"
+                            }
+                          }
                         ],
                         "items": [
                           {
                             "id": "cardEdit",
                             "type": "OnboardingPopupMenuItem",
-                            "props": { "label": "Edit", "icon": "pencil" },
-                            "on": { "tap": [{ "do": "navigate", "to": "admin.automationEditor", "params": { "id": { "$bind": "item.id" } } }] }
+                            "props": {
+                              "label": "Edit",
+                              "icon": "pencil"
+                            },
+                            "on": {
+                              "tap": [
+                                {
+                                  "do": "navigate",
+                                  "to": "admin.automationEditor",
+                                  "params": {
+                                    "id": {
+                                      "$bind": "item.id"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
                           }
                         ]
                       }
                     },
-                    { "id": "cardId", "type": "StyledText", "props": { "text": { "$bind": "item.id" }, "style": "StyleText.bodySubtle" } }
-                  ]
+                    {
+                      "id": "cardId",
+                      "type": "StyledText",
+                      "props": {
+                        "text": {
+                          "$bind": "item.id"
+                        },
+                        "style": "StyleText.bodySubtle"
+                      }
+                    }
+                  ],
+                  "on": {
+                    "tap": [
+                      {
+                        "do": "navigate",
+                        "to": "admin.automationEditor",
+                        "params": {
+                          "id": {
+                            "$bind": "item.id"
+                          }
+                        }
+                      }
+                    ]
+                  }
                 }
               ]
             }
@@ -257,17 +686,53 @@
       {
         "id": "pagination",
         "type": "OnboardingPaginationBar",
-        "when": { "$gt": [{ "$bind": "data.paging.total" }, 25] },
+        "note": "Shown above the first page size (README section 8: defaultPageSizes.first). The bar disables Previous and Next at the ends itself.",
+        "when": {
+          "$gt": [
+            {
+              "$bind": "data.paging.total"
+            },
+            10
+          ]
+        },
         "props": {
-          "page": { "$bind": "data.paging.page" },
-          "pageCount": { "$bind": "data.paging.pageCount" },
-          "pageSize": { "$bind": "data.paging.pageSize" },
-          "totalItems": { "$bind": "data.paging.total" }
+          "page": {
+            "$bind": "data.paging.page"
+          },
+          "pageCount": {
+            "$bind": "data.paging.pageCount"
+          },
+          "pageSize": {
+            "$bind": "data.paging.pageSize"
+          },
+          "totalItems": {
+            "$bind": "data.paging.total"
+          }
         },
         "on": {
-          "previous": [{ "do": "emit", "name": "previousPage" }],
-          "next": [{ "do": "emit", "name": "nextPage" }],
-          "pageSizeChanged": [{ "do": "emit", "name": "setPageSize", "payload": { "size": { "$bind": "event.value" } } }]
+          "previous": [
+            {
+              "do": "emit",
+              "name": "previousPage"
+            }
+          ],
+          "next": [
+            {
+              "do": "emit",
+              "name": "nextPage"
+            }
+          ],
+          "pageSizeChanged": [
+            {
+              "do": "emit",
+              "name": "setPageSize",
+              "payload": {
+                "size": {
+                  "$bind": "event.value"
+                }
+              }
+            }
+          ]
         }
       }
     ]

@@ -1,8 +1,12 @@
 {
-  "$schema": "../../schemas/workspace.schema.json",
   "format": 1,
   "name": "Onboarding360",
   "start": "admin.automations",
-  "catalog": { "version": 1 },
-  "export": { "bundle": "../../packages/onboarding/assets/design/bundle.json", "fixtures": "none" }
+  "catalog": {
+    "version": 1
+  },
+  "export": {
+    "bundle": "bundle.json",
+    "fixtures": "none"
+  }
 }

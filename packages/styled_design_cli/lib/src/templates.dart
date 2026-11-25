@@ -53,7 +53,7 @@ const _list = r'''
     },
     "empty": { "items": [], "paging": { "total": 0 } },
     "loading": { "items": [], "isLoading": true },
-    "failed": { "error": "Items could not be loaded. Try again." }
+    "failed": { "error": "Items could not be loaded. Try again.", "items": [], "paging": { "total": 0 } }
   },
   "emits": {
     "createItem": { "description": "The New button was pressed. Replace with openModal or navigate when that screen exists." },

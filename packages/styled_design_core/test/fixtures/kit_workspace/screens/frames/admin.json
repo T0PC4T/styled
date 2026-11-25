@@ -1,5 +1,4 @@
 {
-  "$schema": "../../../../schemas/screen.schema.json",
   "format": 1,
   "id": "frames.admin",
   "kind": "frame",
@@ -13,16 +12,13 @@
         {
           "id": "sidebar",
           "type": "OnboardingSidebar",
-          "slots": {
-            "header": [
-              { "id": "brand", "type": "OnboardingSidebarHeader", "props": { "title": "Onboarding360", "subtitle": "360 Care Group" } }
-            ]
-          },
           "children": [
             {
               "id": "manage",
               "type": "OnboardingSidebarSection",
-              "props": { "title": "Manage" },
+              "props": {
+                "title": "Manage"
+              },
               "children": [
                 {
                   "id": "navDashboard",
@@ -30,9 +26,24 @@
                   "props": {
                     "label": "Dashboard",
                     "icon": "layout_dashboard",
-                    "selected": { "$eq": [{ "$bind": "page.id" }, "admin.dashboard"] }
+                    "selected": {
+                      "$eq": [
+                        {
+                          "$bind": "page.id"
+                        },
+                        "admin.dashboard"
+                      ]
+                    }
                   },
-                  "on": { "tap": [{ "do": "navigate", "to": "admin.dashboard", "mode": "replaceAll" }] }
+                  "on": {
+                    "tap": [
+                      {
+                        "do": "navigate",
+                        "to": "admin.dashboard",
+                        "mode": "replaceAll"
+                      }
+                    ]
+                  }
                 },
                 {
                   "id": "navAutomations",
@@ -40,16 +51,51 @@
                   "props": {
                     "label": "Automations",
                     "icon": "bolt",
-                    "selected": { "$in": [{ "$bind": "page.id" }, ["admin.automations", "admin.automationEditor"]] }
+                    "selected": {
+                      "$in": [
+                        {
+                          "$bind": "page.id"
+                        },
+                        [
+                          "admin.automations",
+                          "admin.automationEditor"
+                        ]
+                      ]
+                    }
                   },
-                  "on": { "tap": [{ "do": "navigate", "to": "admin.automations", "mode": "replaceAll" }] }
+                  "on": {
+                    "tap": [
+                      {
+                        "do": "navigate",
+                        "to": "admin.automations",
+                        "mode": "replaceAll"
+                      }
+                    ]
+                  }
                 }
               ]
             }
-          ]
+          ],
+          "slots": {
+            "header": [
+              {
+                "id": "brand",
+                "type": "OnboardingSidebarHeader",
+                "props": {
+                  "title": "Onboarding360",
+                  "subtitle": "360 Care Group"
+                }
+              }
+            ]
+          }
         }
       ],
-      "child": [{ "id": "outlet", "type": "DesignOutlet" }]
+      "child": [
+        {
+          "id": "outlet",
+          "type": "DesignOutlet"
+        }
+      ]
     }
   }
 }
